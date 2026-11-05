@@ -50,36 +50,24 @@ traces it looks for, in the places it could read. It cannot find spyware nobody 
 traces of, and it does not prove a device is safe. If you think you are being targeted, ask a
 digital-security helpline even if the result is green.
 
-**Your antivirus may flag these programs.** Antivirus products often wrongly flag new programs that are not code-signed yet, and some flag these. If you downloaded the file from [the official release page](https://github.com/assmmsto/securail/releases/latest), this is a false alarm and you can ignore it: the code is public, and each program has a public build record you can check. We have applied for free code signing and will report these false alarms to the antivirus companies. **If the file came from anywhere else, do not run it and trust the warning.**
+### One file, one Python, every system
 
-### Windows
+The release carries a single file, `securail.py`, and a `SHA256SUMS` manifest beside it. It
+is not a compiled program: it is the whole tool in one readable text file, so nothing runs
+that you cannot open and read. It works the same on Windows, macOS and Linux.
 
-1. Download `securail-windows-x64.exe`.
-2. Double-click it in your Downloads folder.
-3. Windows may say it "protected your PC". Click **More info**, then **Run anyway**.
+1. Install Python 3.8 or newer from [python.org](https://www.python.org/downloads/) if you
+   do not have it. On Windows, tick **Add python.exe to PATH** in the installer.
+2. Download `securail.py` from [the release page](https://github.com/assmmsto/securail/releases/latest).
+3. Double-click it, or from a terminal in the same folder run `python securail.py`.
 
-### Mac
+It opens a window; you do not need to type anything. On a Mac, open it on the Mac itself,
+not through a remote or SSH session, because it needs a desktop.
 
-1. Download `securail-macos-apple-silicon.dmg` for a newer Mac (M1, M2, M3, M4),
-   or `securail-macos-intel.dmg` for an older Intel Mac. The Apple menu →
-   **About This Mac** says which one you have.
-2. Open it, drag **Securail** into Applications, then open it from Applications.
-3. macOS will refuse the first time. Open **System Settings → Privacy & Security**, scroll
-   down, click **Open Anyway**, then open the app again.
-
-Open the app on the Mac itself, not through a remote or SSH session: it needs a desktop.
-
-### Linux
-
-1. Download `securail-linux-x64.tar.gz`.
-2. Extract it (double-click it, or `tar -xzf securail-linux-x64.tar.gz`).
-3. Run `./securail`, or right-click it and choose **Run in Terminal**.
-
-The warnings appear because the programs are not signed by Microsoft or Apple yet. Each
-program is built by GitHub from the published source, and you can check that before running it:
-`gh attestation verify <file> --repo interplains/Zero-Breach-Toolkit` (see
-[docs/VERIFYING.md](docs/VERIFYING.md)). Prefer to see exactly what runs? Use the Python
-version in the guide below; it is the same check.
+If your antivirus objects to a new, unsigned file, that is the usual false alarm for a
+script nobody has seen before: the file is plain Python, and the two checks in
+[docs/VERIFYING.md](docs/VERIFYING.md) let you confirm it is exactly what this source builds
+before you allow it. **If the file came from anywhere else, do not run it.**
 
 To let the check read Safari on a Mac, give **Securail** (or Terminal, for the Python
 version) **Full Disk Access** in System Settings → Privacy & Security.
@@ -487,24 +475,21 @@ The single-file `securail.py` attached to a release is generated from the same
 source. Rebuild it from the release's tag and compare:
 
 ```
-git checkout v2.0.5
+git checkout v2.0.6
 python build/bundle.py
 python -c "import hashlib; print(hashlib.sha256(open('dist/securail.py','rb').read()).hexdigest())"
 ```
 
-For v2.0.5 the file is 2,988,026 bytes, SHA-256
-`d3d50bda337d33536512d42f139fcb72f6c9bac212eae6b5ef8824cb06f62c96`. The size and SHA-256
+For v2.0.6 the file is 3,017,870 bytes, SHA-256
+`cf80ef70c8145448eb1a5986e9965c7ce30ec289dbb569d8e17d2d9b37290dff`. The size and SHA-256
 published with each release are authoritative. The build is deterministic, so a matching
 rebuild means the published file contains that source and nothing else. Releases are also
-GPG-signed; see [docs/VERIFYING.md](docs/VERIFYING.md).
+published with a SHA-256 manifest; see [docs/VERIFYING.md](docs/VERIFYING.md).
 
-The Windows program is being set up for signing through the SignPath Foundation, whose
-certificate is issued to the Foundation rather than to a person, so the project stays
-anonymous; see [docs/CODE-SIGNING.md](docs/CODE-SIGNING.md). Until that is in place the
-program is unsigned. An `.exe` you build yourself with
-PyInstaller is unsigned, has no download reputation and is not byte-reproducible, so
-SmartScreen will warn, some antivirus products will flag it, and the comparison above does
-not apply. Running from source avoids all of that.
+This fork publishes no compiled Windows, macOS or Linux programs. Upstream builds those with
+PyInstaller and describes its own signing plan in `docs/CODE-SIGNING.md`; a PyInstaller
+build is not byte-reproducible, so the comparison above would not cover it anyway. One file
+of plain Python avoids every question that comes with a compiled, unsigned binary.
 
 ### Checking an Android phone
 

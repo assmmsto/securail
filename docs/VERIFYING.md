@@ -1,36 +1,32 @@
 # Verifying a release
 
-Releases are published on the project's GitHub Releases page, starting with v0.1.0. Each
-can be checked in two independent ways: a signature against a key you already trust, and a
-build you reproduce yourself. Use both.
+Releases are published on this fork's GitHub Releases page (upstream publishes its own,
+starting with v0.1.0). Each can be checked in two independent ways: a published checksum that
+detects a damaged download, and a build you reproduce yourself. Use both.
 
-## 1. The publisher's GPG signature
+## 1. The published checksum
 
-Each release carries detached GPG signatures for its files and for a `SHA256SUMS.txt`
-manifest, made with ArchiveGenocide's established Ed25519 release-signing key (the same key
-that signs the archive's other releases). Its full fingerprint is:
+Each release carries `securail.py` and a `SHA256SUMS` manifest beside it:
 
-    C24E C92B 12D6 670A 2516 065F 9B4D 5754 99AF A53C
+    sha256sum -c SHA256SUMS          # macOS: shasum -a 256 -c SHA256SUMS
 
-Before trusting the key, compare that fingerprint with
-[ArchiveGenocide's verification page](https://archivegenocide.com/verify.html) or another
-record you already trust. Then:
+That detects a damaged or altered download. It cannot tell you that the publisher is
+honest, because the publisher wrote the manifest too — which is exactly what rebuilding
+answers.
 
-    gpg --show-keys --with-fingerprint archivegenocide-signing-key.asc
-    gpg --import archivegenocide-signing-key.asc
-    gpg --verify SHA256SUMS.txt.asc SHA256SUMS.txt
-    sha256sum -c SHA256SUMS.txt          # macOS: shasum -a 256 -c SHA256SUMS.txt
+## Why there is no GPG signature here
 
-A warning that the key is "not certified with a trusted signature" concerns your own web of
-trust; it is not a BAD signature. Never ignore a fingerprint mismatch or a failed
-verification.
+Upstream signs its releases with ArchiveGenocide's Ed25519 release key (fingerprint
+`C24E C92B 12D6 670A 2516 065F 9B4D 5754 99AF A53C`, described in the upstream
+repository's `docs/VERIFYING.md`). This fork holds neither that key nor one of its own, so
+its releases carry no signature and ask nobody to trust a key. Rebuild and compare instead.
 
 ## 2. Rebuilding the single file yourself
 
 This check does not depend on us at all. The single-file scanner is generated from the
 repository source, so you can regenerate it from the release's tag and compare:
 
-    git checkout v2.0.0
+    git checkout v2.0.6
     python build/bundle.py
     sha256sum dist/securail.py
 
@@ -38,52 +34,33 @@ If the hash matches the one published with the release, that file holds this sou
 nothing else. The build is deterministic, so a mismatch means something is wrong, not
 merely different.
 
+`verify-release` (`.github/workflows/verify-release.yml`) does the same thing on a clean
+GitHub machine every time a release is published: it rebuilds from the tag, compares the
+result with both the downloadable file and the manifest, and fails loudly if any of the
+three disagree.
+
 Running from source is the other half of the same idea: nothing is compiled, and every line
 the tool executes can be read in the clone.
 
 ## Why there is no code signature
 
-There is no signed Windows release, and none is planned while the project stays anonymous.
-Code-signing certificates require a verifiable legal identity, and every signing route,
-including [SignPath Foundation](https://signpath.org/), expects named, publicly identified
-maintainers and approvers. This project does not have them, by choice. It claims no
-certificate, signing service or signed binary, and asks nobody to trust it because of one.
-Rebuild it and compare instead.
+There is no signed Windows release and no signed installer. Code-signing certificates
+require a verifiable legal identity and, in every route including
+[SignPath Foundation](https://signpath.org/), named and publicly identified maintainers.
+This project does not have them. It claims no certificate, signing service or signed binary,
+and asks nobody to trust it because of one. Rebuild it and compare instead.
 
-A signed Windows release would need a named maintainer willing to hold the certificate and
-be publicly identified. Before any signed distribution, the project would publish its build
-workflow, name the release roles, require manual approval of signing requests and document
-how to verify the executable. That decision has not been made, and the project's anonymity
-is the reason.
+The fork publishes no prebuilt Windows, macOS or Linux programs; the release carries the
+single-file Python build, which needs Python 3.8 or newer on the machine that runs it.
+`programs.yml` and the signed program checksums in this file's earlier versions described
+files this fork does not publish, so they are gone rather than promised.
 
-## Checking the downloadable programs
+## What a checksum does and does not tell you
 
-The Windows, macOS and Linux programs on the release page are built by GitHub Actions from
-the release tag (`.github/workflows/programs.yml`), not on anyone's own computer. Each build
-is checked against the single-file Python build before it is published, and GitHub records
-a signed attestation of exactly which workflow, commit and runner produced each file. With
-the [GitHub CLI](https://cli.github.com/):
-
-    gh attestation verify securail-windows-x64.exe --repo interplains/Zero-Breach-Toolkit
-
-From 2.0.4 on, the programs' checksums are also signed with the release key, which does not
-depend on GitHub. Download `SHA256SUMS-programs.txt` and its `.asc` file beside the programs:
-
-    gpg --verify SHA256SUMS-programs.txt.asc SHA256SUMS-programs.txt
-    sha256sum --ignore-missing -c SHA256SUMS-programs.txt
-
-A passing attestation check means the file is byte-for-byte what that public workflow built from that
-tagged commit. The programs are not code-signed, so Windows SmartScreen and macOS
-Gatekeeper warn the first time they are opened, and some antivirus products may object to
-any new unsigned program. PyInstaller output is not byte-reproducible, so the rebuild
-comparison in section 2 applies to the single-file Python build; the attestation is the
-check for the programs.
-
-## What a signature does and does not tell you
-
-A signature proves who published these exact bytes. It does not prove the program is free
-of bugs, and an older signed release is not necessarily the latest. A checksum on its own
-does not authenticate the publisher.
+A checksum proves these exact bytes are the ones the manifest lists. It does not prove the
+program is free of bugs, and it does not authenticate the publisher. A rebuild proves the
+file holds this source and nothing else. Neither proves the source is correct; reading it
+does.
 
 ## Indicator updates are a separate trust path
 
@@ -91,24 +68,9 @@ does not authenticate the publisher.
 sources, checks that each file parses before it replaces the previous copy, and records a
 SHA-256 for every file; a cached file changed afterwards is refused at scan time. This
 project does not sign those lists. They are only as trustworthy as their publishers'
-repositories, and the release signature does not cover them.
+repositories, and the release checksum does not cover them.
 
-What the program sends, and when, is described in [PRIVACY.md](../PRIVACY.md).
-
-## Maintainer procedure
-
-Use the release key only through its configured keyring; never export a private key into
-this project, GitHub, a chat or logs. Finish and test the release artifacts first, then sign
-the manifest; verify with a separate keyring holding only the public key, and confirm that a
-modified file is rejected.
-
-`python tools/make_release.py` does this in order:
-
-1. builds the single file twice and stops if the two differ;
-2. writes `release/v<version>/` with the scanner, the public key and `SHA256SUMS.txt`;
-3. signs the manifest and the scanner (gpg asks for the passphrase itself);
-4. verifies each signature with a temporary keyring holding only the public key, and checks
-   that a modified scanner is rejected.
-
-It publishes nothing. Attaching the folder's files to a GitHub release is a separate,
-deliberate step.
+`daily-sources` (`.github/workflows/daily-sources.yml`) downloads all of them once a day and
+records each source's indicator count, so a list that shrinks sharply, disappears, stops
+downloading or goes stale shows up as a public build failure and an open issue — before a
+scan silently relies on it.

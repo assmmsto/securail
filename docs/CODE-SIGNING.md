@@ -1,27 +1,15 @@
 # Code signing policy
 
-Free code signing provided by [SignPath.io](https://about.signpath.io), certificate by
-[SignPath Foundation](https://signpath.org).
+This fork publishes no compiled programs, so there is nothing to code-sign. The release
+carries the single-file Python build, `securail.py`, which needs no signature because
+nothing in it is compiled: every line it runs can be read in the clone, and
+`verify-release` (`.github/workflows/verify-release.yml`) rebuilds it from the tag and
+compares the result with the published file and its `SHA256SUMS`.
 
-## What is signed
-
-Only the Windows program, `securail-windows-x64.exe`. It is built by GitHub Actions
-from the tagged source in this repository (`.github/workflows/programs.yml`), sent to SignPath
-for signing, checked again after signing, and only then attached to the release with a public
-build attestation. Nothing built anywhere else is signed. A maintainer approves every release
-before it is published.
-
-The certificate is issued to the SignPath Foundation, not to a person, so the signature tells
-you the file came from this project's build and was not changed afterwards. It is not a
-statement that the program is free of bugs.
-
-Until the production certificate is in place, releases stay unsigned and only test builds are
-signed, with a test certificate that Windows does not trust.
-
-## Team roles
-
-- Committers and reviewers: [interplains](https://github.com/interplains)
-- Approvers: [interplains](https://github.com/interplains)
+Upstream applies to [SignPath Foundation](https://signpath.org) for a certificate covering
+its own Windows program. That certificate would cover files built by upstream, not by this
+fork, so this repository claims no certificate, signing service or signed binary and
+reproduces no part of that policy here.
 
 ## Privacy
 

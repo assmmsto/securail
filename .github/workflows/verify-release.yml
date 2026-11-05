@@ -2,8 +2,8 @@ name: verify-release
 
 # Rebuilds the single file from the release tag on a clean GitHub machine and
 # compares it with both the downloadable file and the SHA-256 in the release's
-# SHA256SUMS.txt, after checking both signatures against the pinned release key,
-# so a release can be checked without trusting the machine that built it.
+# SHA256SUMS manifest, so a release can be checked without trusting the machine
+# that built it.
 # Read-only: no secrets beyond the default token, nothing is published.
 on:
   release:
@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "release tag to verify, for example v0.1.6"
+        description: "release tag to verify, for example v2.0.6"
         required: true
 
 permissions:
@@ -37,31 +37,21 @@ jobs:
       - name: Rebuild from the tag
         run: python build/bundle.py . rebuilt.py
 
-      - name: Check the published file, checksum and signatures
-        env:
-          RELEASE_KEY: C24EC92B12D6670A2516065F9B4D575499AFA53C
+      - name: Check the published file and its checksum
         run: |
           set -eu
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir published --pattern SHA256SUMS.txt --pattern SHA256SUMS.txt.asc --pattern securail.py --pattern securail.py.asc --pattern archivegenocide-signing-key.asc
-          # Signatures: only the pinned release key is trusted, whatever key
-          # file the release carries. The downloaded scanner is never run.
-          export GNUPGHOME="$(mktemp -d)"
-          gpg --batch --quiet --import published/archivegenocide-signing-key.asc
-          gpg --batch --with-colons --fingerprint | awk -F: '$1 == "fpr" {print $10}' > fingerprints
-          grep -qx "$RELEASE_KEY" fingerprints
-          for file in SHA256SUMS.txt securail.py; do
-            gpg --batch --status-fd 1 --verify "published/$file.asc" "published/$file" > status
-            grep -q " VALIDSIG $RELEASE_KEY " status
-          done
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir published --pattern SHA256SUMS --pattern securail.py
           # Exactly one manifest entry for the scanner.
-          test "$(awk '$2 == "securail.py"' published/SHA256SUMS.txt | wc -l)" -eq 1
-          expected=$(awk '$2 == "securail.py" {print $1}' published/SHA256SUMS.txt)
+          test "$(awk '$2 == "securail.py"' published/SHA256SUMS | wc -l)" -eq 1
+          expected=$(awk '$2 == "securail.py" {print $1}' published/SHA256SUMS)
           rebuilt=$(sha256sum rebuilt.py | cut -d' ' -f1)
           download=$(sha256sum published/securail.py | cut -d' ' -f1)
-          echo "signed checksum SHA-256: $expected"
-          echo "downloadable    SHA-256: $download"
-          echo "rebuilt         SHA-256: $rebuilt"
+          echo "published checksum SHA-256: $expected"
+          echo "downloadable      SHA-256: $download"
+          echo "rebuilt           SHA-256: $rebuilt"
           test -n "$expected"
           test "$expected" = "$rebuilt"
           test "$download" = "$rebuilt"
-          echo "The downloadable file is exactly what the tagged source builds, and both signatures are good."
+          # The manifest must describe the file beside it, not some other build.
+          ( cd published && sha256sum -c SHA256SUMS )
+          echo "The downloadable file is exactly what the tagged source builds."

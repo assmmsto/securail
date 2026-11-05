@@ -6,13 +6,19 @@ Securail is a fork of Zero Breach Toolkit 2.0.6. The scanning engine, the indica
 sets and every detection below are upstream work and are unchanged. What this fork
 changes is the name and the presentation:
 
-- Renamed: the command is securail.py, the package is scan/securail/, the program
-  is Securail, and the release files are securail-windows-x64.exe,
-  securail-macos-apple-silicon.dmg, securail-macos-intel.dmg and
-  securail-linux-x64.tar.gz.
+- Renamed: the command is securail.py, the package is scan/securail/, and the program
+  is Securail.
 - New banner: SECURAIL over the line S P Y W A R E   S C A N, in the same palette.
 - Links, docs and messages point at this fork. The Apache-2.0 licence, the NOTICE and
   the CC0 indicator licence are kept intact, and the NOTICE states the fork relation.
+- First release: v2.0.6, carrying securail.py and SHA256SUMS. The single-file Python
+  build is what this fork publishes; the compiled Windows, macOS and Linux programs
+  belong to upstream and are not attached here.
+- `verify-release` checks every published release: it rebuilds the file from the tag on
+  a clean GitHub machine and compares it with the download and its manifest.
+- `.github/workflows/daily-sources.yml` downloads all 29 official indicator sources once
+  a day and fails, and opens an issue, when one disappears, stops downloading, shrinks by
+  more than a third, or goes stale beyond 45 days.
 
 Upstream release notes for 2.0.6, unchanged:
 

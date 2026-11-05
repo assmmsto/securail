@@ -32,3 +32,6 @@ ideas.md
 
 # release gate output
 gate-out/
+
+# release artifacts are built, never committed
+/dist/
