@@ -326,6 +326,7 @@ def describe_document() -> Dict[str, Any]:
         },
         "workflow": {
             "readable_report": "--report PATH saves the displayed report independently of JSON outputs",
+            "html_report": "--html-report PATH saves one self-contained page that opens offline: no script, no external file, no network request",
             "follow_up": "Interactive start-menu checks offer evidence inspection, coverage review and export; --post-menu requests this after an explicit scan; --no-menu disables it",
             "no_scan": "Leaving the start menu returns 4, produces no scan verdict and saves no report",
             "evidence_export": "--evidence-bundle PATH writes a NEW unencrypted private ZIP. Repeat --evidence-file PATH for deliberately selected originals. No uploads or inferred file selections.",
@@ -435,6 +436,19 @@ def finalize_report(iocs, results, started, args, cancelled=False):
         except (OSError, ValueError, TypeError) as exc:
             failed = True
             _report_console("[could not write readable report: {}]".format(exc), sys.stderr)
+    if getattr(args, "html_report", None):
+        try:
+            from .htmlreport import render_html
+            page = attempt(lambda: render_html(document))
+            workflow_output_guard(args, args.html_report, document)
+            # HTML is a closed vocabulary: a surrogate from an odd Windows
+            # filename cannot be written, but dropping it must never merge
+            # adjacent after-escaping characters into a new one.
+            attempt(lambda: workflow_write_text(page, args.html_report, errors="xmlcharrefreplace"))
+            _report_console("[wrote HTML report to {}]".format(args.html_report), sys.stderr)
+        except (OSError, ValueError, TypeError) as exc:
+            failed = True
+            _report_console("[could not write HTML report: {}]".format(exc), sys.stderr)
     if getattr(args, "evidence_bundle", None):
         try:
             from .handoff import handoff_preview, handoff_write
@@ -1228,6 +1242,10 @@ def _human_document(document):
     doc = copy.deepcopy(document)
 
     def scrub(value, limit=2000):
+        # No indicator name is passed: the scheme pass neuters every hxxps://
+        # here, and _defang_report() swaps each network indicator for its
+        # defanged form afterwards, once, for the whole document. Defanging the
+        # name in this pass too would leave a second pass nothing to match.
         if isinstance(value, str):
             return _defang_text(_safe_text(value, limit), "")
         if isinstance(value, list):
@@ -1257,7 +1275,13 @@ def _human_document(document):
     for row in doc.get("timeline", []):
         for key in ("when", "what", "location"):
             row[key] = scrub(row.get(key, ""), 500)
-    doc["verdict"]["gaps"] = scrub(doc["verdict"].get("gaps", []))
+    # Sanitized (control characters, newlines, invisible formatting) but NOT
+    # defanged: the JSON keeps the raw reason, and each renderer defangs the
+    # network location it prints, once, alongside the rest of its text.
+    # Defanging here would both mangle the reason for anyone parsing the JSON and
+    # leave the second pass nothing to match. Skipping _safe_text here would let
+    # a filename that contains a newline forge a whole line of the terminal report.
+    doc["verdict"]["gaps"] = [_safe_text(gap) for gap in doc["verdict"].get("gaps", [])]
     return doc
 
 

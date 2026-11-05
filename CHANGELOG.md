@@ -1,5 +1,31 @@
 # Changelog
 
+## Securail 2.0.7
+
+No change to the scanning engine, the indicator sets or any detection. This release adds
+a second way to read a result, and the daily check of the sources the indicators come
+from. The 2.0.6 release stays published and unchanged; nothing here replaces it.
+
+- New `--html-report PATH`: the same result saved as one self-contained web page that
+  opens offline. One file, one `<style>` block, no script, no font, no image, no
+  stylesheet, no network request — a Content-Security-Policy inside the file forbids
+  loading anything, so it reads identically on a machine with no connection. Every value
+  taken from the scan is escaped, indicator addresses are defanged exactly as the text
+  report defangs them, the result line is the terminal's own sentence, and the privacy
+  warning and the "what could not be checked" list appear on every page. It is for the
+  reader who does not read terminals, not a replacement for `--report`, `--json` or
+  `--share-json`.
+- New `.github/workflows/daily-sources.yml`: downloads all 29 official indicator sources
+  once a day and fails, opening or updating a single issue, when a source disappears,
+  stops downloading, shrinks by more than a third against the day before, or its
+  published file has not changed in 45 days. Only a healthy run becomes the next day's
+  baseline, so a bad day cannot hide itself. The comparison lives in
+  `build/check_sources.py`, which reads three JSON files and the date and is tested on
+  fixtures rather than on the network.
+- The single-file build now carries the report module. `build/bundle.py` lists every
+  module it inlines by name, and the new one had to be added to that list; a test now
+  fails if the built file uses a name it never defines.
+
 ## Securail 2.0.6
 
 Securail is a fork of Zero Breach Toolkit 2.0.6. The scanning engine, the indicator
@@ -16,9 +42,6 @@ changes is the name and the presentation:
   belong to upstream and are not attached here.
 - `verify-release` checks every published release: it rebuilds the file from the tag on
   a clean GitHub machine and compares it with the download and its manifest.
-- `.github/workflows/daily-sources.yml` downloads all 29 official indicator sources once
-  a day and fails, and opens an issue, when one disappears, stops downloading, shrinks by
-  more than a third, or goes stale beyond 45 days.
 
 Upstream release notes for 2.0.6, unchanged:
 

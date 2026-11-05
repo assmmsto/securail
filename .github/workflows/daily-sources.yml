@@ -1,0 +1,136 @@
+name: daily-sources
+
+# Downloads all 29 official indicator sources once a day, records what came back,
+# and fails - opening or updating one issue - when a source disappears, stops
+# downloading, shrinks by more than a third against yesterday, or its published
+# file has not changed in 45 days.
+#
+# Why this is not part of the test job: it needs the publishers' servers, so it
+# must never be able to fail a pull request. It runs on a schedule, and its result
+# is a public build failure plus an issue, not a blocked merge.
+# Reads public lists only; writes nothing but the state cache and that issue.
+on:
+  schedule:
+    # 04:23 UTC daily - off the hour so it does not pile onto everyone else's cron.
+    - cron: "23 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: daily-sources
+  cancel-in-progress: false
+
+jobs:
+  sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONIOENCODING: "utf-8"
+      STATE_DIR: .cache/state
+      STATE: .cache/state/source-state.json
+      REPORT: .cache/state/sources.md
+      CACHE: .cache/incoming
+      GH_TOKEN: ${{ github.token }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
+        with:
+          python-version: "3.13"
+
+      # Yesterday's counts and the date each published file last changed. Without
+      # it a shrink and a stale list are both invisible: one run cannot see a
+      # file that has been identical for six weeks.
+      - name: Restore what the last run recorded
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache
+          key: sources-${{ github.run_id }}
+          restore-keys: |
+            sources-
+
+      - name: Download every source
+        id: update
+        run: |
+          set +e
+          mkdir -p "$STATE_DIR"
+          python -X utf8 scan/securail.py --update --latest --no-version-check \
+            --indicator-cache "$CACHE" --json "$STATE_DIR/update.json"
+          code=$?
+          echo "exit=$code" >> "$GITHUB_OUTPUT"
+          # A non-zero exit is a finding for the step below to report, not the end
+          # of the job: the comparison must still run and the issue must still be
+          # written.
+          exit 0
+
+      - name: Decide whether to raise the alarm
+        id: check
+        run: |
+          set +e
+          python -X utf8 build/check_sources.py \
+            --update-json "$STATE_DIR/update.json" \
+            --manifest "$CACHE/manifest.json" \
+            --state "$STATE" \
+            --output "$STATE" \
+            --summary "$REPORT"
+          code=$?
+          [ -s "$REPORT" ] && cat "$REPORT" >> "$GITHUB_STEP_SUMMARY"
+          # The summary is what the issue body quotes, so it must exist even when
+          # the check could not read the update output at all.
+          if [ ! -s "$REPORT" ]; then
+            {
+              echo "# Indicator sources, $(date -u +%F)"
+              echo
+              echo "The check could not read the download summary."
+              echo "See the 'Download every source' step in run $GITHUB_RUN_ID."
+            } > "$REPORT"
+          fi
+          exit "$code"
+
+      - name: Say what went wrong
+        if: failure()
+        run: |
+          set -eu
+          title="daily-sources: an indicator source needs a look"
+          body="$(cat "$REPORT")
+
+          Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+            --search "in:title \"$title\"" --json number,title \
+            --jq ".[] | select(.title == \"$title\") | .number" | head -n 1)
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body "$body"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body "$body"
+          fi
+
+      - name: Close the issue once every source is healthy again
+        if: success()
+        run: |
+          set -eu
+          title="daily-sources: an indicator source needs a look"
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+            --search "in:title \"$title\"" --json number,title \
+            --jq ".[] | select(.title == \"$title\") | .number" | head -n 1)
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" \
+              --body "Every source downloaded and none regressed in run $GITHUB_RUN_ID. Closing."
+            gh issue close "$existing" --repo "$GITHUB_REPOSITORY"
+          fi
+
+      # Only a healthy run becomes tomorrow's baseline: recording a degraded one
+      # would hide the drop that caused it.
+      - name: Keep today's counts for tomorrow
+        if: success()
+        uses: actions/cache/save@v4
+        with:
+          path: .cache
+          key: sources-${{ github.run_id }}

@@ -26,7 +26,7 @@ its releases carry no signature and ask nobody to trust a key. Rebuild and compa
 This check does not depend on us at all. The single-file scanner is generated from the
 repository source, so you can regenerate it from the release's tag and compare:
 
-    git checkout v2.0.6
+    git checkout v2.0.7
     python build/bundle.py
     sha256sum dist/securail.py
 

@@ -34,6 +34,8 @@ def gui_wanted(raw, args):
 
 def workflow_arguments(parser):
     parser.add_argument("--report", metavar="PATH", help="also save the readable report to a local text file")
+    parser.add_argument("--html-report", metavar="PATH",
+                        help="also save a single self-contained HTML page that opens offline; loads nothing and runs no script")
     parser.add_argument("--evidence-bundle", metavar="PATH", help="save a private, unencrypted evidence ZIP; refuses to overwrite an existing file")
     parser.add_argument("--evidence-file", action="append", default=[], metavar="PATH",
                         help="explicit local original file to include in --evidence-bundle (repeatable; may contain private data)")
@@ -44,15 +46,15 @@ def workflow_arguments(parser):
 
 def workflow_validate(parser, args):
     outputs = [(name, getattr(args, name.replace("-", "_"), None))
-               for name in ("json", "share-json", "report", "evidence-bundle")]
+               for name in ("json", "share-json", "report", "html-report", "evidence-bundle")]
     present = [(name, os.path.abspath(path)) for name, path in outputs if path]
     keys = [os.path.normcase(path) for _, path in present]
     if len(keys) != len(set(keys)):
-        parser.error("report, JSON, sharing summary and evidence bundle must name different files")
+        parser.error("report, HTML report, JSON, sharing summary and evidence bundle must name different files")
     selected = list(getattr(args, "evidence_file", ()) or ())
     if selected and not args.evidence_bundle:
         parser.error("--evidence-file requires --evidence-bundle")
-    if (args.report or args.evidence_bundle or args.post_menu) and any(
+    if (args.report or args.html_report or args.evidence_bundle or args.post_menu) and any(
             getattr(args, key, False) for key in ("update", "preview", "describe", "phone_guide")):
         parser.error("report, evidence and post-menu options require a scan")
     if args.post_menu and args.no_menu:
@@ -201,7 +203,7 @@ def workflow_before_scan(args, iocs):
 
 
 def workflow_check_outputs(args, document=None):
-    for key in ("json", "share_json", "report", "evidence_bundle"):
+    for key in ("json", "share_json", "report", "html_report", "evidence_bundle"):
         path = getattr(args, key, None)
         if path:
             workflow_output_guard(args, path, document)
@@ -228,7 +230,7 @@ def workflow_fingerprints(iocs):
                         for source, rows in sorted(groups.items())]}
 
 
-def workflow_write_text(text, path):
+def workflow_write_text(text, path, errors="backslashreplace"):
     """Independently save a readable UTF-8 report via atomic replacement."""
     path = os.path.abspath(path)
     problem = path_problem(path)
@@ -236,7 +238,7 @@ def workflow_write_text(text, path):
         raise OSError("report output path refused: " + problem)
     pending = None
     try:
-        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", errors="backslashreplace",
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", errors=errors,
                                          newline="\n", prefix=".zbt_text_", suffix=".tmp",
                                          dir=os.path.dirname(path), delete=False) as fh:
             pending = fh.name

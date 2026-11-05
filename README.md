@@ -406,6 +406,10 @@ the Citizen Lab and Echap's stalkerware research, and a hand-curated set from Ci
 reports (Candiru / DevilsTongue and Paragon's Graphite, and Memento Labs' Dante from
 Kaspersky) with every line cited. The curated
 set works offline; `--update` downloads the rest from a fixed list of official sources.
+Those sources are checked once a day in public (`.github/workflows/daily-sources.yml`):
+a list that disappears, stops downloading, shrinks by more than a third, or has not been
+republished in 45 days turns the build red and opens an issue, so a scan is not quietly
+built on a list that stopped being maintained. See [docs/VERIFYING.md](docs/VERIFYING.md).
 A second built-in set holds about 1,040 file fingerprints and Android package names of
 spyware used against journalists, activists and minorities (Arid Viper against Palestinians,
 EvilBamboo, MOONSHINE, HenBox, DoNot, OceanLotus, KoSpy and others, and the Massistant
@@ -475,13 +479,13 @@ The single-file `securail.py` attached to a release is generated from the same
 source. Rebuild it from the release's tag and compare:
 
 ```
-git checkout v2.0.6
+git checkout v2.0.7
 python build/bundle.py
 python -c "import hashlib; print(hashlib.sha256(open('dist/securail.py','rb').read()).hexdigest())"
 ```
 
-For v2.0.6 the file is 3,017,870 bytes, SHA-256
-`cf80ef70c8145448eb1a5986e9965c7ce30ec289dbb569d8e17d2d9b37290dff`. The size and SHA-256
+For v2.0.7 the file is 3,042,944 bytes, SHA-256
+`b79d174d608b852245cb07ad0496e590a2a632421e59ecc2589bfc5416f5be72`. The size and SHA-256
 published with each release are authoritative. The build is deterministic, so a matching
 rebuild means the published file contains that source and nothing else. Releases are also
 published with a SHA-256 manifest; see [docs/VERIFYING.md](docs/VERIFYING.md).
@@ -646,6 +650,24 @@ keeps prompts visible and saves both readable and JSON reports.
 Reports never replace an existing file inside a selected evidence folder, a selected input
 file, or the app data and app cache folders where desktop apps keep the records the scan
 reads. Choose a new filename. No baseline snapshots are kept.
+
+`--html-report PATH` saves the same result as one self-contained web page you can open
+offline, and it is the version to hand to someone who does not read terminals:
+
+```text
+python scan/securail.py --scan-type targeted --target SUSPICIOUS_FILE --html-report report.html
+```
+
+The page is a single file with one `<style>` block and no script. It loads nothing from the
+network and fetches no font, image or stylesheet — a Content-Security-Policy in the file
+forbids all of it, so it reads the same on a machine with no connection. Every value taken
+from the scan is escaped, so a deliberately odd filename renders as text instead of changing
+the page. Indicator addresses are defanged the same way the text report defangs them, the
+result line is the terminal's own sentence, and the privacy warning appears on every page:
+it can contain your username, computer name, browser profile names and file paths. The
+page says the same thing the terminal does about what could not be checked, so nobody reads
+a partial scan as an all-clear. Treat the `.html` file as private evidence and share it the
+way you would share `--report` output.
 
 ### Private evidence handoff
 

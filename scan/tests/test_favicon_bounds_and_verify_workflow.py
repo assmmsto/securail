@@ -1,7 +1,7 @@
 """A small crafted Favicons database with repeated ids must not multiply into
 millions of rows held in memory; icons are streamed and capped. And the
-release-verify workflow checks the downloadable file and both signatures, not
-only the checksum line."""
+release-verify workflow checks the downloadable file against the manifest AND a
+rebuild from the tag, and claims no signature it does not have."""
 import contextlib
 import os
 import sqlite3
@@ -48,10 +48,20 @@ def test_icon_row_cap_is_a_gap(tmp_path, monkeypatch):
     assert gaps and "more than 3 icons" in gaps[0]
 
 
-def test_verify_workflow_checks_the_download_and_signatures():
+def test_verify_workflow_checks_the_download_and_the_rebuild():
     root = Path(__file__).resolve().parents[2]
     run = (root / ".github" / "workflows" / "verify-release.yml").read_text(encoding="utf-8")
-    assert "--pattern securail.py " in run
+    # Both published files are fetched, and the scanner is the one hashed.
+    assert "--pattern SHA256SUMS --pattern securail.py" in run
     assert "sha256sum published/securail.py" in run
-    assert run.count("VALIDSIG $RELEASE_KEY") == 1 and "for file in SHA256SUMS.txt securail.py" in run
+    # The manifest must describe the file beside it, and the rebuild must equal
+    # both, or the job fails: a release is never trusted because it downloaded.
+    assert "( cd published && sha256sum -c SHA256SUMS )" in run
+    assert "test -n \"$expected\"" in run
+    assert 'test "$expected" = "$rebuilt"' in run
     assert 'test "$download" = "$rebuilt"' in run
+    # This fork publishes no signature and must not pretend it checks one.
+    # Rebuilding from the tag is the whole verification story; see
+    # docs/VERIFYING.md for why there is no key here.
+    assert "VALIDSIG" not in run
+    assert "gpg" not in run.lower()
