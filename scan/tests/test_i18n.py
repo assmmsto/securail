@@ -163,3 +163,32 @@ def test_both_entry_points_offer_the_same_languages():
     bundle = open(os.path.join(root, "build", "bundle.py"), encoding="utf-8").read()
     for text in (cli, bundle):
         assert '"--lang", metavar="CODE", default=None, choices=I18N_CODES' in text
+
+
+def test_a_catalog_written_through_windows_1252_is_read_back():
+    """UTF-8 saved over Windows-1252 turns "—" into "â€”" and "ž" into "Å¾".
+    Whatever can be recovered is recovered, so a reader never meets the wreckage."""
+    em_dash = "\u2014"
+    damaged = em_dash.encode("utf-8").decode("cp1252")          # â€”
+    assert i18n._i18n_repair(damaged) == em_dash
+    accented = "Sa\u017eetak  " + em_dash + "  pr\u00f6citaj"
+    wrecked = accented.encode("utf-8").decode("cp1252").encode("cp1252", "replace").decode("cp1252")
+    assert i18n._i18n_repair(wrecked) == accented
+
+
+def test_a_catalog_entry_whose_lead_byte_was_already_lost_still_reads():
+    """When "â" itself fell off, the "€" and "”" are all that is left of the dash."""
+    assert i18n._i18n_repair("SUMMARY  \u20ac\u201d  read this part") == "SUMMARY  \u2014  read this part"
+
+
+def test_text_a_translator_wrote_is_left_alone():
+    for text in ("plain English, no damage", "SUMMARY  \u2014  read this part", "Dov\u2019s reading"):
+        assert i18n._i18n_repair(text) == text
+
+
+@pytest.mark.parametrize("lang", sorted(k for k in I18N_DATA if k != "_keys"))
+def test_no_shipped_catalog_entry_shows_the_marks_of_a_bad_encoding(lang):
+    # Only the whole "â€" run is certain damage: a lone "\u00c3" is a real letter
+    # in Portuguese and Turkish ("NÃO", "DEĞİL"), so it is not evidence of one.
+    wrecked = [k for k, v in i18n._i18n_blob(lang).items() if "\u00e2\u20ac" in v]
+    assert wrecked == []

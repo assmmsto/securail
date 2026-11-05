@@ -39,6 +39,28 @@ def _i18n_unpack(blob):
     return lzma.decompress(base64.b85decode("".join(blob))).decode("utf-8").split("\x1e")
 
 
+# Letters that only appear when UTF-8 was read as Windows-1252 ("â€”", "Ã©").
+_I18N_MOJIBAKE = re.compile("\u00e2\u20ac[\u2122\u0153\u009d\u00a6]|\u00c3[\u00a0-\u00bf]")
+# Where the lead byte is already lost, only this middle mark survives the wreckage;
+# put back the dash it can only have come from. A translator's own typographic
+# apostrophe cannot be told apart from it and is left alone.
+_I18N_STRAY = re.compile("\u20ac(?=[\u201d\u2122\u0153\u009d\u00a6])")
+
+
+def _i18n_repair(text):
+    """Text that was written through a Windows-1252 round trip arrives mangled:
+    every dash, quote and accented letter becomes two or three Latin-1 marks, and
+    what fell outside that code page is lost for good. Undo it where the damage is
+    reversible, and put back whatever a surviving half tells us stood there,
+    so a report never shows "â€”" in the middle of a sentence."""
+    if not text or not (_I18N_MOJIBAKE.search(text) or _I18N_STRAY.search(text)):
+        return text
+    try:
+        return text.encode("cp1252").decode("utf-8")
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return text.replace("\u00e2\u20ac", "\u2014").replace("\u00c3", "").replace("\u20ac", "\u2014").replace("\u201d", "")
+
+
 def _i18n_blob(lang):
     blob = I18N_DATA.get(lang)
     if not blob:
@@ -47,7 +69,7 @@ def _i18n_blob(lang):
         keys, values = _i18n_unpack(I18N_DATA["_keys"]), _i18n_unpack(blob)
     except Exception:  # noqa: BLE001 - a damaged embedded catalogue (lzma.LZMAError is not a
         return {}      # ValueError) must never stop the program: English is shown instead
-    return {k: v for k, v in zip(keys, values) if v}
+    return {k: _i18n_repair(v) for k, v in zip(keys, values) if v}
 
 
 def i18n_available():
