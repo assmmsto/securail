@@ -218,7 +218,7 @@ def test_version_notice_compares_strictly(tag, expect):
     note = feeds.version_notice("2.0.0", fetch=lambda: tag)
     assert bool(note) is expect
     if expect:
-        assert "is available" in note and "github.com/interplains/Zero-Breach-Toolkit/releases/tag/v" in note
+        assert "is available" in note and "github.com/assmmsto/securail/releases/tag/v" in note
 
 
 def test_version_notice_is_silent_on_any_failure():
