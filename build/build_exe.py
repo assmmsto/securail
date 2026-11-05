@@ -1,9 +1,12 @@
 """Build the double-click program for this platform.
 
 Windows: dist/zero-breach-toolkit.exe. macOS and Linux: dist/zero-breach-toolkit
-(a single executable that opens in a terminal). Each platform builds its own;
-the release workflow (.github/workflows/programs.yml) builds all of them on
-GitHub's machines from the tagged source.
+(a single executable that opens in a terminal). Each platform builds its own.
+This fork does not publish these: its releases carry the single-file Python
+build only, and no release job builds or signs a compiled program. The tool is
+kept because building one locally is still possible, and a PyInstaller build is
+not byte-reproducible, so it could never be verified the way the single file is
+(see docs/VERIFYING.md).
 
 Packages the single-file build (dist/securail.py, made by
 build/bundle.py) with PyInstaller. Run with the pinned build environment:

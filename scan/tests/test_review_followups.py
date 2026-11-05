@@ -223,11 +223,24 @@ def test_recorded_pins_cover_every_source():
 
 # --- #11 release tooling ---------------------------------------------------------
 
-def test_withdrawals_feed_names_the_same_producer_as_the_active_feed():
-    def identities(name):
-        with open(os.path.join(ROOT, "dist", name), encoding="utf-8") as fh:
+def test_withdrawals_feed_names_the_same_producer_as_the_active_feed(tmp_path):
+    # Both feeds are built here rather than read from dist/. dist/ is generated
+    # and git-ignored, so reading it passed on a machine that had built once and
+    # failed on every clean clone - which is every CI runner.
+    spec = importlib.util.spec_from_file_location(
+        "_emit_stix_for_test", os.path.join(ROOT, "build", "emit_stix.py"))
+    emitter = importlib.util.module_from_spec(spec)
+    sys.modules["_emit_stix_for_test"] = emitter
+    spec.loader.exec_module(emitter)
+    active_path = str(tmp_path / "active.stix.json")
+    withdrawn_path = str(tmp_path / "withdrawn.stix.json")
+    assert emitter.main(["--out", active_path, "--withdrawals-out", withdrawn_path]) == 0
+
+    def identities(path):
+        with open(path, encoding="utf-8") as fh:
             return {o["id"]: o for o in json.load(fh)["objects"] if o["type"] == "identity"}
-    active, withdrawn = identities("adfection.stix.json"), identities("adfection.withdrawals.stix.json")
+    active, withdrawn = identities(active_path), identities(withdrawn_path)
+    assert withdrawn, "the withdrawal feed is empty, so this test proves nothing"
     for ident, obj in withdrawn.items():
         assert obj["name"] == active[ident]["name"]
 
