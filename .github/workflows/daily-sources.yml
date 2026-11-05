@@ -104,7 +104,7 @@ jobs:
 
           Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
           existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
-            --search "in:title \"$title\"" --json number,title \
+            --search "in:title daily-sources" --json number,title \
             --jq ".[] | select(.title == \"$title\") | .number" | head -n 1)
           if [ -n "$existing" ]; then
             gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body "$body"
@@ -118,7 +118,7 @@ jobs:
           set -eu
           title="daily-sources: an indicator source needs a look"
           existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
-            --search "in:title \"$title\"" --json number,title \
+            --search "in:title daily-sources" --json number,title \
             --jq ".[] | select(.title == \"$title\") | .number" | head -n 1)
           if [ -n "$existing" ]; then
             gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" \
