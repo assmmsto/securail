@@ -8,7 +8,7 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import feeds, iocs
+from securail import feeds, iocs
 from test_followup_fixes import bundle
 from test_stix_import import _ind, write
 

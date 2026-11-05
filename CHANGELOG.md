@@ -1,6 +1,21 @@
 # Changelog
 
-## 2.0.6 (unreleased)
+## Securail 2.0.6
+
+Securail is a fork of Zero Breach Toolkit 2.0.6. The scanning engine, the indicator
+sets and every detection below are upstream work and are unchanged. What this fork
+changes is the name and the presentation:
+
+- Renamed: the command is securail.py, the package is scan/securail/, the program
+  is Securail, and the release files are securail-windows-x64.exe,
+  securail-macos-apple-silicon.dmg, securail-macos-intel.dmg and
+  securail-linux-x64.tar.gz.
+- New banner: SECURAIL over the line S P Y W A R E   S C A N, in the same palette.
+- Links, docs and messages point at this fork. The Apache-2.0 licence, the NOTICE and
+  the CC0 indicator licence are kept intact, and the NOTICE states the fork relation.
+
+Upstream release notes for 2.0.6, unchanged:
+
 
 - With the optional pattern check (`--patterns`), the pattern engine is first tried in a separate process. On
   some Macs yara-x stops Python with no message; the check is now skipped with an explanation and the rest of
@@ -208,7 +223,7 @@ Indicators and checks
 - The packaged program can update the indicator lists on Linux systems whose certificate
   folder differs from Debian's (Fedora, Arch and others) and in the macOS app: if no trusted
   certificates are found, the system's own certificate file is used. Certificate checking is
-  never turned off. The macOS app's advice now says to give Full Disk Access to "Zero Breach
+  never turned off. The macOS app's advice now says to give Full Disk Access to "Securail
   Toolkit" (Terminal when run as a script) and no longer mentions Install Certificates.command.
 - If the window cannot be built for any reason, the program continues in the terminal.
 - 150 more indicators for Candiru DevilsTongue and Intellexa Predator from Microsoft, ESET,
@@ -521,8 +536,8 @@ Updates and reports
 
 ## 0.1.1 (2026-10-27)
 
-The project is now called Zero Breach Toolkit: the repository is `Zero-Breach-Toolkit` and
-the single file is `zero-breach-toolkit.py`. Old links redirect.
+The project is now called Securail: the repository is `Zero-Breach-Toolkit` and
+the single file is `securail.py`. Old links redirect.
 
 iPhone
 - Encrypted backups from real devices are read correctly. Files whose recorded size
@@ -570,7 +585,7 @@ Reports and guides
 
 ## 0.1.0 (2026-10-27)
 
-First version of Zero Breach Toolkit, built on Zero Breach.
+First version of Securail, built on Securail.
 
 - Indicators from 25 published sources (Amnesty International Security Lab, the MVT
   project, the Citizen Lab, Echap) via `--update`, plus a hand-curated, cited set for

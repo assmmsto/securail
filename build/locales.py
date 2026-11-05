@@ -4,7 +4,7 @@
                                       window and the report can show, keyed by
                                       itself (the catalog translators work from)
     python build/locales.py build     pack locales/<lang>.json into
-                                      scan/zbtriage/i18n_data.py for the bundle
+                                      scan/securail/i18n_data.py for the bundle
     python build/locales.py check     every translation keeps its placeholders,
                                       numbers, addresses and commands
 
@@ -23,7 +23,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PKG = os.path.join(ROOT, "scan", "zbtriage")
+PKG = os.path.join(ROOT, "scan", "securail")
 LOCALES = os.path.join(ROOT, "locales")
 
 # Files whose sentences are shown directly (window, report, guides, training).
@@ -111,20 +111,20 @@ def _from_file(path, everything):
 
 def _training_notes():
     sys.path.insert(0, os.path.join(ROOT, "scan"))
-    from zbtriage.training import _TRN_NOTES
+    from securail.training import _TRN_NOTES
     return ["\n".join(lines) for lines in _TRN_NOTES.values()]
 
 
 def _metric_labels():
     sys.path.insert(0, os.path.join(ROOT, "scan"))
-    from zbtriage.report import _METRIC_LABELS
+    from securail.report import _METRIC_LABELS
     return [label.strip() for label in _METRIC_LABELS.values()]
 
 
 def _gui_tables():
     """Labels the window keeps in tables and translates through a variable."""
     sys.path.insert(0, os.path.join(ROOT, "scan"))
-    from zbtriage import gui, report
+    from securail import gui, report
     out = []
     for _value, label, note in gui.GUI_CHECKS:
         out += [label, note]

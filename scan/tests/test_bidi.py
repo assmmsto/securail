@@ -7,7 +7,7 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import bidi  # noqa: E402
+from securail import bidi  # noqa: E402
 
 RLM = "‏"
 
@@ -33,12 +33,12 @@ def test_native_mode_marks_both_ends_and_keeps_typing_order():
 
 def test_manual_mode_orders_words_right_to_left_and_keeps_english_runs():
     bidi.bidi_mode("x11")
-    out = bidi.bidi_line("يفحص Zero Breach الجهاز")
+    out = bidi.bidi_line("يفحص Securail الجهاز")
     words = out.split(" ")
     # The English name keeps its own order, between the two Arabic words, which swap sides.
-    assert words[1:3] == ["Zero", "Breach"]
+    assert words[1] == "Securail"
     assert bidi.bidi_shape("الجهاز")[::-1] == words[0]
-    assert bidi.bidi_shape("يفحص")[::-1] == words[3]
+    assert bidi.bidi_shape("يفحص")[::-1] == words[2]
 
 
 def test_manual_mode_joins_arabic_letters():

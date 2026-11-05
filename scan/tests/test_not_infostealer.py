@@ -22,7 +22,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 PKG = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                   "zbtriage")
+                   "securail")
 
 
 def source_files():
@@ -123,9 +123,9 @@ class TestNeverDecryptsSecrets(unittest.TestCase):
         import tempfile
 
         sys.path.insert(0, os.path.dirname(PKG))
-        from zbtriage import iocs as iocmod
-        from zbtriage.context import ScanContext
-        from zbtriage.modules import browser
+        from securail import iocs as iocmod
+        from securail.context import ScanContext
+        from securail.modules import browser
 
         sentinel = b"SENTINEL-SECRET-VALUE-DO-NOT-READ"
         tmp = tempfile.mkdtemp(prefix="nostealer_")
@@ -180,9 +180,9 @@ class TestLocalStateMasterKey(unittest.TestCase):
         import tempfile
 
         sys.path.insert(0, os.path.dirname(PKG))
-        from zbtriage import iocs as iocmod
-        from zbtriage.context import ScanContext
-        from zbtriage.modules import browser
+        from securail import iocs as iocmod
+        from securail.context import ScanContext
+        from securail.modules import browser
 
         key_sentinel = "MASTER-KEY-SENTINEL-MUST-NOT-APPEAR"
         tmp = tempfile.mkdtemp(prefix="localstate_")

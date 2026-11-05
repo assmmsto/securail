@@ -24,7 +24,7 @@ import uuid
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 "..", "scan"))
 
-from zbtriage import iocs as iocmod  # noqa: E402
+from securail import iocs as iocmod  # noqa: E402
 
 NAMESPACE = uuid.UUID("6f0b4a2e-5d1c-4f3b-9a7e-adf3c70f1001")
 

@@ -12,9 +12,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import pytest
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import posix
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import posix
 
 CHECK = "macos-download-record"
 DOMAIN = "fixture.invalid"

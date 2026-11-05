@@ -5,7 +5,7 @@ Windows: dist/zero-breach-toolkit.exe. macOS and Linux: dist/zero-breach-toolkit
 the release workflow (.github/workflows/programs.yml) builds all of them on
 GitHub's machines from the tagged source.
 
-Packages the single-file build (dist/zero-breach-toolkit.py, made by
+Packages the single-file build (dist/securail.py, made by
 build/bundle.py) with PyInstaller. Run with the pinned build environment:
 
     build\\.venv\\Scripts\\python.exe build\\build_exe.py
@@ -30,13 +30,13 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-SOURCE = os.path.join(ROOT, "dist", "zero-breach-toolkit.py")
+SOURCE = os.path.join(ROOT, "dist", "securail.py")
 WORK = os.path.join(HERE, "pyinstaller")
-PRODUCT = "Zero Breach Toolkit"
+PRODUCT = "Securail"
 
 
 def version():
-    text = open(os.path.join(ROOT, "scan", "zbtriage", "__init__.py"), encoding="utf-8").read()
+    text = open(os.path.join(ROOT, "scan", "securail", "__init__.py"), encoding="utf-8").read()
     return re.search(r'__version__\s*=\s*"([^"]+)"', text).group(1)
 
 
@@ -52,7 +52,7 @@ def version_file(ver):
                     fileType=0x1, subtype=0x0, date=(0, 0)),
   kids=[
     StringFileInfo([StringTable('040904B0', [
-      StringStruct('CompanyName', 'Zero Breach'),
+      StringStruct('CompanyName', 'Securail'),
       StringStruct('FileDescription', '{product} - spyware indicator check'),
       StringStruct('FileVersion', '{ver}'),
       StringStruct('InternalName', 'zero-breach-toolkit'),
@@ -72,7 +72,7 @@ def main():
         sys.exit("missing {} - run build/bundle.py first".format(SOURCE))
     ver = version()
     if sys.platform == "darwin":
-        # A Mac app bundle (Zero Breach Toolkit.app) that opens the window when
+        # A Mac app bundle (Securail.app) that opens the window when
         # double-clicked; the release workflow puts it in a .dmg. PyInstaller
         # builds .app bundles as a folder (one-file .app is deprecated).
         cmd = [sys.executable, "-m", "PyInstaller", "--onedir", "--windowed", "--noupx",

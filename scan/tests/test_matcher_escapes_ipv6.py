@@ -17,7 +17,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.iocs import TYPE_DOMAIN, TYPE_IP, Indicator, IocSet  # noqa: E402
+from securail.iocs import TYPE_DOMAIN, TYPE_IP, Indicator, IocSet  # noqa: E402
 
 
 def make(*values):

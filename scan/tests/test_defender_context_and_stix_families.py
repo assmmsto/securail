@@ -7,9 +7,9 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import stix
-from zbtriage.modules import traces
-from zbtriage.result import ModuleResult
+from securail import stix
+from securail.modules import traces
+from securail.result import ModuleResult
 from test_followup_fixes import bundle
 from test_stix_import import _ind, write
 

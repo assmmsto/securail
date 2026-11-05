@@ -12,7 +12,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.modules import host, traces  # noqa: E402
+from securail.modules import host, traces  # noqa: E402
 
 
 class TestPowerShellLaunch(unittest.TestCase):

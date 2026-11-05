@@ -7,8 +7,8 @@ from unittest.mock import patch
 
 import pytest
 
-from zbtriage.modules import patternscan as patterns
-from zbtriage.result import UNKNOWN
+from securail.modules import patternscan as patterns
+from securail.result import UNKNOWN
 
 from test_evidence_safety import _ctx, safety_api  # noqa: F401
 from test_followup_fixes import bundle  # noqa: F401
@@ -108,7 +108,7 @@ def test_a_damaged_safari_cookie_file_is_still_called_damaged(tmp_path, monkeypa
 
 
 def test_a_refused_bookmark_file_explains_itself(monkeypatch):
-    from zbtriage.modules import browser
+    from securail.modules import browser
     monkeypatch.setattr(browser.sys, "platform", "darwin")
     note = browser._locked_note("/Users/x/Library/Application Support/Google/Chrome/Default/Bookmarks",
                                 PermissionError(1, "Operation not permitted"))

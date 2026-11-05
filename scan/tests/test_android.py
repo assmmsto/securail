@@ -24,11 +24,11 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import cli  # noqa: E402
-from zbtriage.context import ScanContext  # noqa: E402
-from zbtriage.iocs import Indicator, IocSet  # noqa: E402
-from zbtriage.modules import android  # noqa: E402
-from zbtriage.result import EV_DEVICE_LOG, EV_ON_DEVICE  # noqa: E402
+from securail import cli  # noqa: E402
+from securail.context import ScanContext  # noqa: E402
+from securail.iocs import Indicator, IocSet  # noqa: E402
+from securail.modules import android  # noqa: E402
+from securail.result import EV_DEVICE_LOG, EV_ON_DEVICE  # noqa: E402
 
 APK_SHA = "a" * 64
 CERT_SHA = "b" * 64
@@ -132,7 +132,7 @@ class TestFolderAndCli(unittest.TestCase):
         report = os.path.join(tempfile.mkdtemp(prefix="rep_"), "r.json")
         out = io.StringIO()
         with patch.object(cli, "_default_ioc_paths", return_value=[]), \
-                patch("zbtriage.cli.load_any", side_effect=lambda *a, **k: iocs()), \
+                patch("securail.cli.load_any", side_effect=lambda *a, **k: iocs()), \
                 contextlib.redirect_stdout(out), contextlib.redirect_stderr(io.StringIO()):
             code = cli.main(["--iocs", "x.txt", "--phone", collection(spy=True),
                              "--json", report])

@@ -5,7 +5,7 @@ must never be reported as Pegasus."""
 import hashlib
 import json
 
-from zbtriage import feeds
+from securail import feeds
 from test_followup_fixes import bundle  # noqa: F401  (fixture)
 
 SID = "citizenlab-nso-insider-2017"

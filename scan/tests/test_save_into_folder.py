@@ -6,7 +6,7 @@ import os
 import sys
 from unittest.mock import patch
 
-from zbtriage import cli, workflow
+from securail import cli, workflow
 from test_workflow import Terminal, wf_document
 
 

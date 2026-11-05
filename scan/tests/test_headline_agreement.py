@@ -17,10 +17,10 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import gui, report
-from zbtriage.contract import contract_exit_code
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.result import EV_CONTACTED, EV_REFERENCED, Hit, ModuleResult
+from securail import gui, report
+from securail.contract import contract_exit_code
+from securail.iocs import Indicator, IocSet
+from securail.result import EV_CONTACTED, EV_REFERENCED, Hit, ModuleResult
 
 NOW = datetime.datetime(2026, 11, 2, 12, 0, 0)
 IOCS = IocSet([Indicator("spy-c2.test", "cc", "primary", "domain", "fixture", "Fixturefam")], "fixture", None)
@@ -71,7 +71,7 @@ def _document(kind):
                 for h in md.get("hits", []):
                     h["withdrawn_only"] = True
                     h["withdrawal_present"] = True
-        with patch("zbtriage.evidence.evidence_enrich", enrich):
+        with patch("securail.evidence.evidence_enrich", enrich):
             doc = report.build_document(IOCS, [module], NOW)
     else:
         doc = report.build_document(IOCS, [module], NOW)

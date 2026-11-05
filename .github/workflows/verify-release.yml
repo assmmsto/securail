@@ -42,22 +42,22 @@ jobs:
           RELEASE_KEY: C24EC92B12D6670A2516065F9B4D575499AFA53C
         run: |
           set -eu
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir published --pattern SHA256SUMS.txt --pattern SHA256SUMS.txt.asc --pattern zero-breach-toolkit.py --pattern zero-breach-toolkit.py.asc --pattern archivegenocide-signing-key.asc
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir published --pattern SHA256SUMS.txt --pattern SHA256SUMS.txt.asc --pattern securail.py --pattern securail.py.asc --pattern archivegenocide-signing-key.asc
           # Signatures: only the pinned release key is trusted, whatever key
           # file the release carries. The downloaded scanner is never run.
           export GNUPGHOME="$(mktemp -d)"
           gpg --batch --quiet --import published/archivegenocide-signing-key.asc
           gpg --batch --with-colons --fingerprint | awk -F: '$1 == "fpr" {print $10}' > fingerprints
           grep -qx "$RELEASE_KEY" fingerprints
-          for file in SHA256SUMS.txt zero-breach-toolkit.py; do
+          for file in SHA256SUMS.txt securail.py; do
             gpg --batch --status-fd 1 --verify "published/$file.asc" "published/$file" > status
             grep -q " VALIDSIG $RELEASE_KEY " status
           done
           # Exactly one manifest entry for the scanner.
-          test "$(awk '$2 == "zero-breach-toolkit.py"' published/SHA256SUMS.txt | wc -l)" -eq 1
-          expected=$(awk '$2 == "zero-breach-toolkit.py" {print $1}' published/SHA256SUMS.txt)
+          test "$(awk '$2 == "securail.py"' published/SHA256SUMS.txt | wc -l)" -eq 1
+          expected=$(awk '$2 == "securail.py" {print $1}' published/SHA256SUMS.txt)
           rebuilt=$(sha256sum rebuilt.py | cut -d' ' -f1)
-          download=$(sha256sum published/zero-breach-toolkit.py | cut -d' ' -f1)
+          download=$(sha256sum published/securail.py | cut -d' ' -f1)
           echo "signed checksum SHA-256: $expected"
           echo "downloadable    SHA-256: $download"
           echo "rebuilt         SHA-256: $rebuilt"

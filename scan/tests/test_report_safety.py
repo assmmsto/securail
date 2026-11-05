@@ -7,9 +7,9 @@ import tempfile
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from zbtriage.iocs import Indicator, IocSet, TYPE_DOMAIN
-from zbtriage.result import Hit, ModuleResult, EV_PERSISTENCE, EV_DNS
-from zbtriage.report import build_document, render_human, render_summary, write_json
+from securail.iocs import Indicator, IocSet, TYPE_DOMAIN
+from securail.result import Hit, ModuleResult, EV_PERSISTENCE, EV_DNS
+from securail.report import build_document, render_human, render_summary, write_json
 
 
 class TestReportSafety(unittest.TestCase):

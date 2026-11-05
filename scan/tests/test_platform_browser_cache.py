@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from test_evidence_safety import _ctx, _history, safety_api
 from test_followup_fixes import bundle
-from zbtriage import workflow
+from securail import workflow
 
 
 @pytest.mark.parametrize("platform", ("linux", "darwin"))
@@ -71,7 +71,7 @@ def test_cache_scope_accepts_only_explicitly_containing_targets(tmp_path, monkey
 
 def test_default_cache_evidence_cannot_be_replaced_by_a_report(tmp_path, monkeypatch, safety_api):
     api = safety_api.browser
-    guard = workflow if safety_api.entry.__name__ == "zbtriage.cli" else safety_api.entry
+    guard = workflow if safety_api.entry.__name__ == "securail.cli" else safety_api.entry
     root = tmp_path / ".config" / "google-chrome"
     cache = tmp_path / ".cache" / "google-chrome" / "Default" / "Cache" / "record"
     cache.parent.mkdir(parents=True)

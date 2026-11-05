@@ -10,37 +10,51 @@ import os
 import shutil
 import sys
 
-# 'ANSI Shadow' style block letters, 6 rows each.
+# 'ANSI Shadow' style block letters, 6 rows each. Every glyph is exactly
+# _BN_CELL wide so the word lines up on a grid instead of by luck.
 _BN_GLYPHS = {
-    "Z": ["███████╗", "╚══███╔╝", "  ███╔╝ ", " ███╔╝  ", "███████╗", "╚══════╝"],
+    "S": ["███████╗", "██╔════╝", "███████╗", "╚════██║", "███████║", "╚══════╝"],
     "E": ["███████╗", "██╔════╝", "█████╗  ", "██╔══╝  ", "███████╗", "╚══════╝"],
-    "R": ["██████╗ ", "██╔══██╗", "██████╔╝", "██╔══██╗", "██║  ██║", "╚═╝  ╚═╝"],
-    "O": [" ██████╗ ", "██╔═══██╗", "██║   ██║", "██║   ██║", "╚██████╔╝", " ╚═════╝ "],
-    "B": ["██████╗ ", "██╔══██╗", "██████╔╝", "██╔══██╗", "██████╔╝", "╚═════╝ "],
-    "A": [" █████╗ ", "██╔══██╗", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"],
     "C": [" ██████╗", "██╔════╝", "██║     ", "██║     ", "╚██████╗", " ╚═════╝"],
-    "H": ["██╗  ██╗", "██║  ██║", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"],
-    " ": ["  "] * 6,
+    "U": ["██╗   ██╗", "██║   ██║", "██║   ██║", "██║   ██║", "╚██████╔╝", " ╚═════╝ "],
+    "R": ["██████╗ ", "██╔══██╗", "██████╔╝", "██╔══██╗", "██║  ██║", "╚═╝  ╚═╝"],
+    "A": [" █████╗ ", "██╔══██╗", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"],
+    "I": ["██╗ ", "██║ ", "██║ ", "██║ ", "██║ ", "╚═╝ "],
+    "L": ["██╗     ", "██║     ", "██║     ", "██║     ", "███████╗", "╚══════╝"],
+    " ": ["   "] * 6,
 }
+_BN_CELL = 8
 
-# Compact 3-row letters for narrow windows.
+# Compact 3-row letters for narrow windows; _BN_SMALL_CELL wide, so the short
+# form fits a 48-column window.
 _BN_SMALL = {
-    "Z": ["▀▀█", "▄▀ ", "▀▀▀"], "E": ["█▀▀", "█▀▀", "▀▀▀"], "R": ["█▀▄", "█▀▄", "▀ ▀"],
-    "O": ["█▀█", "█ █", "▀▀▀"], "B": ["█▀▄", "█▀▄", "▀▀ "], "A": ["█▀█", "█▀█", "▀ ▀"],
-    "C": ["█▀▀", "█  ", "▀▀▀"], "H": ["█ █", "█▀█", "▀ ▀"], " ": ["  ", "  ", "  "],
+    "S": ["█▀▀", "▀▀█", "▀▀▀"], "E": ["█▀▀", "█▀▀", "▀▀▀"], "C": ["█▀▀", "█  ", "▀▀▀"],
+    "U": ["█ █", "█ █", "▀▀▀"], "R": ["█▀▄", "█▀▄", "▀ ▀"], "A": ["█▀█", "█▀█", "▀ ▀"],
+    "I": ["▀ ", "▀ ", "▀ "], "L": ["█ ", "█ ", "▀▀"], " ": ["  "] * 3,
 }
+_BN_SMALL_CELL = 3
 
 # Red, top to bottom - the archive's own colour, dark to bright.
 _BN_RAMP = [(140, 12, 18), (170, 18, 24), (200, 28, 32), (222, 42, 44),
             (236, 64, 60), (246, 92, 84)]
 _BN_DIM = (150, 150, 150)
 _BN_ACCENT = (230, 54, 52)
-_BN_TITLE = "ZERO BREACH"
+_BN_TITLE = "SECURAIL"
+_BN_TAGLINE = "S P Y W A R E   S C A N"
 
 
-def _bn_word(text, glyphs, gap):
-    rows = len(glyphs["Z"])
-    return ["".join(glyphs[ch][r] + gap for ch in text).rstrip() for r in range(rows)]
+def _bn_word(text, glyphs, gap, cell):
+    """The word as rows of block letters. Every cell is padded to `cell`
+    columns, so a narrow glyph does not pull its neighbours out of line."""
+    unknown = sorted({ch for ch in text.upper() if ch not in glyphs})
+    if unknown:
+        raise KeyError("no banner glyph for {!r}".format("".join(unknown)))
+    rows = len(glyphs[" "])
+    lines = []
+    for r in range(rows):
+        line = "".join(glyphs[ch][r].ljust(cell) + gap for ch in text.upper())
+        lines.append(line.rstrip())
+    return lines
 
 
 def _bn_color_on(stream):
@@ -75,9 +89,9 @@ def render_banner(version, width=None, color=False):
     is None. Used by tests and by show_banner()."""
     if width is None:
         width = shutil.get_terminal_size((100, 24)).columns
-    big = _bn_word(_BN_TITLE, _BN_GLYPHS, "")
+    big = _bn_word(_BN_TITLE, _BN_GLYPHS, "", _BN_CELL)
     small = width < max(len(r) for r in big) + 4
-    art = _bn_word(_BN_TITLE, _BN_SMALL, " ") if small else big
+    art = (_bn_word(_BN_TITLE, _BN_SMALL, " ", _BN_SMALL_CELL) if small else big)
     ramp = _BN_RAMP[1::2] if small else _BN_RAMP
     art_w = max(len(r) for r in art)
     pad = "  "
@@ -86,7 +100,7 @@ def render_banner(version, width=None, color=False):
     for i, row in enumerate(art):
         out.append(pad + _bn_paint(row, ramp[i % len(ramp)], color))
     out.append("")
-    out.append(pad + _bn_paint("T O O L K I T", _BN_ACCENT, color)
+    out.append(pad + _bn_paint(_BN_TAGLINE, _BN_ACCENT, color)
                + _bn_paint("   v{}".format(version), _BN_DIM, color))
     out.append(pad + "Checks this device for traces of known mercenary spyware")
     out.append(pad + _bn_paint("Pegasus · Predator · Graphite · Candiru · and more", _BN_DIM, color))

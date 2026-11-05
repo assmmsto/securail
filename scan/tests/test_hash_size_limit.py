@@ -1,7 +1,7 @@
 """Large ordinary files (installers, app data) were listed as unfingerprinted
 gaps at 120 MB, which worried people. Reading is chunked, so the limit only
 bounds time; it is now 512 MB, and the report says why the rest is left out."""
-from zbtriage.modules import hashscan
+from securail.modules import hashscan
 
 
 def test_limit_covers_large_ordinary_files():

@@ -7,10 +7,10 @@ import sys
 
 import pytest
 
-from zbtriage import winrecords
-from zbtriage.modules import execution
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
+from securail import winrecords
+from securail.modules import execution
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
 from test_followup_fixes import bundle
 
 

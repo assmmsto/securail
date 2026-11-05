@@ -3,7 +3,7 @@
 For each source repository, reads the commit at the head of its branch (or the
 commit given with --pin owner/repo=SHA), downloads every source file at that
 commit, checks that it parses, and rewrites the FEED_PINS / FEED_FILE_SHA256
-block in scan/zbtriage/feeds.py. Read the upstream changes before committing
+block in scan/securail/feeds.py. Read the upstream changes before committing
 the result: a release then downloads exactly these files.
 
     python tools/pin_feeds.py            # pin every repository at its branch head
@@ -24,9 +24,9 @@ import urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "scan"))
 
-from zbtriage import feeds  # noqa: E402
+from securail import feeds  # noqa: E402
 
-FEEDS_PY = os.path.join(ROOT, "scan", "zbtriage", "feeds.py")
+FEEDS_PY = os.path.join(ROOT, "scan", "securail", "feeds.py")
 BLOCK = re.compile(r"(?ms)^FEED_PINS = \{\n.*?^\}\nFEED_IOS_ONLY_APP_IDS = \{\n.*?^\}\n"
                    r"FEED_FILE_SHA256 = \{\n.*?^\}\n")
 

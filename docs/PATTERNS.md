@@ -21,7 +21,7 @@ environment:
 ```text
 python -m venv .venv
 <venv-python> -m pip install -r requirements-patterns.txt
-<venv-python> scan/zero-breach-toolkit.py --patterns
+<venv-python> scan/securail.py --patterns
 ```
 
 The scanner never installs packages, downloads rules or contacts sample or indicator

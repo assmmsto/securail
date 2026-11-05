@@ -365,7 +365,7 @@ def reader_select(ctx, platform=None):
 
 
 def reader_resolve(spec):
-    module = importlib.import_module(".modules." + spec.module, "zbtriage")
+    module = importlib.import_module(".modules." + spec.module, "securail")
     if module.NAME != spec.name or not callable(module.run):
         raise ValueError("reader interface mismatch: " + spec.name)
     return module.run

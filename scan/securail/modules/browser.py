@@ -1002,7 +1002,7 @@ def _locked_note(path, exc):
         # folder exists, so it must not claim the browser is installed.
         if is_packaged():
             blocked = ("macOS privacy protection blocked {} so it could not be checked{}. Give "
-                       "Zero Breach Toolkit Full Disk Access (System Settings > Privacy & Security > "
+                       "Securail Full Disk Access (System Settings > Privacy & Security > "
                        "Full Disk Access), then run again.")
         else:
             blocked = ("macOS privacy protection blocked {} so it could not be checked{}. Give "

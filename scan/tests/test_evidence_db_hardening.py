@@ -9,8 +9,8 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import localpaths
-from zbtriage.modules import browser
+from securail import localpaths
+from securail.modules import browser
 from test_followup_fixes import bundle
 
 
@@ -50,7 +50,7 @@ def test_oversized_values_are_refused(tmp_path, api):
 
 
 def test_browser_and_iphone_readers_use_the_shared_opener():
-    from zbtriage import ios_sources
+    from securail import ios_sources
     for module in (browser, ios_sources):
         assert module.open_evidence_db is localpaths.open_evidence_db
         assert "sqlite3.connect(" not in open(module.__file__, encoding="utf-8").read()

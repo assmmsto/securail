@@ -24,13 +24,13 @@ import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RELEASE_KEY = "C24EC92B12D6670A2516065F9B4D575499AFA53C"
-SCANNER = "zero-breach-toolkit.py"
+SCANNER = "securail.py"
 PUBLIC_KEY = "archivegenocide-signing-key.asc"
 
 
 def version():
     scope = {}
-    with open(os.path.join(ROOT, "scan", "zbtriage", "__init__.py"), encoding="utf-8") as fh:
+    with open(os.path.join(ROOT, "scan", "securail", "__init__.py"), encoding="utf-8") as fh:
         exec(compile(fh.read(), "__init__.py", "exec"), scope)  # module only assigns constants
     return scope["__version__"]
 

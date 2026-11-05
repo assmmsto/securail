@@ -10,8 +10,8 @@ from unittest.mock import patch
 
 import pytest
 
-from zbtriage import handoff, report
-from zbtriage.result import Hit, ModuleResult, EV_REFERENCED
+from securail import handoff, report
+from securail.result import Hit, ModuleResult, EV_REFERENCED
 from test_expanded_capabilities import context, BAD
 from test_followup_fixes import bundle
 

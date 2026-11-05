@@ -6,10 +6,10 @@ import plistlib
 
 import pytest
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import browser, hashscan, posix
-from zbtriage.stix import load_stix
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import browser, hashscan, posix
+from securail.stix import load_stix
 from test_followup_fixes import bundle
 
 

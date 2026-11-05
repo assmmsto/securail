@@ -201,7 +201,7 @@ def kev_update(cache, emit=lambda _m: None, fetch=None, accept_shrink=False):
     with ThreadPoolExecutor(max_workers=8) as pool:
         rows = [row for rows in pool.map(one, wanted) for row in rows]
     missing = sum(1 for r in rows if not r["record"])
-    doc = {"tool": "zero-breach-toolkit", "source": KEV_URL,
+    doc = {"tool": "securail", "source": KEV_URL,
            "catalogVersion": str(catalog.get("catalogVersion", ""))[:40],
            "dateReleased": str(catalog.get("dateReleased", ""))[:40],
            "downloaded_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),

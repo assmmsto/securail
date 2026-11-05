@@ -1,6 +1,6 @@
 """Command-line entry point and orchestration.
 
-  zero-breach-toolkit [--quick] [--json <path>] [--share-json <path>] [--iocs <path>]
+  securail [--quick] [--json <path>] [--share-json <path>] [--iocs <path>]
 
 Default behaviour (no flags): read-only tier-1 IOC match across the browser, hash
 and host modules, under the no-network guard. Requires no administrator (D7).
@@ -66,14 +66,14 @@ def _force_utf8_io() -> None:
 
 
 def _default_ioc_path() -> str:
-    # scan/zbtriage/cli.py -> repo root is two levels up; IOCs live in iocs/.
+    # scan/securail/cli.py -> repo root is two levels up; IOCs live in iocs/.
     here = os.path.dirname(os.path.abspath(__file__))
     repo = os.path.dirname(os.path.dirname(here))
     return os.path.join(repo, "iocs", "adfection_iocs.txt")
 
 
 def _default_ioc_paths() -> List[str]:
-    """The curated files shipped with the tool: Zero Breach's AdFection/Candiru
+    """The curated files shipped with the tool: Securail's AdFection/Candiru
     set, the hand-curated mercenary-vendor set (e.g. Paragon Graphite) and the
     set of spyware used against journalists, activists and minorities."""
     here = os.path.dirname(os.path.abspath(__file__))
@@ -84,7 +84,7 @@ def _default_ioc_paths() -> List[str]:
 
 def _parse(argv: List[str]) -> argparse.Namespace:
     p = WorkflowParser(
-        prog="zero-breach-toolkit",
+        prog="securail",
         description="Local, read-only check for known mercenary spyware indicators. "
                     "A clean result is NOT a clean bill of health.")
     p.add_argument("--quick", action="store_true",
@@ -149,7 +149,7 @@ def _parse(argv: List[str]) -> argparse.Namespace:
                         "start menu (the menu only appears for a person at a terminal "
                         "who has not chosen a check on the command line)")
     p.add_argument("--version", action="version",
-                   version="Zero Breach Toolkit {}".format(__version__))
+                   version="Securail {}".format(__version__))
     scope_arguments(p)
     workflow_arguments(p)
     training_arguments(p)

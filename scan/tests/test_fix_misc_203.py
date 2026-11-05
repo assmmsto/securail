@@ -19,9 +19,9 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import contract, i18n, report
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.result import ModuleResult
+from securail import contract, i18n, report
+from securail.iocs import Indicator, IocSet
+from securail.result import ModuleResult
 
 ROOT = Path(__file__).resolve().parents[2]
 NOW = datetime.datetime(2026, 11, 2, 12, 0, 0)
@@ -135,16 +135,16 @@ def test_no_test_function_is_defined_inside_a_main_guard():
 # --- 29: the documents state the cap the code applies ----------------------------------
 
 def test_the_per_file_hash_cap_is_stated_as_it_is():
-    from zbtriage.modules import hashscan
+    from securail.modules import hashscan
     assert hashscan.MAX_BYTES == 512 * 1024 * 1024
     stale = []
-    for name in ("README.md", "docs/METHODOLOGY.md", "docs/COVERAGE.md", "scan/zbtriage/readers.py",
-                 "scan/zbtriage/scope.py"):
+    for name in ("README.md", "docs/METHODOLOGY.md", "docs/COVERAGE.md", "scan/securail/readers.py",
+                 "scan/securail/scope.py"):
         text = (ROOT / name).read_text(encoding="utf-8")
         if "120 MiB" in text or "120 MB" in text:
             stale.append(name)
     assert not stale, "still say 120 MiB: " + ", ".join(stale)
-    traces = (ROOT / "scan/zbtriage/modules/traces.py").read_text(encoding="utf-8")
+    traces = (ROOT / "scan/securail/modules/traces.py").read_text(encoding="utf-8")
     assert "same cap as the hash check" not in traces
 
 

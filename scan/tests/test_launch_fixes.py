@@ -16,9 +16,9 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import cli, menu, report
-from zbtriage.modules import android, browser
-from zbtriage.result import NOT_APPLICABLE
+from securail import cli, menu, report
+from securail.modules import android, browser
+from securail.result import NOT_APPLICABLE
 from test_expanded_capabilities import BAD, context
 from test_followup_fixes import bundle  # noqa: F401  (pytest fixture)
 
@@ -149,7 +149,7 @@ def _stix(path, objects):
 
 
 def test_a_relationship_with_a_non_string_target_does_not_crash_the_import(tmp_path):
-    from zbtriage.iocs import load_any
+    from securail.iocs import load_any
     path = _stix(tmp_path / "x.stix2", [
         {"type": "malware", "id": "malware--1", "name": "X"},
         {"type": "indicator", "id": "indicator--1", "pattern_type": "stix",
@@ -160,7 +160,7 @@ def test_a_relationship_with_a_non_string_target_does_not_crash_the_import(tmp_p
 
 
 def test_absurdly_nested_json_is_a_clean_indicator_error(tmp_path):
-    from zbtriage.iocs import IocError, load_any
+    from securail.iocs import IocError, load_any
     path = tmp_path / "deep.stix2"
     path.write_text('{"type":"bundle","objects":' + "[" * 100000 + "]" * 100000 + "}")
     with pytest.raises(IocError):
@@ -168,7 +168,7 @@ def test_absurdly_nested_json_is_a_clean_indicator_error(tmp_path):
 
 
 def test_update_into_an_unwritable_cache_is_a_clean_error(tmp_path, capsys, monkeypatch):
-    from zbtriage import feeds
+    from securail import feeds
     blocker = tmp_path / "a file, not a folder"
     blocker.write_text("x")
     monkeypatch.setattr(feeds, "update", lambda cache, emit=None: (_ for _ in ()).throw(
@@ -180,7 +180,7 @@ def test_update_into_an_unwritable_cache_is_a_clean_error(tmp_path, capsys, monk
 @pytest.mark.skipif(sys.platform != "win32", reason="junctions are a Windows feature")
 def test_the_path_guard_sees_a_junction_in_a_forward_slash_path(tmp_path):
     import subprocess
-    from zbtriage.localpaths import path_problem
+    from securail.localpaths import path_problem
     (tmp_path / "outside").mkdir()
     junction = tmp_path / "junction"
     subprocess.run(["cmd", "/c", "mklink", "/J", str(junction), str(tmp_path / "outside")],
@@ -192,7 +192,7 @@ def test_the_path_guard_sees_a_junction_in_a_forward_slash_path(tmp_path):
 
 
 def test_correlations_tolerate_empty_fields():
-    from zbtriage.evidence import evidence_correlations
+    from securail.evidence import evidence_correlations
     modules = {"m": {"hits": [
         {"indicator": BAD, "evidence": "contacted", "observed": None, "location": None,
          "artifact": None, "kind": "domain"},
@@ -203,8 +203,8 @@ def test_correlations_tolerate_empty_fields():
 
 def test_a_withdrawn_only_match_does_not_also_say_treat_it_as_serious(tmp_path):
     import datetime as _dt
-    from zbtriage.iocs import load_any
-    from zbtriage.result import EV_CONTACTED, Hit, ModuleResult
+    from securail.iocs import load_any
+    from securail.result import EV_CONTACTED, Hit, ModuleResult
     path = _stix(tmp_path / "w.stix2", [
         {"type": "indicator", "id": "indicator--aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
          "pattern_type": "stix", "pattern": "[domain-name:value = '" + BAD + "']",

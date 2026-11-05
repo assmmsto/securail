@@ -155,7 +155,7 @@ def main():
         if args.require_backups:
             check_backup_dependency()
         sys.path.insert(0, str(ROOT / "scan"))
-        from zbtriage.candiru_rules import CANDIRU_ENGINE_VERSION
+        from securail.candiru_rules import CANDIRU_ENGINE_VERSION
         engine = importlib.util.find_spec("yara_x") is not None
         if engine:
             from importlib.metadata import version

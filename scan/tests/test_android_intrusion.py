@@ -7,9 +7,9 @@ import zipfile
 
 import pytest
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import intrusion
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import intrusion
 from test_followup_fixes import bundle
 
 

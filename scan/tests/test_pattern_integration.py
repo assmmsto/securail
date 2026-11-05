@@ -15,11 +15,11 @@ import unittest
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from zbtriage import cli, report
-from zbtriage.context import ScanContext
-from zbtriage.iocs import load
-from zbtriage.modules import browser, hashscan, host, patternscan, traces, android, ios
-from zbtriage.result import Hit, ModuleResult, EV_FILE_PATTERN
+from securail import cli, report
+from securail.context import ScanContext
+from securail.iocs import load
+from securail.modules import browser, hashscan, host, patternscan, traces, android, ios
+from securail.result import Hit, ModuleResult, EV_FILE_PATTERN
 from reader_fixtures import stub_registered_readers
 
 ROOT = Path(__file__).resolve().parents[2]

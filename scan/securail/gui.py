@@ -66,7 +66,7 @@ GUI_STEP_NAMES = {
     "patterns": "Extra patterns",
 }
 HELPLINE = "https://www.accessnow.org/help/"
-BLOCKLIST_URL = "https://github.com/interplains/Zero-Breach-Toolkit#blocking-advertising-domains"
+BLOCKLIST_URL = "https://github.com/assmmsto/securail#blocking-advertising-domains"
 
 
 def gui_progress(message, state):
@@ -642,13 +642,13 @@ class GuiApp:
 
     def _layout(self):
         tk, ttk = self.tk, self.ttk
-        self.root.title("Zero Breach Toolkit")
+        self.root.title("Securail")
         self.root.minsize(780, 640)
         header = tk.Frame(self.root, bg="#111111")
         header.pack(fill="x")
         top = tk.Frame(header, bg="#111111")
         top.pack(fill="x", padx=16, pady=(10, 0))
-        tk.Label(top, text="ZERO BREACH", fg=GUI_RED, bg="#111111", font=self.font_title).pack(side="left")
+        tk.Label(top, text="SECURAIL", fg=GUI_RED, bg="#111111", font=self.font_title).pack(side="left")
         tk.Label(top, text="v" + self.hooks["version"].split(" ")[0], fg="#8a8a8a",
                  bg="#111111", font=self.font_body).pack(side="right")
         # Each language's own name, laid out for its own direction (Arabic,
@@ -1400,7 +1400,7 @@ def gui_help_text():
              "withdrawn": T("Only a withdrawn indicator matched")}
     sections = [
         (T("What this does"), [
-            T("Zero Breach looks for traces that known mercenary spyware (Pegasus, Predator, Candiru, "
+            T("Securail looks for traces that known mercenary spyware (Pegasus, Predator, Candiru, "
               "Paragon Graphite and others) leaves on a device: records in browsers and apps, startup "
               "items, and fingerprints of program files. It only reads; it never changes, deletes or "
               "uploads anything.")]),
@@ -1439,7 +1439,7 @@ def gui_help_text():
             bullet + T("The Citizen Lab: {url}", url="https://citizenlab.ca/")]),
     ]
     parts = [heading + "\n" + "\n".join(lines) for heading, lines in sections]
-    parts.append(T("More: {url}", url="https://github.com/interplains/Zero-Breach-Toolkit#readme"))
+    parts.append(T("More: {url}", url="https://github.com/assmmsto/securail#readme"))
     return "\n\n".join(parts) + "\n"
 
 

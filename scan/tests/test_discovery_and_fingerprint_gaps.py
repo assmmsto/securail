@@ -11,9 +11,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from test_evidence_safety import _ctx, _history, safety_api
 from test_followup_fixes import bundle
-from zbtriage.iocs import TYPE_APP_CERT, TYPE_SHA256, Indicator, IocSet
-from zbtriage.modules import android
-from zbtriage.result import ModuleResult
+from securail.iocs import TYPE_APP_CERT, TYPE_SHA256, Indicator, IocSet
+from securail.modules import android
+from securail.result import ModuleResult
 
 SHA = "ab" * 32
 CERT = "cd" * 32

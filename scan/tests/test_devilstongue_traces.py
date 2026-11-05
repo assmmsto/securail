@@ -5,10 +5,10 @@ import os
 
 import pytest
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import IocSet
-from zbtriage.modules import host
-from zbtriage.result import ModuleResult
+from securail.context import ScanContext
+from securail.iocs import IocSet
+from securail.modules import host
+from securail.result import ModuleResult
 
 
 def _run(monkeypatch, tmp_path, servers):

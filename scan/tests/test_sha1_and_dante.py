@@ -11,15 +11,15 @@ from unittest.mock import patch
 
 import pytest
 
-from zbtriage import feeds, stix
-from zbtriage.context import ScanContext
-from zbtriage.iocs import (COMPUTER_TYPES, TYPE_DOMAIN, TYPE_SHA1, TYPE_SHA256, Indicator, IocSet,
+from securail import feeds, stix
+from securail.context import ScanContext
+from securail.iocs import (COMPUTER_TYPES, TYPE_DOMAIN, TYPE_SHA1, TYPE_SHA256, Indicator, IocSet,
                            infer_type, load)
-from zbtriage.modules import android, hashscan, host, traces
-from zbtriage.report import _show_indicator
-from zbtriage.result import EV_ON_DISK, ModuleResult
+from securail.modules import android, hashscan, host, traces
+from securail.report import _show_indicator
+from securail.result import EV_ON_DISK, ModuleResult
 
-CONTENT = b"Zero Breach SHA-1 fixture - not software"
+CONTENT = b"Securail SHA-1 fixture - not software"
 SHA1 = hashlib.sha1(CONTENT).hexdigest()
 SHA256 = hashlib.sha256(CONTENT).hexdigest()
 

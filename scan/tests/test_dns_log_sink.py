@@ -6,10 +6,10 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import host
-from zbtriage.result import ModuleResult
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import host
+from securail.result import ModuleResult
 
 BAD = "bad-c2.example"
 

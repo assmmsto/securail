@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scan"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from zbtriage import iocs
+from securail import iocs
 from test_browser_launch import chromium_cookie_db
 from reader_fixtures import stub_registered_readers
 
@@ -173,7 +173,7 @@ class TestDownloadedEntryPoint(unittest.TestCase):
         # v0.1.7 shipped a single file that reported "0.1.6" because the version
         # was hardcoded in build/bundle.py and drifted from the package. The
         # bundle now derives it, so the two can never disagree again.
-        from zbtriage import __version__ as pkg_version
+        from securail import __version__ as pkg_version
         self.assertTrue(
             self.bundle.__version__.startswith(pkg_version),
             "bundle reports {!r}, package is {!r}".format(

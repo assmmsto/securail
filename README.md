@@ -1,7 +1,7 @@
-# Zero Breach Toolkit
+# Securail
 
 > **Version 2 is out:** now a double-click app for Windows, Mac and Linux, in 27 languages.
-> [Download it from the latest release](https://github.com/interplains/Zero-Breach-Toolkit/releases/latest).
+> [Download it from the latest release](https://github.com/assmmsto/securail/releases/latest).
 
 A free, open-source check for traces of known mercenary spyware (Pegasus, Predator,
 Graphite, Candiru and others) on computers, Android phones and iPhone backups.
@@ -14,7 +14,11 @@ Graphite, Candiru and others) on computers, Android phones and iPhone backups.
 - **States its limits.** Every report says what was found, how strong the evidence is, and
   what could not be checked. A clean result is never presented as proof that you are safe.
 
-Made by archivegenocide. Built on [Zero Breach](https://github.com/interplains/zero-breach).
+Made by archivegenocide. Securail is an independent fork of
+[Zero Breach Toolkit 2.0.6](https://github.com/assmmsto/securail),
+which is also by archivegenocide: the scanning engine and the indicator sets are
+upstream work, unchanged here, and this fork changes the name and the presentation only.
+The Apache-2.0 licence and the [NOTICE](NOTICE) are kept intact.
 
 > **If you think you are being targeted right now, get expert help first.** You do not
 > need to run this tool before asking. Journalists, activists, human-rights defenders and
@@ -27,7 +31,7 @@ Made by archivegenocide. Built on [Zero Breach](https://github.com/interplains/z
 ## Easiest: download the program (no Python, no commands)
 
 **You do not need to know anything technical to use this.** Download one file from the
-[latest release](https://github.com/interplains/Zero-Breach-Toolkit/releases/latest), open it,
+[latest release](https://github.com/assmmsto/securail/releases/latest), open it,
 and follow the window. You do not need the source code on this page, and you do not need to
 type any commands.
 
@@ -46,20 +50,20 @@ traces it looks for, in the places it could read. It cannot find spyware nobody 
 traces of, and it does not prove a device is safe. If you think you are being targeted, ask a
 digital-security helpline even if the result is green.
 
-**Your antivirus may flag these programs.** Antivirus products often wrongly flag new programs that are not code-signed yet, and some flag these. If you downloaded the file from [the official release page](https://github.com/interplains/Zero-Breach-Toolkit/releases/latest), this is a false alarm and you can ignore it: the code is public, and each program has a public build record you can check. We have applied for free code signing and will report these false alarms to the antivirus companies. **If the file came from anywhere else, do not run it and trust the warning.**
+**Your antivirus may flag these programs.** Antivirus products often wrongly flag new programs that are not code-signed yet, and some flag these. If you downloaded the file from [the official release page](https://github.com/assmmsto/securail/releases/latest), this is a false alarm and you can ignore it: the code is public, and each program has a public build record you can check. We have applied for free code signing and will report these false alarms to the antivirus companies. **If the file came from anywhere else, do not run it and trust the warning.**
 
 ### Windows
 
-1. Download `zero-breach-toolkit-windows-x64.exe`.
+1. Download `securail-windows-x64.exe`.
 2. Double-click it in your Downloads folder.
 3. Windows may say it "protected your PC". Click **More info**, then **Run anyway**.
 
 ### Mac
 
-1. Download `zero-breach-toolkit-macos-apple-silicon.dmg` for a newer Mac (M1, M2, M3, M4),
-   or `zero-breach-toolkit-macos-intel.dmg` for an older Intel Mac. The Apple menu →
+1. Download `securail-macos-apple-silicon.dmg` for a newer Mac (M1, M2, M3, M4),
+   or `securail-macos-intel.dmg` for an older Intel Mac. The Apple menu →
    **About This Mac** says which one you have.
-2. Open it, drag **Zero Breach Toolkit** into Applications, then open it from Applications.
+2. Open it, drag **Securail** into Applications, then open it from Applications.
 3. macOS will refuse the first time. Open **System Settings → Privacy & Security**, scroll
    down, click **Open Anyway**, then open the app again.
 
@@ -67,9 +71,9 @@ Open the app on the Mac itself, not through a remote or SSH session: it needs a 
 
 ### Linux
 
-1. Download `zero-breach-toolkit-linux-x64.tar.gz`.
-2. Extract it (double-click it, or `tar -xzf zero-breach-toolkit-linux-x64.tar.gz`).
-3. Run `./zero-breach-toolkit`, or right-click it and choose **Run in Terminal**.
+1. Download `securail-linux-x64.tar.gz`.
+2. Extract it (double-click it, or `tar -xzf securail-linux-x64.tar.gz`).
+3. Run `./securail`, or right-click it and choose **Run in Terminal**.
 
 The warnings appear because the programs are not signed by Microsoft or Apple yet. Each
 program is built by GitHub from the published source, and you can check that before running it:
@@ -77,7 +81,7 @@ program is built by GitHub from the published source, and you can check that bef
 [docs/VERIFYING.md](docs/VERIFYING.md)). Prefer to see exactly what runs? Use the Python
 version in the guide below; it is the same check.
 
-To let the check read Safari on a Mac, give **Zero Breach Toolkit** (or Terminal, for the Python
+To let the check read Safari on a Mac, give **Securail** (or Terminal, for the Python
 version) **Full Disk Access** in System Settings → Privacy & Security.
 
 ---
@@ -102,7 +106,7 @@ computer and about 20 minutes. Phones are checked by connecting them to the comp
 2. On the first screen of the installer, **tick "Add python.exe to PATH"** at the bottom,
    then click **Install Now**. Wait until it says "Setup was successful".
 3. On this page, click the green **Code** button near the top, then **Download ZIP**.
-4. Open your **Downloads** folder, right-click **Zero-Breach-Toolkit-main.zip** and choose
+4. Open your **Downloads** folder, right-click **securail-main.zip** and choose
    **Extract All**, then **Extract**.
 
 **Run the check**
@@ -138,7 +142,7 @@ computer and about 20 minutes. Phones are checked by connecting them to the comp
 5. Open **Terminal** (press Cmd+Space, type `Terminal`, press Enter). Copy this line, paste it
    into Terminal and press Enter:
    ```
-   cd ~/Downloads/Zero-Breach-Toolkit-main && python3 -X utf8 scan/zero-breach-toolkit.py
+   cd ~/Downloads/Zero-Breach-Toolkit-main && python3 -X utf8 scan/securail.py
    ```
    After step 1, `python3` is the Python from python.org. If you skipped step 1, `python3` is
    the one Apple ships with the Command Line Tools: it still runs the check in the terminal, but
@@ -171,7 +175,7 @@ If Chinese, Japanese or Korean text in the window shows as empty boxes, install 
 3. Close your web browsers and chat apps.
 4. Copy this line, paste it into the terminal and press Enter:
    ```
-   cd ~/Downloads/Zero-Breach-Toolkit-main && python3 -X utf8 scan/zero-breach-toolkit.py
+   cd ~/Downloads/Zero-Breach-Toolkit-main && python3 -X utf8 scan/securail.py
    ```
 5. A menu appears. Type the number next to **Update the indicator lists** and press Enter,
    then type `y` and press Enter. When it finishes, press Enter.
@@ -199,7 +203,7 @@ First do the **Set up** steps for [Windows](#windows) or [Mac](#mac) above.
 
 **On the computer**
 
-4. Start Zero Breach (Windows: double-click **run-scan.cmd**; Mac: step 5 of the Mac guide).
+4. Start Securail (Windows: double-click **run-scan.cmd**; Mac: step 5 of the Mac guide).
 5. In the menu, type the number next to **A phone** and press Enter, then type `2` (**Collect
    from an Android phone connected by USB now**) and press Enter.
 6. Press Enter to save the collection on your Desktop, then type `YES` and press Enter.
@@ -241,9 +245,9 @@ up to a computer and the backup is checked there.
      `~/Library/Application Support/MobileSync/Backup` and press Enter.
 
    Inside is a folder with a long name of letters and numbers: that is your backup.
-4. Start Zero Breach. In the menu, type the number next to **A phone**, press Enter, type `1`
+4. Start Securail. In the menu, type the number next to **A phone**, press Enter, type `1`
    and press Enter.
-5. **Drag the backup folder** (the one with the long name) into the Zero Breach window and press
+5. **Drag the backup folder** (the one with the long name) into the Securail window and press
    Enter.
 6. When asked whether the backup is password-protected, type `y` and press Enter, then type the
    backup password (nothing appears while you type) and press Enter.
@@ -253,7 +257,7 @@ up to a computer and the backup is checked there.
 | What you see | What to do |
 |---|---|
 | `'python' is not recognized` or nothing happens on Windows | Run the Python installer again, choose **Modify**, and make sure **Add Python to environment variables** is ticked. Restart the computer. |
-| `No such file or directory` on a Mac | Type `python3 -X utf8 ` (with a space at the end) in Terminal, then drag the file `zero-breach-toolkit.py` from the toolkit's `scan` folder into Terminal and press Enter. This works from any folder. |
+| `No such file or directory` on a Mac | Type `python3 -X utf8 ` (with a space at the end) in Terminal, then drag the file `securail.py` from the toolkit's `scan` folder into Terminal and press Enter. This works from any folder. |
 | `Bad CPU type in executable`, or trying to run it on an iPad or iPhone | The check cannot run on an iPad or iPhone. Back the device up to a Windows PC or Mac (the iPhone steps above work for an iPad too) and check the backup on that computer. |
 | A folder named `candiru` in the download | That is part of the toolkit: `third_party/candiru` holds the published detection rules for Candiru's spyware, not the spyware. Leave it in place; if it was deleted, download the toolkit again. |
 | "encrypted iPhone backups require optional cryptography" after installing it | It went into a different Python. Install it with the same command you start the check with (`python3 -m pip install --require-hashes -r requirements-backups.txt` on a Mac), from the toolkit folder. |
@@ -265,7 +269,7 @@ up to a computer and the backup is checked there.
 | iPhone: "wrong password" | Use the password chosen when **Encrypt local backup** was first turned on. If it is forgotten, it can be reset on the iPhone (Settings → General → Transfer or Reset iPhone → Reset → Reset All Settings), then make a new backup. |
 | Safari "could not be checked" on a Mac | Give Terminal Full Disk Access (Mac step 3), close Terminal, open it again and run the check again. |
 
-Still stuck? Ask in the [issues](https://github.com/interplains/Zero-Breach-Toolkit/issues)
+Still stuck? Ask in the [issues](https://github.com/assmmsto/securail/issues)
 (do not post your report there; it contains private details).
 
 ### What the result means
@@ -435,7 +439,7 @@ packages. On macOS and Linux type `python3` instead of `python`.
 
 1. **Get the toolkit.** On GitHub choose **Code → Download ZIP** and extract it, or:
    ```
-   git clone https://github.com/interplains/Zero-Breach-Toolkit.git
+   git clone https://github.com/assmmsto/securail.git
    ```
 2. **Open a terminal in the toolkit folder.** Windows: open the extracted
    folder (`Zero-Breach-Toolkit`, or `Zero-Breach-Toolkit-main` from a ZIP), click the address bar, type `powershell` and press
@@ -445,7 +449,7 @@ packages. On macOS and Linux type `python3` instead of `python`.
    step that uses the internet; the checks themselves never do. Without it only a small
    built-in set is used. Repeat it every few weeks.
    ```
-   python -X utf8 scan/zero-breach-toolkit.py --update
+   python -X utf8 scan/securail.py --update
    ```
 4. **On a Mac, give Terminal Full Disk Access first** (System Settings → Privacy & Security
    → Full Disk Access → add Terminal, then reopen it). Without it macOS blocks Safari's
@@ -453,7 +457,7 @@ packages. On macOS and Linux type `python3` instead of `python`.
 5. **Close your browsers and chat apps**, then run the check. A menu opens; press Enter for
    the standard check of this computer.
    ```
-   python -X utf8 scan/zero-breach-toolkit.py
+   python -X utf8 scan/securail.py
    ```
    On Windows you can instead double-click `scan\run-scan.cmd`. It saves the readable and
    JSON reports in a `findings` folder next to the toolkit.
@@ -462,10 +466,10 @@ Reports contain private details from your computer; keep them out of shared and 
 folders. Useful options:
 
 ```
-python -X utf8 scan/zero-breach-toolkit.py --quick                     # faster: skips file fingerprints
-python -X utf8 scan/zero-breach-toolkit.py --phone "FOLDER"            # a phone collection or backup
-python -X utf8 scan/zero-breach-toolkit.py --json report.json          # machine-readable report
-python -X utf8 scan/zero-breach-toolkit.py --share-json summary.json   # minimal summary for sharing
+python -X utf8 scan/securail.py --quick                     # faster: skips file fingerprints
+python -X utf8 scan/securail.py --phone "FOLDER"            # a phone collection or backup
+python -X utf8 scan/securail.py --json report.json          # machine-readable report
+python -X utf8 scan/securail.py --share-json summary.json   # minimal summary for sharing
 ```
 
 Put folder paths in quotes, especially if they contain spaces. On Linux or macOS,
@@ -479,13 +483,13 @@ you can reproduce.
 Running from source, as above, means every line the tool executes is in the clone: nothing
 is compiled and nothing is fetched in order to run.
 
-The single-file `zero-breach-toolkit.py` attached to a release is generated from the same
+The single-file `securail.py` attached to a release is generated from the same
 source. Rebuild it from the release's tag and compare:
 
 ```
 git checkout v2.0.5
 python build/bundle.py
-python -c "import hashlib; print(hashlib.sha256(open('dist/zero-breach-toolkit.py','rb').read()).hexdigest())"
+python -c "import hashlib; print(hashlib.sha256(open('dist/securail.py','rb').read()).hexdigest())"
 ```
 
 For v2.0.5 the file is 2,988,026 bytes, SHA-256
@@ -523,7 +527,7 @@ not apply. Running from source avoids all of that.
 4. AndroidQF saves a `.zip` next to itself. Extract it.
 5. From the toolkit folder, check the extracted folder (keep the quotes):
    ```
-   python -X utf8 scan/zero-breach-toolkit.py --phone "PATH TO THE EXTRACTED FOLDER"
+   python -X utf8 scan/securail.py --phone "PATH TO THE EXTRACTED FOLDER"
    ```
    Or run the tool with no options, choose *A phone*, and drag the folder into the window.
 6. Turn USB debugging off again.
@@ -575,7 +579,7 @@ reported folder: original or partial records are kept and may be unencrypted.
 3. From the toolkit folder (keep the quotes; leave out `--backup-password` if the backup
    is not encrypted, and the password is asked for privately):
    ```
-   python -X utf8 scan/zero-breach-toolkit.py --phone "PATH TO THE BACKUP FOLDER" --backup-password
+   python -X utf8 scan/securail.py --phone "PATH TO THE BACKUP FOLDER" --backup-password
    ```
 
 `--phone-guide ios` and `--phone-guide android` print these steps in the terminal.
@@ -666,7 +670,7 @@ report, readable report, minimal sharing summary and an integrity manifest. Repe
 files to copy, and nothing is uploaded or sent to a helpline.
 
 ```text
-python scan/zero-breach-toolkit.py --scan-type targeted --target SUSPICIOUS_FILE --report report.txt --json report.json --evidence-bundle evidence.zip --evidence-file SUSPICIOUS_FILE
+python scan/securail.py --scan-type targeted --target SUSPICIOUS_FILE --report report.txt --json report.json --evidence-bundle evidence.zip --evidence-file SUSPICIOUS_FILE
 ```
 
 `SUSPICIOUS_FILE` is the path of one file; `--evidence-file` takes files, not folders.
@@ -688,10 +692,10 @@ example**, and in the window as **Practise**, where the result carries an amber
 **TRAINING EXAMPLE** bar.
 
 ```text
-python scan/zero-breach-toolkit.py --training spyware        # findings and evidence grades
-python scan/zero-breach-toolkit.py --training worth-a-look   # leads, but no findings
-python scan/zero-breach-toolkit.py --training clean          # what "nothing found" means
-python scan/zero-breach-toolkit.py --training cellebrite     # a phone seized and unlocked with Cellebrite
+python scan/securail.py --training spyware        # findings and evidence grades
+python scan/securail.py --training worth-a-look   # leads, but no findings
+python scan/securail.py --training clean          # what "nothing found" means
+python scan/securail.py --training cellebrite     # a phone seized and unlocked with Cellebrite
 ```
 
 The report is the ordinary report, so what people learn carries over to a real check. It
@@ -781,7 +785,7 @@ report that marks the fields to relay to the person, the next steps that may be 
 which fields hold untrusted text from the scanned machine. See
 [scan/CONTRACT.md](scan/CONTRACT.md).
 
-A [skill file](skills/zero-breach-toolkit/SKILL.md) is included for assistants that support
+A [skill file](skills/securail/SKILL.md) is included for assistants that support
 skills: add the `skills/zero-breach-toolkit` folder to the assistant's skill directory, or
 have it read that file. It covers scope selection, encrypted-backup prompts, offline
 operation, report interpretation and evidence privacy. Nothing is installed automatically.
@@ -797,10 +801,10 @@ single-file build; see [scan/READERS.md](scan/READERS.md) to add one.
 
 There is no `src` folder; the code is under [`scan/`](scan/):
 
-- [`scan/zero-breach-toolkit.py`](scan/zero-breach-toolkit.py): the entry point you run.
-- [`scan/zbtriage/`](scan/zbtriage/): the scanner (indicator loading, the network block,
+- [`scan/securail.py`](scan/securail.py): the entry point you run.
+- [`scan/securail/`](scan/securail/): the scanner (indicator loading, the network block,
   reporting). The package keeps the project's earlier name so existing installs keep working.
-- [`scan/zbtriage/modules/`](scan/zbtriage/modules/): one file per check (browsers, Windows
+- [`scan/securail/modules/`](scan/securail/modules/): one file per check (browsers, Windows
   records, macOS and Linux, Android, iPhone, file fingerprints).
 - [`scan/tests/`](scan/tests/): the test suite.
 - [`build/bundle.py`](build/bundle.py): builds the single file attached to each release from

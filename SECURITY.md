@@ -1,6 +1,6 @@
 # Security policy
 
-Zero Breach Toolkit is used by people who may be targeted by a state-grade adversary, so
+Securail is used by people who may be targeted by a state-grade adversary, so
 its own integrity matters as much as what it detects.
 
 ## Reporting a problem
@@ -36,7 +36,7 @@ investigate, and credit you if you wish.
 ## Verifying the tool
 
 Do not run a security tool on trust. Each release publishes the SHA-256 of its files, and
-the single-file build is reproducible: you can rebuild `dist/zero-breach-toolkit.py` from
+the single-file build is reproducible: you can rebuild `dist/securail.py` from
 source and confirm it matches. Signed releases also include detached GPG signatures made
 with ArchiveGenocide's established release key; check its full fingerprint against the
 official publisher page before trusting a downloaded key. See

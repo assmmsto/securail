@@ -52,8 +52,8 @@ TRAINING_PATH = "/data/local/tmp/training-spy-daemon"
 TRAINING_USB = ("04f2", "b071")
 TRAINING_USB_SERIAL = "000000-EXAMPLE"
 assert TRAINING_USB in DT_CELLEBRITE_USB
-_TRN_APK = hashlib.sha256(b"Zero Breach Toolkit training APK - not software").hexdigest()
-_TRN_CERT = hashlib.sha256(b"Zero Breach Toolkit training certificate").hexdigest()
+_TRN_APK = hashlib.sha256(b"Securail training APK - not software").hexdigest()
+_TRN_CERT = hashlib.sha256(b"Securail training certificate").hexdigest()
 
 # Options that point a check at real evidence, real indicators, or produce
 # something meant to be sent to another person. None of them belongs in a
@@ -190,7 +190,7 @@ def _trn_collection(folder, scenario):
                                       "sha256": ""}])
     _trn_json(folder, "root_binaries.json", [])
     _trn_json(folder, "acquisition.json", {"started": "2026-01-15T10:00:00Z",
-                                           "note": "Zero Breach Toolkit training example"})
+                                           "note": "Securail training example"})
     _trn_text(folder, "processes.txt",
               "USER PID PPID VSZ RSS WCHAN ADDR S NAME\n"
               "system 900 1 1 1 0 0 S system_server\n")

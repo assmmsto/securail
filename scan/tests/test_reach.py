@@ -19,12 +19,12 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import iocs as iocmod  # noqa: E402
-from zbtriage import report  # noqa: E402
-from zbtriage.context import ScanContext  # noqa: E402
-from zbtriage.modules import browser  # noqa: E402
-from zbtriage.modules import host
-from zbtriage.result import ModuleResult
+from securail import iocs as iocmod  # noqa: E402
+from securail import report  # noqa: E402
+from securail.context import ScanContext  # noqa: E402
+from securail.modules import browser  # noqa: E402
+from securail.modules import host
+from securail.result import ModuleResult
 
 
 class TestOverlapStatement(unittest.TestCase):

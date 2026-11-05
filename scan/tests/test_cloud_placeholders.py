@@ -8,7 +8,7 @@ import types
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import localpaths
+from securail import localpaths
 
 CLOUD_TAG = 0x9000701A          # IO_REPARSE_TAG_CLOUD_7, as OneDrive uses
 SYMLINK_TAG = 0xA000000C

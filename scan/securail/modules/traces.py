@@ -75,7 +75,7 @@ _TR_SKIP_DIRS = {"node_modules", ".git", "__pycache__", ".venv", "venv"}
 _TR_MAX_LEADS = 25              # per kind; the rest are counted in a note
 _TR_PS_EVENTS = 20000           # newest PowerShell script blocks examined
 
-# Lead patterns are data in zbtriage/heuristics.py (see its docstring for why).
+# Lead patterns are data in securail/heuristics.py (see its docstring for why).
 _TR_RUNNER, _TR_REMOTE = RUNNER, REMOTE
 _TR_CRADLE_RUN, _TR_CRADLE_GET = CRADLE_RUN, CRADLE_GET
 

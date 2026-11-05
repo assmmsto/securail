@@ -8,7 +8,7 @@ import sqlite3
 import time
 from pathlib import Path
 
-from zbtriage.modules import browser
+from securail.modules import browser
 from test_expanded_capabilities import context, BAD
 from test_followup_fixes import bundle  # noqa: F401  (fixture)
 from test_desktop_toolkit import _dt_iocs
@@ -51,7 +51,7 @@ def test_icon_row_cap_is_a_gap(tmp_path, monkeypatch):
 def test_verify_workflow_checks_the_download_and_signatures():
     root = Path(__file__).resolve().parents[2]
     run = (root / ".github" / "workflows" / "verify-release.yml").read_text(encoding="utf-8")
-    assert "--pattern zero-breach-toolkit.py " in run
-    assert "sha256sum published/zero-breach-toolkit.py" in run
-    assert run.count("VALIDSIG $RELEASE_KEY") == 1 and "for file in SHA256SUMS.txt zero-breach-toolkit.py" in run
+    assert "--pattern securail.py " in run
+    assert "sha256sum published/securail.py" in run
+    assert run.count("VALIDSIG $RELEASE_KEY") == 1 and "for file in SHA256SUMS.txt securail.py" in run
     assert 'test "$download" = "$rebuilt"' in run

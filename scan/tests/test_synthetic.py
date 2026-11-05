@@ -30,15 +30,15 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import iocs as iocmod                     # noqa: E402
-from zbtriage.context import ScanContext                # noqa: E402
-from zbtriage.modules import browser, hashscan          # noqa: E402
-from zbtriage.result import CLEAN, HITS, ModuleResult    # noqa: E402
+from securail import iocs as iocmod                     # noqa: E402
+from securail.context import ScanContext                # noqa: E402
+from securail.modules import browser, hashscan          # noqa: E402
+from securail.result import CLEAN, HITS, ModuleResult    # noqa: E402
 
 # RFC 2606 reserved TLD: it is unregistrable, so even a bug that tried to
 # resolve this could not reach anyone.
 TEST_DOMAIN = "synthetic-test-indicator.invalid"
-PAYLOAD_BYTES = b"MZ\x90\x00 synthetic zbtriage test payload, not malware\n"
+PAYLOAD_BYTES = b"MZ\x90\x00 synthetic securail test payload, not malware\n"
 PAYLOAD_SHA256 = hashlib.sha256(PAYLOAD_BYTES).hexdigest()
 
 

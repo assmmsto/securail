@@ -12,9 +12,9 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import browser, execution
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import browser, execution
 from test_windows_execution import _we_context, _we_prefetch
 
 
@@ -72,8 +72,8 @@ def test_amcache_problem_stays_with_amcache(tmp_path, monkeypatch):
 
 
 def test_missing_defender_log_is_explained(monkeypatch):
-    from zbtriage.modules import traces
-    from zbtriage.result import ModuleResult
+    from securail.modules import traces
+    from securail.result import ModuleResult
     msg = ("Get-WinEvent : There is not an event log on the localhost computer that matches "
            '"Microsoft-Windows-Windows Defender/Operational".')
     monkeypatch.setattr(traces, "_tr_events", lambda *a, **k: ([], msg))

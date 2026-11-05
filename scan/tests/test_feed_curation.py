@@ -11,7 +11,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scan'))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from zbtriage import iocs
+from securail import iocs
 from test_bundle_release import import_file
 
 

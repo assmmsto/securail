@@ -12,8 +12,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from zbtriage import gui, report
-from zbtriage.modules import ios
+from securail import gui, report
+from securail.modules import ios
 from test_evidence_safety import _ctx
 from test_ios_upgrade import backup, db_bytes
 

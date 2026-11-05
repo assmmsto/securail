@@ -218,7 +218,7 @@ def _hs_reasons(reasons, fix=True):
         if mac_has_full_disk_access():
             text += "; macOS keeps some folders closed even with Full Disk Access"
         elif is_packaged():
-            text += ("; macOS privacy protection blocks some folders: give Zero Breach Toolkit Full Disk "
+            text += ("; macOS privacy protection blocks some folders: give Securail Full Disk "
                      "Access (System Settings > Privacy & Security > Full Disk Access) and run again")
         else:
             text += ("; macOS privacy protection blocks some folders: give Terminal Full Disk Access "

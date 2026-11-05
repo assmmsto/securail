@@ -22,7 +22,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.netguard import NetworkContactAttempt, no_network  # noqa: E402
+from securail.netguard import NetworkContactAttempt, no_network  # noqa: E402
 
 
 class TestGuardBlocks(unittest.TestCase):
@@ -71,9 +71,9 @@ class TestRealScanResolvesNothing(unittest.TestCase):
     """Exercise host orchestration with synthetic OS inputs, never live host I/O."""
 
     def test_full_scan_performs_no_resolution(self):
-        from zbtriage import iocs as iocmod
-        from zbtriage.context import ScanContext
-        from zbtriage.modules import host
+        from securail import iocs as iocmod
+        from securail.context import ScanContext
+        from securail.modules import host
 
         ioc_path = os.path.join(
             os.path.dirname(os.path.dirname(os.path.dirname(
@@ -127,7 +127,7 @@ class TestNoNetworkImports(unittest.TestCase):
     def test_modules_import_nothing_networked(self):
         mod_dir = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            "zbtriage", "modules")
+            "securail", "modules")
         offenders = []
         for fn in os.listdir(mod_dir):
             if not fn.endswith(".py"):
@@ -148,7 +148,7 @@ class TestNoNetworkImports(unittest.TestCase):
         """Blocks the other way to resolve a name: handing it to a system tool."""
         mod_dir = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            "zbtriage", "modules")
+            "securail", "modules")
         # Word-boundary matched, not plain substring: "ping" as a substring also
         # occurs inside "skipping", which would fail the suite for no reason.
         forbidden = ("resolve-dnsname", "nslookup", "ping", "curl", "wget",
@@ -184,9 +184,9 @@ class TestRemotePathsAreNeverTouched(unittest.TestCase):
 
     def _run_com_over(self, raw_values, remote_letters=(), kind="InprocServer32"):
         import tempfile
-        from zbtriage import iocs as iocmod
-        from zbtriage.context import ScanContext
-        from zbtriage.modules import host
+        from securail import iocs as iocmod
+        from securail.context import ScanContext
+        from securail.modules import host
 
         tmp = tempfile.mkdtemp(prefix="comunc_")
         ioc_path = os.path.join(tmp, "iocs.txt")
@@ -259,7 +259,7 @@ class TestRemotePathsAreNeverTouched(unittest.TestCase):
                 self.assertTrue(any(not c.ran for c in r.checks))
 
     def test_signature_inventory_never_starts_a_subprocess(self):
-        from zbtriage.modules import host
+        from securail.modules import host
         with patch.object(host, "_ps_json", side_effect=AssertionError("network-capable verifier")):
             statuses, reason = host._signature_status(["C:" + self.BACKSLASH + "example.dll"])
         self.assertTrue(reason)

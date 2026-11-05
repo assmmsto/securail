@@ -2,8 +2,8 @@
 import importlib
 from unittest.mock import patch
 
-from zbtriage.readers import READER_SPECS
-from zbtriage.result import ModuleResult
+from securail.readers import READER_SPECS
+from securail.result import ModuleResult
 
 
 def stub_registered_readers(stack, bundle=None, keep=()):
@@ -18,7 +18,7 @@ def stub_registered_readers(stack, bundle=None, keep=()):
             result.ran("fixture")
             return result
         if bundle is None:
-            module = importlib.import_module("zbtriage.modules." + spec.module)
+            module = importlib.import_module("securail.modules." + spec.module)
             stack.enter_context(patch.object(module, "run", empty))
         else:
             stack.enter_context(patch.object(bundle, "run_" + spec.suffix, empty))

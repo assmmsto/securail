@@ -7,9 +7,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import posix
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import posix
 
 
 def _ctx(*indicators):
@@ -46,7 +46,7 @@ def test_launch_item_program_name_is_a_process_name(monkeypatch, tmp_path):
 
 
 def test_hosts_file_on_macos_and_linux(monkeypatch, tmp_path):
-    from zbtriage.modules import host
+    from securail.modules import host
     hosts = tmp_path / "hosts"
     hosts.write_text("127.0.0.1 localhost\n0.0.0.0 blocked.invalid\n203.0.113.7 fixture.invalid\n")
     for system in ("Darwin", "Linux"):

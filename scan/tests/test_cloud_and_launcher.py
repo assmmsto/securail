@@ -12,9 +12,9 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import localpaths
-from zbtriage.iocs import load_any
-from zbtriage.modules import hashscan
+from securail import localpaths
+from securail.iocs import load_any
+from securail.modules import hashscan
 
 SCAN = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT = os.path.dirname(SCAN)
@@ -88,7 +88,7 @@ def test_launcher_skips_a_python_that_does_not_run(tmp_path):
     folder = tmp_path / "kit" / "scan"
     folder.mkdir(parents=True)
     shutil.copy(os.path.join(SCAN, "run-scan.cmd"), folder / "run-scan.cmd")
-    (folder / "zero-breach-toolkit.py").write_text("import sys\nsys.exit(0)\n")
+    (folder / "securail.py").write_text("import sys\nsys.exit(0)\n")
     env = dict(os.environ, PATH=str(stub) + os.pathsep + os.environ.get("PATH", ""))
     subprocess.run('echo.| "{}"'.format(folder / "run-scan.cmd"), shell=True, env=env,
                    capture_output=True, text=True, timeout=120)

@@ -29,7 +29,7 @@ def test_special_characters_in_the_folder_name(tmp_path):
     scan = root / "scan"
     scan.mkdir(parents=True)
     shutil.copy(os.path.join(SCAN, "run-scan.cmd"), scan / "run-scan.cmd")
-    (scan / "zero-breach-toolkit.py").write_text(FAKE)
+    (scan / "securail.py").write_text(FAKE)
     out = subprocess.run('echo.| "{}"'.format(scan / "run-scan.cmd"), shell=True, capture_output=True,
                          text=True, timeout=120).stdout
     assert not any(line.strip().startswith("INJECTED-MARKER") for line in out.splitlines())

@@ -7,7 +7,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import menu
+from securail import menu
 
 
 def _session(tmp_path, answer, monkeypatch, with_desktop=True):

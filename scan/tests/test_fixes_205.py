@@ -3,8 +3,8 @@ import json
 
 import pytest
 
-from zbtriage import kevdata
-from zbtriage.modules import browser
+from securail import kevdata
+from securail.modules import browser
 
 
 def _catalog(n):
@@ -75,7 +75,7 @@ def test_our_published_lists_are_still_filter_lists(url):
     "https://archivegenocide.com/",
     "https://archivegenocide.com/scan/other.html",
     "https://archivegenocide.com/scan/sub/scan.js",
-    "https://github.com/interplains/Zero-Breach-Toolkit",
+    "https://github.com/assmmsto/securail",
     "https://evil.invalid/scan/scan.js",
 ))
 def test_nothing_else_of_ours_is_exempt(url):

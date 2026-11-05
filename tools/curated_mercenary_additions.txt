@@ -164,7 +164,7 @@ zipzone.io	infrastructure	primary	recordedfuture-predator-2025-06	Intellexa Pred
 # --- Added 2026-10-31: Google Threat Analysis Group, 2023-03-29. Hostnames exactly as published
 #     (re-fanged). Campaign 2 is attributed by Google to the Heliconia framework of the vendor
 #     Variston; Campaign 1 names no vendor. Its Android system properties and file path are
-#     built into the phone check (scan/zbtriage/devicetraces.py), not listed here.
+#     built into the phone check (scan/securail/devicetraces.py), not listed here.
 # Google, Campaign 2: 'landing page and exploit delivery'.
 www.sufficeconfigure.com	infrastructure	primary	google-tag-spyware-vendors-2023-03	Variston Heliconia
 # Google, Campaign 2: 'malware C2'.

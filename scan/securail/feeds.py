@@ -516,7 +516,7 @@ def _write_manifest(cache: str, entries: Dict[str, Dict[str, object]]) -> None:
     final = _feed_local_path(cache, MANIFEST)
     fd, tmp = tempfile.mkstemp(dir=cache, prefix=".manifest.")
     with os.fdopen(fd, "w", encoding="utf-8") as fh:
-        json.dump({"tool": "zero-breach-toolkit", "version": __version__,
+        json.dump({"tool": "securail", "version": __version__,
                    "sources": entries}, fh, indent=2, ensure_ascii=False)
     os.replace(tmp, final)
 
@@ -709,7 +709,7 @@ def cached_sets(cache: Optional[str] = None,
 
 
 RELEASE_API = "https://api.github.com/repos/interplains/Zero-Breach-Toolkit/releases/latest"
-RELEASE_PAGE = "https://github.com/interplains/Zero-Breach-Toolkit/releases/tag/"
+RELEASE_PAGE = "https://github.com/assmmsto/securail/releases/tag/"
 # The newest-version line of the last update in this process (the window shows it).
 LAST_VERSION_NOTICE = ""
 

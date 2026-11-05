@@ -26,8 +26,8 @@ jobs:
       matrix:
         include:
           - { os: windows-latest, label: windows-x64, program: zero-breach-toolkit.exe }
-          - { os: macos-latest, label: macos-apple-silicon, program: "Zero Breach Toolkit.app/Contents/MacOS/Zero Breach Toolkit" }
-          - { os: macos-15-intel, label: macos-intel, program: "Zero Breach Toolkit.app/Contents/MacOS/Zero Breach Toolkit" }
+          - { os: macos-latest, label: macos-apple-silicon, program: "Securail.app/Contents/MacOS/Securail" }
+          - { os: macos-15-intel, label: macos-intel, program: "Securail.app/Contents/MacOS/Securail" }
           - { os: ubuntu-22.04, label: linux-x64, program: zero-breach-toolkit }
     runs-on: ${{ matrix.os }}
     timeout-minutes: 40
@@ -59,7 +59,7 @@ jobs:
 
       - name: Build the program
         run: |
-          python build/bundle.py . dist/zero-breach-toolkit.py
+          python build/bundle.py . dist/securail.py
           python build/build_exe.py
           "dist/${{ matrix.program }}" --version
 
@@ -77,10 +77,10 @@ jobs:
               # A disk image with the app, a shortcut to Applications to drag it
               # onto, and the first-open instructions.
               mkdir -p pkg/dmg
-              ditto "dist/Zero Breach Toolkit.app" "pkg/dmg/Zero Breach Toolkit.app"
+              ditto "dist/Securail.app" "pkg/dmg/Securail.app"
               ln -s /Applications pkg/dmg/Applications
               cp build/program-readme-macos.txt "pkg/dmg/HOW TO OPEN.txt"
-              hdiutil create -volname "Zero Breach Toolkit" -srcfolder pkg/dmg -ov -format UDZO "out/$name.dmg" ;;
+              hdiutil create -volname "Securail" -srcfolder pkg/dmg -ov -format UDZO "out/$name.dmg" ;;
             linux-*)
               mkdir -p "pkg/$name"
               cp "dist/${{ matrix.program }}" "pkg/$name/zero-breach-toolkit"

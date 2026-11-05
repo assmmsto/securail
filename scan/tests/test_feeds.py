@@ -1,4 +1,4 @@
-"""--update and the downloaded-indicator cache (zbtriage/feeds.py).
+"""--update and the downloaded-indicator cache (securail/feeds.py).
 
 Pinned here, all without touching the network (downloads are injected):
   - only allow-listed sources can be fetched, and a redirect elsewhere is refused;
@@ -21,8 +21,8 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import cli, feeds  # noqa: E402
-from zbtriage.iocs import TYPE_DOMAIN, TYPE_IP, IocError  # noqa: E402
+from securail import cli, feeds  # noqa: E402
+from securail.iocs import TYPE_DOMAIN, TYPE_IP, IocError  # noqa: E402
 
 STIX_OK = json.dumps({"type": "bundle", "objects": [
     {"type": "malware", "id": "malware--1", "name": "Pegasus"},

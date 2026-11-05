@@ -21,10 +21,10 @@ from unittest.mock import Mock, patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.modules import host, patternscan as patterns
-from zbtriage.candiru_rules import (CANDIRU_RULE_METADATA, CANDIRU_RULE_SOURCES,
+from securail.modules import host, patternscan as patterns
+from securail.candiru_rules import (CANDIRU_RULE_METADATA, CANDIRU_RULE_SOURCES,
                                      CANDIRU_ENGINE_VERSION)
-from zbtriage.result import CLEAN, HITS, PARTIAL, UNKNOWN, ModuleResult
+from securail.result import CLEAN, HITS, PARTIAL, UNKNOWN, ModuleResult
 
 
 def synthetic_malpedia_fixture():

@@ -15,7 +15,7 @@ import sys
 import urllib.error
 from unittest.mock import patch
 
-from zbtriage import cli, feeds, workflow
+from securail import cli, feeds, workflow
 from test_workflow import Terminal, wf_document
 
 SRC = {"id": "test-src", "name": "Test source", "format": "stix2", "cite": "Test",

@@ -4,7 +4,7 @@ scan time, whatever its manifest says, unless the scan itself asks for
 import hashlib
 import json
 
-from zbtriage import feeds
+from securail import feeds
 from test_followup_fixes import bundle  # noqa: F401  (fixture)
 
 

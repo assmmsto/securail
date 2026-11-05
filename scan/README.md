@@ -1,11 +1,11 @@
-# Zero Breach Toolkit: scanner
+# Securail: scanner
 
 A local, read-only check for published mercenary spyware indicators that reports missing
 evidence and checks that could not run. See the [project README](../README.md) for
 installation, phone support and scope, and [PATTERNS.md](../docs/PATTERNS.md) for the
 optional Candiru pattern check.
 
-On Linux and macOS, run `python3 scan/zero-breach-toolkit.py` from the project root, or
+On Linux and macOS, run `python3 scan/securail.py` from the project root, or
 `sh scan/run-scan.sh`. Browser and file checks and native startup-configuration readers are
 available there; Windows live checks run only on Windows. Copied Prefetch and Amcache files
 can be checked in targeted scope; compressed Prefetch needs Windows.
@@ -36,11 +36,11 @@ No dependencies beyond Python 3.8+, and no installation.
 
 ```
 cd scan
-python -X utf8 zero-breach-toolkit.py
+python -X utf8 securail.py
 ```
 
 ```
-python zero-breach-toolkit.py [--quick] [--phone FOLDER] [--json PATH] [--share-json PATH] [--iocs PATH]
+python securail.py [--quick] [--phone FOLDER] [--json PATH] [--share-json PATH] [--iocs PATH]
 ```
 
 | Flag | Effect |

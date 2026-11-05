@@ -3,8 +3,8 @@ a file over a limit is named with its size (issue: the check read nothing on a
 512 GB phone because Manifest.db was over 300 MB)."""
 import pytest
 
-from zbtriage import ios_sources
-from zbtriage.modules import ios
+from securail import ios_sources
+from securail.modules import ios
 
 MB = 1024 * 1024
 # Measured on a full, unencrypted backup of a current 512 GB phone.

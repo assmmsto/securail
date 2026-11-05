@@ -33,7 +33,7 @@ browser profiles.
   must not be skipped when publishing the page or its download instructions.
 - To verify a separately saved public download, add `--downloaded-scanner DOWNLOADED_FILE`;
   the gate hashes that file without running it.
-- Use `--scanner dist/zero-breach-toolkit.py` to verify the staged local download.
+- Use `--scanner dist/securail.py` to verify the staged local download.
 
 Then build, sign and verify the release files with `python tools/make_release.py` (see
 [docs/VERIFYING.md](docs/VERIFYING.md)).
@@ -49,7 +49,7 @@ python build/build.py
 ```
 
 The build is deterministic: a fresh clone produces a byte-identical
-`dist/zero-breach-toolkit.py`. `python build/build.py --check` reports drift in tracked
+`dist/securail.py`. `python build/build.py --check` reports drift in tracked
 artifacts, and the release check verifies reproducibility.
 
 ## Adding artifact readers

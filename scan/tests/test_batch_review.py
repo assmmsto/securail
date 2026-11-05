@@ -10,9 +10,9 @@ from unittest.mock import patch
 
 import pytest
 
-from zbtriage import feeds, report
-from zbtriage.modules import traces
-from zbtriage.result import ModuleResult, EV_PERSISTENCE, EV_REFERENCED
+from securail import feeds, report
+from securail.modules import traces
+from securail.result import ModuleResult, EV_PERSISTENCE, EV_REFERENCED
 from test_expanded_capabilities import BAD, context
 from test_followup_fixes import bundle, fake_registry
 

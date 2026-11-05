@@ -8,7 +8,7 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.modules import posix
+from securail.modules import posix
 from test_evidence_safety import _ctx
 from test_followup_fixes import bundle
 

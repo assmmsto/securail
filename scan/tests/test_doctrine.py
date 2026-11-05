@@ -28,9 +28,9 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import iocs as iocmod                                # noqa: E402
-from zbtriage import report                                        # noqa: E402
-from zbtriage.result import (CLEAN, HITS, PARTIAL, UNKNOWN,        # noqa: E402
+from securail import iocs as iocmod                                # noqa: E402
+from securail import report                                        # noqa: E402
+from securail.result import (CLEAN, HITS, PARTIAL, UNKNOWN,        # noqa: E402
                                Hit, ModuleResult)
 
 # The sentence D1 requires, written out by hand. If report.D1_LINE is ever

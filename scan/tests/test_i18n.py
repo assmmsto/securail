@@ -12,9 +12,9 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import i18n, report  # noqa: E402
-from zbtriage.i18n import I18N_CODES, T, TN, TX, i18n_as, i18n_lang, i18n_rtl, i18n_set  # noqa: E402
-from zbtriage.i18n_data import I18N_DATA  # noqa: E402
+from securail import i18n, report  # noqa: E402
+from securail.i18n import I18N_CODES, T, TN, TX, i18n_as, i18n_lang, i18n_rtl, i18n_set  # noqa: E402
+from securail.i18n_data import I18N_DATA  # noqa: E402
 
 
 @pytest.fixture(autouse=True)
@@ -87,7 +87,7 @@ def test_say_keeps_english_lines_and_translates_whole_paragraphs(monkeypatch):
 
 
 def test_summary_uses_whole_sentence_translations(monkeypatch):
-    from zbtriage.training import TRAINING_SCENARIOS
+    from securail.training import TRAINING_SCENARIOS
     assert TRAINING_SCENARIOS
     document = {
         "tool": {"version": "0"}, "timestamp": "2026-01-01T00:00:00", "platform": {"system": "X", "release": "1"},
@@ -108,7 +108,7 @@ def test_summary_uses_whole_sentence_translations(monkeypatch):
 
 
 def test_saved_report_carries_the_english_original(monkeypatch):
-    from zbtriage import gui
+    from securail import gui
     document = {
         "tool": {"version": "0"}, "timestamp": "2026-01-01T00:00:00", "platform": {"system": "X", "release": "1"},
         "modules": {}, "verdict": {"status": "no-hits", "gaps": [], "hits_total": 0},
@@ -149,7 +149,7 @@ def test_shipped_catalogs_keep_what_must_not_change(lang):
 
 @pytest.mark.parametrize("lang", I18N_CODES)
 def test_every_language_renders_the_training_reports(lang, tmp_path, monkeypatch):
-    from zbtriage import training
+    from securail import training
     i18n_set(lang)
     for scenario in training.TRAINING_SCENARIOS:
         top, bottom = training.training_banner({"training": {"scenario": scenario}})
@@ -159,7 +159,7 @@ def test_every_language_renders_the_training_reports(lang, tmp_path, monkeypatch
 
 def test_both_entry_points_offer_the_same_languages():
     root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    cli = open(os.path.join(root, "scan", "zbtriage", "cli.py"), encoding="utf-8").read()
+    cli = open(os.path.join(root, "scan", "securail", "cli.py"), encoding="utf-8").read()
     bundle = open(os.path.join(root, "build", "bundle.py"), encoding="utf-8").read()
     for text in (cli, bundle):
         assert '"--lang", metavar="CODE", default=None, choices=I18N_CODES' in text

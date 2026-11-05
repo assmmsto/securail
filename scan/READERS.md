@@ -1,11 +1,11 @@
 # Adding a reader
 
-`zbtriage/readers.py` is the shared registry for the source CLI, the single-file builder,
+`securail/readers.py` is the shared registry for the source CLI, the single-file builder,
 platform selection, `--describe` coverage and entry-point test stubs. It holds trusted
 built-in readers only; collections and reports cannot install or select arbitrary Python
 code.
 
-1. Add `zbtriage/modules/example.py` with a unique `NAME` and
+1. Add `securail/modules/example.py` with a unique `NAME` and
    `run(ctx) -> ModuleResult`. Publish the active result as `ctx.partial` before reading
    records, so cancellation keeps the evidence collected so far.
 2. Add one `ReaderSpec` to `READER_SPECS` in `readers.py`: result name, module filename

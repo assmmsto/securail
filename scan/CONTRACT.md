@@ -1,6 +1,6 @@
 # Module contract
 
-Each scan module is a file in `zbtriage/modules/` registered once in `zbtriage/readers.py`.
+Each scan module is a file in `securail/modules/` registered once in `securail/readers.py`.
 Its `ReaderSpec` supplies selection, bundle suffix, optional helper files and coverage
 descriptions. Both entry points use the same dispatcher, and the builder and hermetic test
 stubs derive their module lists from this registry. See [READERS.md](READERS.md) for the
@@ -13,12 +13,12 @@ def run(ctx) -> ModuleResult:
     ...
 ```
 
-- `ctx` is `zbtriage.context.ScanContext`: `ctx.iocs` (an `IocSet`), `ctx.deep` (bool) and
+- `ctx` is `securail.context.ScanContext`: `ctx.iocs` (an `IocSet`), `ctx.deep` (bool) and
   `ctx.emit(str)` for progress. Progress goes to stderr; never print to stdout from a
   module, because stdout is the final readable report.
-- Return a `zbtriage.result.ModuleResult`.
+- Return a `securail.result.ModuleResult`.
 
-## IocSet (`zbtriage/iocs.py`)
+## IocSet (`securail/iocs.py`)
 
 - `ctx.iocs.network_strings`: sorted lower-case list of domain and IP strings for substring
   matching in artifacts. **Never resolve or connect to these.**
@@ -26,7 +26,7 @@ def run(ctx) -> ModuleResult:
 - `ctx.iocs.lookup(value)`: the `Indicator` for a matched string, or None. Use it to attach
   `.tier` and `.confidence` to each hit.
 
-## ModuleResult (`zbtriage/result.py`)
+## ModuleResult (`securail/result.py`)
 
 - `r = ModuleResult(NAME)`
 - For each hit: `r.add_hit(Hit(indicator=ioc, location=path, detail=ctx, tier=..., confidence=...))`,
@@ -78,7 +78,7 @@ and the `candiru-pattern` tier, never exact-hash claims.
 
 ## Machine contract (for scripts and assistants)
 
-Defined in `zbtriage/contract.py` and pinned by `tests/test_contract.py`. Current schema:
+Defined in `securail/contract.py` and pinned by `tests/test_contract.py`. Current schema:
 **1.6**.
 
 ### Exit codes and verdicts

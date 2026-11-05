@@ -16,11 +16,11 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import contract, report
-from zbtriage.evidence import _withdrawn_only
-from zbtriage.iocs import Indicator, IocError, IocSet, _value_problem, load
-from zbtriage.result import Hit, ModuleResult, EV_CONTACTED
-from zbtriage.stix import _normalise
+from securail import contract, report
+from securail.evidence import _withdrawn_only
+from securail.iocs import Indicator, IocError, IocSet, _value_problem, load
+from securail.result import Hit, ModuleResult, EV_CONTACTED
+from securail.stix import _normalise
 
 BAD = "withdrawn-review.example"
 LIVE = "live-review.example"

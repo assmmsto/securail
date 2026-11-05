@@ -16,7 +16,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import iocs as iocmod  # noqa: E402
+from securail import iocs as iocmod  # noqa: E402
 
 
 def make_set(lines):

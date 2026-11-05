@@ -33,10 +33,10 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import execution, exploited, hashscan, host, intrusion, patternscan, posix, traces
-from zbtriage.result import ModuleResult
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import execution, exploited, hashscan, host, intrusion, patternscan, posix, traces
+from securail.result import ModuleResult
 
 import test_fix_host_browser as tb
 import test_fix_host_traces as tt
@@ -187,7 +187,7 @@ def _blobs_unreadable(tmp):
         if str(file).endswith("f_000001"):
             raise PermissionError(13, "Access is denied", str(file))
         return real_open(file, *args, **kwargs)
-    with patch("zbtriage.modules.browser.io.open", refuse):
+    with patch("securail.modules.browser.io.open", refuse):
         return _norm(tb.run_browser(tmp))
 
 

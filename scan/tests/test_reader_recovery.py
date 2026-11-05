@@ -11,9 +11,9 @@ from unittest.mock import patch
 
 import pytest
 
-from zbtriage import report
-from zbtriage.modules import ios, traces
-from zbtriage.result import ModuleResult, EV_REFERENCED, EV_PERSISTENCE
+from securail import report
+from securail.modules import ios, traces
+from securail.result import ModuleResult, EV_REFERENCED, EV_PERSISTENCE
 from test_expanded_capabilities import context, ios_fixture, BAD
 from test_followup_fixes import bundle, fake_registry, sms_path
 from test_fix_regressions import build_namespace

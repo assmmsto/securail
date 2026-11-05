@@ -3,9 +3,9 @@ import subprocess
 import sys
 from unittest.mock import patch
 
-from zbtriage import gui, localpaths
-from zbtriage.kevdata import kev_affected
-from zbtriage.modules import hashscan
+from securail import gui, localpaths
+from securail.kevdata import kev_affected
+from securail.modules import hashscan
 
 
 # --- a year in a CVE record is not a version ---------------------------------------------

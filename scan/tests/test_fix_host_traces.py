@@ -26,10 +26,10 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import traces
-from zbtriage.result import ModuleResult
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import traces
+from securail.result import ModuleResult
 
 SHA = "a" * 64
 
@@ -181,7 +181,7 @@ def _persistence(tmp_path, walk=None, services=None):
     tree = dict(run_keys)
     tree[r"system\currentcontrolset\services"] = services if services is not None else FakeKey()
     r = ModuleResult("traces")
-    from zbtriage import localpaths
+    from securail import localpaths
     with patch.dict(os.environ, env), patch.dict(sys.modules, {"winreg": fake_winreg(tree)}):
         if walk:
             with patch.object(localpaths, "walk_local", walk):

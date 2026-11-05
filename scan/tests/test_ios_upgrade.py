@@ -13,12 +13,12 @@ from unittest.mock import patch
 
 import pytest
 
-from zbtriage import cli, ios_sources, report
-from zbtriage.context import ScanContext
-from zbtriage.iocs import IocSet, Indicator
-from zbtriage.modules import ios
-from zbtriage.ios_messages import ios_message_text
-from zbtriage.readers import reader_select
+from securail import cli, ios_sources, report
+from securail.context import ScanContext
+from securail.iocs import IocSet, Indicator
+from securail.modules import ios
+from securail.ios_messages import ios_message_text
+from securail.readers import reader_select
 from test_followup_fixes import bundle
 
 DOMAIN = "fixture.invalid"
@@ -430,7 +430,7 @@ def test_bad_crash_tail_preserves_prior_identity_and_blank_tail_is_valid(tmp_pat
 
 
 def test_process_case_preserved_through_stix(tmp_path, reader):
-    from zbtriage.stix import load_stix
+    from securail.stix import load_stix
     feed = tmp_path / "feed.stix2"
     feed.write_text(json.dumps({"objects": [{"type": "indicator", "pattern": "[process:name='FixtureProc']"}]}))
     root = tmp_path / "diagnostics"
@@ -489,7 +489,7 @@ def test_malformed_xml_metadata_does_not_hide_readable_artifacts(tmp_path, reade
 
 
 def test_new_menu_choices_and_preview_are_scope_only(tmp_path, bundle):
-    from zbtriage import menu
+    from securail import menu
     for api in (menu, bundle):
         for choice, kind in (("3", "filesystem"), ("4", "sysdiagnose")):
             args = cli._parse([])

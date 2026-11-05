@@ -4,9 +4,9 @@ import types
 
 import pytest
 
-from zbtriage import security_products
-from zbtriage.modules import traces
-from zbtriage.result import ModuleResult
+from securail import security_products
+from securail.modules import traces
+from securail.result import ModuleResult
 from test_followup_fixes import bundle
 from test_traces import ctx
 

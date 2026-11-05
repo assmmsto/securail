@@ -39,7 +39,7 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-PACKAGE = Path(__file__).resolve().parents[1] / "zbtriage"
+PACKAGE = Path(__file__).resolve().parents[1] / "securail"
 SWEEPS = ("sweep_android", "sweep_ios", "sweep_host")
 
 

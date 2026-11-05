@@ -11,8 +11,8 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import localpaths, report
-from zbtriage.modules import posix
+from securail import localpaths, report
+from securail.modules import posix
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 

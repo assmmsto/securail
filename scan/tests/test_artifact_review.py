@@ -17,9 +17,9 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.iocs import Indicator, IocSet, TYPE_DOMAIN
-from zbtriage.modules import browser, host, ios, traces
-from zbtriage.result import EV_CONFIGURED, ModuleResult
+from securail.iocs import Indicator, IocSet, TYPE_DOMAIN
+from securail.modules import browser, host, ios, traces
+from securail.result import EV_CONFIGURED, ModuleResult
 from test_expanded_capabilities import BAD, context
 from test_followup_fixes import bundle  # noqa: F401  (pytest fixture)
 

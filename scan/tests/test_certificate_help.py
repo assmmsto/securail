@@ -10,7 +10,7 @@ import urllib.error
 from pathlib import Path
 from unittest.mock import patch
 
-from zbtriage import feeds, phoneguide
+from securail import feeds, phoneguide
 
 
 def test_help_fits_each_system():

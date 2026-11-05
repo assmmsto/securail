@@ -10,8 +10,8 @@ sys.path[:0] = [os.path.dirname(os.path.dirname(__file__)), os.path.dirname(__fi
 
 from test_browser_launch import (BrowserLaunchBase, TEST_DOMAIN,
                                  chromium_history_db, chromium_cookie_db)
-from zbtriage.modules import browser
-from zbtriage.result import UNKNOWN, PARTIAL, EV_CONTACTED, EV_REFERENCED
+from securail.modules import browser
+from securail.result import UNKNOWN, PARTIAL, EV_CONTACTED, EV_REFERENCED
 
 
 class TestVivaldiRoots(unittest.TestCase):

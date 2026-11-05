@@ -7,9 +7,9 @@ from unittest.mock import patch
 
 import pytest
 
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import android, ios
-from zbtriage.result import ModuleResult
+from securail.iocs import Indicator, IocSet
+from securail.modules import android, ios
+from securail.result import ModuleResult
 from test_expanded_capabilities import BAD, context, ios_fixture
 from test_followup_fixes import bundle
 

@@ -20,7 +20,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.iocs import (TYPE_DOMAIN, TYPE_IP, Indicator, IocSet,  # noqa: E402
+from securail.iocs import (TYPE_DOMAIN, TYPE_IP, Indicator, IocSet,  # noqa: E402
                            load_any, merge)
 
 CRAFTED = [
@@ -181,7 +181,7 @@ class TestHostMatchWalk(unittest.TestCase):
         return best
 
     def test_same_choice_as_the_old_loop(self):
-        from zbtriage.modules import browser
+        from securail.modules import browser
         inds = [Indicator(v, "infrastructure", "primary", TYPE_DOMAIN, "t")
                 for v in ("powerium.net", "noas.powerium.net", "qa-noas.powerium.net",
                           "example.com", "deep.a.example.com")]

@@ -335,7 +335,7 @@ def mac_has_full_disk_access():
 
 def mac_privacy_app():
     """What a Mac person gives Full Disk Access to: the app, or Terminal."""
-    return "Zero Breach Toolkit" if is_packaged() else "Terminal"
+    return "Securail" if is_packaged() else "Terminal"
 
 
 # Where systems keep their trusted root certificates. A bundled OpenSSL looks in

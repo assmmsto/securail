@@ -15,10 +15,10 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import feeds, report
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet, ios_only, watchware
-from zbtriage.modules import android
+from securail import feeds, report
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet, ios_only, watchware
+from securail.modules import android
 from test_android import collection, iocs as base_iocs
 
 IOS_ID = "com.example.parent.ios"

@@ -16,10 +16,10 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import iocs as iocmod
-from zbtriage.context import ScanContext
-from zbtriage.modules import host
-from zbtriage.result import EV_ON_DISK
+from securail import iocs as iocmod
+from securail.context import ScanContext
+from securail.modules import host
+from securail.result import EV_ON_DISK
 
 
 def _ioc_set_with_hash(tmp, digest):
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 # planted Downloads\powershell.exe run during the host checks (and forge their
 # results). An absolute path is never resolved through that search.
 import os as _os
-from zbtriage.modules import host as _host
+from securail.modules import host as _host
 
 
 @unittest.skipUnless(sys.platform == "win32", "Windows-only behaviour")

@@ -3,8 +3,8 @@ import os
 
 import pytest
 
-from zbtriage import localpaths
-from zbtriage.localpaths import path_problem, path_problem_cached
+from securail import localpaths
+from securail.localpaths import path_problem, path_problem_cached
 
 
 def _deep(tmp_path, depth=8):

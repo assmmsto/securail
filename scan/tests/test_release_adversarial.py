@@ -20,11 +20,11 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from zbtriage import evidence, ios_messages, report, workflow
-from zbtriage.iocs import IocSet, Indicator
-from zbtriage.modules import ios
-from zbtriage.iocs import load_any
-from zbtriage.result import Hit, ModuleResult
+from securail import evidence, ios_messages, report, workflow
+from securail.iocs import IocSet, Indicator
+from securail.modules import ios
+from securail.iocs import load_any
+from securail.result import Hit, ModuleResult
 from test_evidence_safety import _ctx, safety_api
 from test_evidence_review import _bundle_file, _indicator, BAD
 from test_followup_fixes import bundle
@@ -150,7 +150,7 @@ def test_malformed_encoded_message_does_not_hide_its_neighbours(tmp_path, safety
 @pytest.mark.parametrize("output", ("json", "text"))
 @pytest.mark.parametrize("failure", ("write", "fsync", "replace"))
 def test_failed_report_save_preserves_previous_bytes(tmp_path, safety_api, output, failure):
-    api = (report if output == "json" else workflow) if safety_api.entry.__name__ == "zbtriage.cli" else safety_api.entry
+    api = (report if output == "json" else workflow) if safety_api.entry.__name__ == "securail.cli" else safety_api.entry
     dest = tmp_path / "report.out"
     dest.write_bytes(b"previous complete report\n")
     before = {p.name: p.read_bytes() for p in tmp_path.iterdir()}

@@ -7,7 +7,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.modules.browser import _hsts_fingerprint
+from securail.modules.browser import _hsts_fingerprint
 
 # Entries observed in real browser profiles for these public hosts.
 OBSERVED = {

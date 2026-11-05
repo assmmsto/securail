@@ -1,4 +1,4 @@
-ZERO BREACH TOOLKIT - HOW TO OPEN IT ON LINUX
+SECURAIL - HOW TO OPEN IT ON LINUX
 
 Run it in a terminal from this folder:
 
@@ -12,4 +12,4 @@ Do not run it with sudo: it checks your own account's browsers and files.
 
 Check the download first if you can: compare its SHA-256 with the release page,
 or run  gh attestation verify <file> --repo interplains/Zero-Breach-Toolkit
-Guide: https://github.com/interplains/Zero-Breach-Toolkit#readme
+Guide: https://github.com/assmmsto/securail#readme

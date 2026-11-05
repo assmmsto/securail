@@ -12,8 +12,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from test_discovery_and_fingerprint_gaps import _app, _home
 from test_evidence_safety import safety_api
 from test_followup_fixes import bundle
-from zbtriage import workflow
-from zbtriage.modules import browser
+from securail import workflow
+from securail.modules import browser
 
 
 def _guard(api):

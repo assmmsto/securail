@@ -17,11 +17,11 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.contract import contract_exit_code  # noqa: E402
-from zbtriage.iocs import IocSet, Indicator  # noqa: E402
-from zbtriage.report import (_when_key, build_document, render_human,  # noqa: E402
+from securail.contract import contract_exit_code  # noqa: E402
+from securail.iocs import IocSet, Indicator  # noqa: E402
+from securail.report import (_when_key, build_document, render_human,  # noqa: E402
                              render_summary)
-from zbtriage.result import CLEAN, EV_CONTACTED, Hit, Lead, ModuleResult  # noqa: E402
+from securail.result import CLEAN, EV_CONTACTED, Hit, Lead, ModuleResult  # noqa: E402
 
 STARTED = datetime.datetime(2026, 10, 25, 12, 0, 0)
 
@@ -144,7 +144,7 @@ class TestStalkerwareSitesOnComputers(unittest.TestCase):
     def test_echap_source_gets_the_stalkerware_tier(self):
         import json as _json
         import tempfile as _tf
-        from zbtriage import feeds
+        from securail import feeds
         path = os.path.join(_tf.mkdtemp(prefix="echap_"), "e.stix2")
         with open(path, "w", encoding="utf-8") as fh:
             _json.dump({"type": "bundle", "objects": [
@@ -177,7 +177,7 @@ class TestGapGrouping(unittest.TestCase):
     ]
 
     def test_grouped_into_readable_lines(self):
-        from zbtriage.report import _gap_lines
+        from securail.report import _gap_lines
         lines = _gap_lines(self.GAPS)
         # A bare "could not read" is not proof of a lock (it also covers damaged
         # files), so Docker Desktop's line stays separate instead of telling the

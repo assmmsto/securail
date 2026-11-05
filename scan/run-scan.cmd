@@ -4,11 +4,11 @@ setlocal
 rem Interactive launcher. The scanner saves and displays its own report before
 rem offering follow-up actions. Quitting the start menu is not a scan result.
 
-title Zero Breach Toolkit - spyware indicator check
+title Securail - spyware indicator check
 
 rem Run from this script's own folder, so the default IOC path resolves.
 cd /d "%~dp0" || goto :nofolder
-if not exist "zero-breach-toolkit.py" goto :nofolder
+if not exist "securail.py" goto :nofolder
 
 rem Find Python: the PATH first, then the py launcher.
 rem A Python that actually runs: Windows ships a "python" stand-in that only
@@ -41,7 +41,7 @@ set "JSON=%OUTDIR%\scan-%STAMP%.json"
 
 cls
 echo ========================================================================
-echo   Zero Breach Toolkit - choose what to check
+echo   Securail - choose what to check
 echo ========================================================================
 echo.
 echo  Checks read local evidence and do not change system settings.
@@ -55,7 +55,7 @@ echo ========================================================================
 echo.
 
 rem Keep stdout visible for acquisition prompts and the post-scan workflow.
-%PY% -X utf8 zero-breach-toolkit.py --json "%JSON%" --report "%TXT%"
+%PY% -X utf8 securail.py --json "%JSON%" --report "%TXT%"
 set "RC=%errorlevel%"
 
 echo.
@@ -89,7 +89,7 @@ exit /b %RC%
 
 :nofolder
 echo.
-echo  The Zero Breach folder could not be opened, so nothing was checked.
+echo  The Securail folder could not be opened, so nothing was checked.
 echo  Move the Zero-Breach-Toolkit folder somewhere simple, such as your
 echo  Desktop, and run run-scan.cmd again.
 echo.

@@ -1,4 +1,4 @@
-! zbtriage denylist (adblock) - generated 2026-10-28
+! securail denylist (adblock) - generated 2026-10-28
 ! AdFection / Candiru indicators. Curated from public reporting (The Citizen Lab, Confiant, Recorded Future, Microsoft, ESET, Avast, Google TAG, Amnesty Security Lab). Public domain (CC0). Blocking is a stopgap; it is not proof of anything and does not detect infection. https://github.com/interplains/zero-breach
 ! 291 domains; reviewed domains, all tiers. IP addresses are intentionally omitted (see the emitter).
 ! Historical attribution does not establish current ownership or activity. Bare adtimizer.co is excluded; named operational hosts remain.

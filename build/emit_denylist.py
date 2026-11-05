@@ -39,7 +39,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 "..", "scan"))
 
-from zbtriage import iocs as iocmod  # noqa: E402
+from securail import iocs as iocmod  # noqa: E402
 
 SOURCE_NOTE = ("AdFection / Candiru indicators. Curated from public reporting "
                "(The Citizen Lab, Confiant, Recorded Future, Microsoft, ESET, "
@@ -95,7 +95,7 @@ def _asof_stamp(ioc_set):
 def _header(fmt, comment, domains, include_historical, stamp):
     scope = "reviewed domains, all tiers" if include_historical else "historical tier excluded"
     lines = [
-        "{} zbtriage denylist ({}) - generated {}".format(comment, fmt, stamp),
+        "{} securail denylist ({}) - generated {}".format(comment, fmt, stamp),
         "{} {}".format(comment, SOURCE_NOTE),
         "{} {} domains; {}. IP addresses are intentionally omitted (see the "
         "emitter).".format(comment, len(domains), scope),

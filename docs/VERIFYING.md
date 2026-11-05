@@ -32,7 +32,7 @@ repository source, so you can regenerate it from the release's tag and compare:
 
     git checkout v2.0.0
     python build/bundle.py
-    sha256sum dist/zero-breach-toolkit.py
+    sha256sum dist/securail.py
 
 If the hash matches the one published with the release, that file holds this source and
 nothing else. The build is deterministic, so a mismatch means something is wrong, not
@@ -64,7 +64,7 @@ is checked against the single-file Python build before it is published, and GitH
 a signed attestation of exactly which workflow, commit and runner produced each file. With
 the [GitHub CLI](https://cli.github.com/):
 
-    gh attestation verify zero-breach-toolkit-windows-x64.exe --repo interplains/Zero-Breach-Toolkit
+    gh attestation verify securail-windows-x64.exe --repo interplains/Zero-Breach-Toolkit
 
 From 2.0.4 on, the programs' checksums are also signed with the release key, which does not
 depend on GitHub. Download `SHA256SUMS-programs.txt` and its `.asc` file beside the programs:

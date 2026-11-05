@@ -9,7 +9,7 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.modules import hashscan
+from securail.modules import hashscan
 
 SCAN = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,7 +37,7 @@ def test_missing_user_dirs_file_is_fine(tmp_path):
 _PROBE = r'''
 import os, sys
 sys.path.insert(0, sys.argv[1])
-from zbtriage.modules import browser
+from securail.modules import browser
 home = os.environ["HOME"]
 chromium = dict(browser._chromium_roots())
 firefox = [p for p, _ in browser._firefox_roots()]

@@ -5,7 +5,7 @@ Free code signing provided by [SignPath.io](https://about.signpath.io), certific
 
 ## What is signed
 
-Only the Windows program, `zero-breach-toolkit-windows-x64.exe`. It is built by GitHub Actions
+Only the Windows program, `securail-windows-x64.exe`. It is built by GitHub Actions
 from the tagged source in this repository (`.github/workflows/programs.yml`), sent to SignPath
 for signing, checked again after signing, and only then attached to the release with a public
 build attestation. Nothing built anywhere else is signed. A maintainer approves every release

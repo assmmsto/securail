@@ -43,9 +43,9 @@ import sqlite3
 import tarfile
 from pathlib import Path
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import ios
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import ios
 
 DOMAIN = "sweep.invalid"
 PROCESS = "sweepd"

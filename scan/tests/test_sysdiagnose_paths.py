@@ -6,8 +6,8 @@ import tarfile
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import ios_sources
-from zbtriage.modules import ios
+from securail import ios_sources
+from securail.modules import ios
 
 IPS = b'{"bug_type":"109","procName":"x"}\n'
 

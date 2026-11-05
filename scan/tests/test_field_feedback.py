@@ -13,11 +13,11 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import workflow
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import android, browser, hashscan, traces
-from zbtriage.result import ModuleResult
+from securail import workflow
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import android, browser, hashscan, traces
+from securail.result import ModuleResult
 from test_evidence_safety import _ctx, safety_api  # noqa: F401
 from test_followup_fixes import bundle  # noqa: F401
 
@@ -40,7 +40,7 @@ def test_windows_sharing_violation_is_still_a_lock(monkeypatch):
 
 
 def test_summary_groups_macos_privacy_gaps():
-    from zbtriage.report import _gap_lines
+    from securail.report import _gap_lines
     lines = _gap_lines(["browser/safari:safari-tabs: macOS privacy protection blocked Safari (SafariTabs.db), "
                         "so it was not checked. Give Terminal Full Disk Access (System Settings > Privacy & "
                         "Security > Full Disk Access), then run again."])
@@ -121,7 +121,7 @@ def test_root_of_only_unopened_folders_does_not_claim_candidate_files(tmp_path, 
 
 
 def test_summary_counts_unopened_folders_apart_from_program_files():
-    from zbtriage.report import _gap_lines
+    from securail.report import _gap_lines
     lines = _gap_lines([
         "hash/root:/Users/x/Downloads (partial): 1 of 47 candidate file(s) under this root were "
         "not compared against the known hashes (1 over 120 MB); 12 folder(s) or item(s) under "
@@ -180,9 +180,9 @@ def test_report_cannot_replace_a_file_the_hash_check_reads(tmp_path, monkeypatch
 
 
 @pytest.mark.parametrize("content", [
-    json.dumps({"schema_version": "1.6", "tool": {"name": "zero-breach-toolkit"}}).encode(),
+    json.dumps({"schema_version": "1.6", "tool": {"name": "securail"}}).encode(),
     b'{ "schema_version" "zero-breach-example" THIS IS NOT VALID JSON',
-    b"Zero Breach Toolkit 0.1.2 - spyware indicator check",
+    b"Securail 0.1.2 - spyware indicator check",
 ])
 def test_no_existing_file_in_a_hashed_folder_is_replaced_whatever_it_contains(tmp_path, monkeypatch, content):
     target = tmp_path / "Downloads" / "report.json"
@@ -259,7 +259,7 @@ def test_android_file_fingerprint_coverage_is_reported(tmp_path, records, expect
 
 
 def test_invisible_characters_are_removed_from_report_and_handoff_text():
-    from zbtriage import contract, report
+    from securail import contract, report
     hidden = "\u200b\u200d\u2060fearevolve.com\u200b\u200d\u2060\ufeff\u00ad\u200e"
     for clean in (report._safe_text(hidden), contract.sanitize_untrusted(hidden)):
         assert clean == "fearevolve.com"

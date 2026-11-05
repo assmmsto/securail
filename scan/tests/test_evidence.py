@@ -26,11 +26,11 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import iocs as iocmod  # noqa: E402
-from zbtriage import report  # noqa: E402
-from zbtriage.context import ScanContext  # noqa: E402
-from zbtriage.modules import browser  # noqa: E402
-from zbtriage.result import Hit, ModuleResult, PARTIAL, UNKNOWN  # noqa: E402
+from securail import iocs as iocmod  # noqa: E402
+from securail import report  # noqa: E402
+from securail.context import ScanContext  # noqa: E402
+from securail.modules import browser  # noqa: E402
+from securail.result import Hit, ModuleResult, PARTIAL, UNKNOWN  # noqa: E402
 
 TEST_DOMAIN = "synthetic-test-indicator.invalid"
 
@@ -210,7 +210,7 @@ class TestReportWording(unittest.TestCase):
         fingerprint matches a published sample must be a SERIOUS finding with the
         preserve-the-evidence instructions, never 'probably not a sign of
         compromise'. This regressed once (hashscan set no evidence grade)."""
-        from zbtriage.result import EV_ON_DISK
+        from securail.result import EV_ON_DISK
         text = report.render_human(self.doc([
             Hit("deadbeef" * 8, r"C:\Users\x\AppData\Roaming\evil.dll",
                 "sample", "sample", "primary", "s", EV_ON_DISK)]))
@@ -220,7 +220,7 @@ class TestReportWording(unittest.TestCase):
         self.assertIn("Do NOT delete", text)
 
     def test_persistence_is_never_reported_as_harmless(self):
-        from zbtriage.result import EV_PERSISTENCE
+        from securail.result import EV_PERSISTENCE
         text = report.render_human(self.doc([
             Hit("b.example", r"HKCU\...\InprocServer32", "COM", "cc", "primary",
                 "s", EV_PERSISTENCE)]))
@@ -273,7 +273,7 @@ class TestBlockedDnsLookupIsNotContact(unittest.TestCase):
     """
 
     def _cache_result(self, data):
-        from zbtriage.modules import host
+        from securail.modules import host
         tmp = tempfile.mkdtemp(prefix="dnscache_")
         ctx = make_ctx(tmp)
         rows = [{"Entry": TEST_DOMAIN, "Name": TEST_DOMAIN,
@@ -296,7 +296,7 @@ class TestBlockedDnsLookupIsNotContact(unittest.TestCase):
             self.assertTrue(any("without any lookup" in note for note in r.notes))
 
     def test_real_address_is_a_dns_record_without_proof_of_contact(self):
-        from zbtriage.result import EV_DNS
+        from securail.result import EV_DNS
         r = self._cache_result("192.0.2.10")
         self.assertEqual(len(r.hits), 1)
         self.assertEqual(r.hits[0].evidence, EV_DNS)
@@ -306,7 +306,7 @@ class TestBlockedDnsLookupIsNotContact(unittest.TestCase):
 
 class TestDnsLogIsNotProofOfContact(unittest.TestCase):
     def disabled_log(self, records, events, error=""):
-        from zbtriage.modules import host
+        from securail.modules import host
         with tempfile.TemporaryDirectory(prefix="dnslog_off_") as tmp:
             result = ModuleResult("host")
             replies = [([{"IsEnabled": False, "RecordCount": records}], "")]
@@ -356,7 +356,7 @@ class TestDnsLogIsNotProofOfContact(unittest.TestCase):
         self.assertTrue(any(c.name == "dns-log-recording" and not c.ran for c in result.checks))
 
     def test_dns_match_after_old_20000_event_limit_is_read(self):
-        from zbtriage.modules import host
+        from securail.modules import host
         with tempfile.TemporaryDirectory(prefix="dnslog_extended_") as tmp:
             ctx = make_ctx(tmp)
             result = ModuleResult("host")
@@ -373,7 +373,7 @@ class TestDnsLogIsNotProofOfContact(unittest.TestCase):
         self.assertFalse(any(c.name == "dns-log-older-events" for c in result.checks))
 
     def test_retained_older_dns_events_are_a_coverage_gap(self):
-        from zbtriage.modules import host
+        from securail.modules import host
         with tempfile.TemporaryDirectory(prefix="dnslog_cap_") as tmp:
             ctx = make_ctx(tmp)
             result = ModuleResult("host")
@@ -389,8 +389,8 @@ class TestDnsLogIsNotProofOfContact(unittest.TestCase):
         self.assertIn("-MaxEvents 50000", query.call_args_list[1].args[0])
 
     def test_failed_nxdomain_lookup_remains_dns_evidence(self):
-        from zbtriage.modules import host
-        from zbtriage.result import EV_DNS
+        from securail.modules import host
+        from securail.result import EV_DNS
         with tempfile.TemporaryDirectory(prefix="dnslog_") as tmp:
             ctx = make_ctx(tmp)
             result = ModuleResult("host")

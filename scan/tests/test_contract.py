@@ -1,4 +1,4 @@
-"""The machine-readable contract (zbtriage/contract.py).
+"""The machine-readable contract (securail/contract.py).
 
 The toolkit is run by people and by AI assistants for people who may be spyware
 targets. These tests pin what a script or an assistant relies on:
@@ -24,9 +24,9 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import cli, contract, report  # noqa: E402
-from zbtriage.iocs import TYPE_DOMAIN, Indicator, IocSet  # noqa: E402
-from zbtriage.result import EV_CONTACTED, EV_ON_DISK, Hit, ModuleResult  # noqa: E402
+from securail import cli, contract, report  # noqa: E402
+from securail.iocs import TYPE_DOMAIN, Indicator, IocSet  # noqa: E402
+from securail.result import EV_CONTACTED, EV_ON_DISK, Hit, ModuleResult  # noqa: E402
 
 PLATFORM = {"system": "Synthetic", "release": "test", "version": "test",
             "machine": "test", "python": "test"}
@@ -166,7 +166,7 @@ class TestDescribe(unittest.TestCase):
         """Any literal check name a module (or the CLI) reports must be described,
         so an assistant planning from --describe never meets an unknown check."""
         here = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                            "zbtriage")
+                            "securail")
         sources = [os.path.join(here, "cli.py")] + [
             os.path.join(here, "modules", f) for f in os.listdir(os.path.join(here, "modules"))
             if f.endswith(".py")]

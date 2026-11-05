@@ -4,7 +4,7 @@ import os
 import tempfile
 import unittest
 
-from zbtriage import feeds
+from securail import feeds
 
 CSV_HEADER = "uuid,event_id,category,type,value,comment,to_ids,date\n"
 

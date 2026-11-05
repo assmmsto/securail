@@ -18,8 +18,8 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPO = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 
-from zbtriage import cli  # noqa: E402
-from zbtriage.iocs import (IocError, TYPE_APP_ID, TYPE_DOMAIN, TYPE_SHA1, TYPE_SHA256, load,  # noqa: E402
+from securail import cli  # noqa: E402
+from securail.iocs import (IocError, TYPE_APP_ID, TYPE_DOMAIN, TYPE_SHA1, TYPE_SHA256, load,  # noqa: E402
                            load_any, merge)
 
 TARGETED = os.path.join(REPO, "iocs", "curated_targeted.txt")
@@ -237,8 +237,8 @@ class TestShippedDefaults(unittest.TestCase):
 
 class TestAndroidCollectionWithShippedSets(unittest.TestCase):
     def test_package_name_and_app_file_fingerprint_are_found(self):
-        from zbtriage.context import ScanContext
-        from zbtriage.modules import android
+        from securail.context import ScanContext
+        from securail.modules import android
         merged = merge([load_any(p) for p in cli._default_ioc_paths()])
         henbox = ONE_HASH_PER_SOURCE["unit42-henbox-2018-03"]
         d = tempfile.mkdtemp(prefix="aqf_")

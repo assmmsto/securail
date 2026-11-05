@@ -21,9 +21,9 @@ import time
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = sys.argv[1] if len(sys.argv) > 1 else ROOT
 OUT = (sys.argv[2] if len(sys.argv) > 2
-       else os.path.join(SRC, "dist", "zero-breach-toolkit.py"))
+       else os.path.join(SRC, "dist", "securail.py"))
 
-PKG = os.path.join(SRC, "scan", "zbtriage")
+PKG = os.path.join(SRC, "scan", "securail")
 import importlib.util
 _build_reader_spec = importlib.util.spec_from_file_location("_build_readers", os.path.join(PKG, "readers.py"))
 _build_readers = importlib.util.module_from_spec(_build_reader_spec)
@@ -173,7 +173,7 @@ ioc_mtime = _asof_epoch(ioc_text)
 
 A('#!/usr/bin/env python3')
 A('# -*- coding: utf-8 -*-')
-A('"""Zero Breach (single-file build) - local check for published AdFection /')
+A('"""Securail (single-file build) - local check for published AdFection /')
 A('Candiru spyware indicators.')
 A('')
 A('WHAT THIS IS')
@@ -213,14 +213,14 @@ A('  Optional Candiru rules retain their separate DRL 1.1 / CC BY-SA 4.0')
 A('  licences and author credits, embedded below with their provenance.')
 A('  Copyright 2026 archivegenocide.com. Provided AS IS, without warranty.')
 A('  Full text, and the sources every indicator came from:')
-A('    https://github.com/interplains/Zero-Breach-Toolkit')
+A('    https://github.com/assmmsto/securail')
 A('  NOT affiliated with, and NOT endorsed by, The Citizen Lab, Confiant,')
 A('  Recorded Future, Amnesty International or Access Now.')
 A('')
 A('USAGE')
-A('  python -X utf8 zero-breach-toolkit.py')
-A('  python -X utf8 zero-breach-toolkit.py --json report.json')
-A('  python -X utf8 zero-breach-toolkit.py --patterns   # optional YARA-X setup required')
+A('  python -X utf8 securail.py')
+A('  python -X utf8 securail.py --json report.json')
+A('  python -X utf8 securail.py --patterns   # optional YARA-X setup required')
 A('')
 A('Requires Python 3.8 or newer. Needs no administrator. All supported platforms')
 A('get browser and file checks; Windows also gets host checks.')
@@ -400,7 +400,7 @@ def _bundle_parser():
                         "one; repeat to combine. Accepts the curated format and "
                         "STIX 2 bundles (.stix2 / .json)")
     p.add_argument("--version", action="version",
-                   version="Zero Breach Toolkit " + __version__)
+                   version="Securail " + __version__)
     p.add_argument("--quick", action="store_true",
                    help="skip candidate-file fingerprinting (roughly halves the "
                         "runtime). The skipped check is reported as a gap, not "

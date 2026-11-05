@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from test_evidence_safety import _ctx, safety_api
 from test_followup_fixes import bundle
-from zbtriage.iocs import Indicator, IocSet
+from securail.iocs import Indicator, IocSet
 
 
 def _binarycookies(domains):
@@ -135,7 +135,7 @@ def test_repeated_download_url_keeps_each_records_grade(tmp_path, monkeypatch, s
 
 def test_report_cannot_replace_safari_sandbox_files(tmp_path, monkeypatch, safety_api):
     import argparse
-    from zbtriage import workflow
+    from securail import workflow
     root = _safari(tmp_path)
     tabs = tmp_path / "Library" / "Containers" / "com.apple.Safari" / "Data" / "Library" / "Safari" / "CloudTabs.db"
     cookies = tmp_path / "Library" / "Cookies" / "Cookies.binarycookies"
@@ -143,7 +143,7 @@ def test_report_cannot_replace_safari_sandbox_files(tmp_path, monkeypatch, safet
     cookies.write_bytes(b"cook")
     api = safety_api.browser
     monkeypatch.setattr(api, "_browser_safari_roots", lambda: [("safari", str(root))])
-    from zbtriage.modules import browser as source_browser
+    from securail.modules import browser as source_browser
     monkeypatch.setattr(source_browser, "_browser_safari_roots", lambda: [("safari", str(root))])
     guard = getattr(safety_api.entry, "workflow_output_guard", None) or workflow.workflow_output_guard
     for target in (tabs, cookies):

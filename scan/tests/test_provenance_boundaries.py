@@ -14,8 +14,8 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import iocs, report, stix
-from zbtriage.result import Hit, ModuleResult
+from securail import iocs, report, stix
+from securail.result import Hit, ModuleResult
 from test_evidence_safety import _ctx, safety_api
 from test_followup_fixes import bundle
 from test_handoff import handoff_api, handoff_document
@@ -30,7 +30,7 @@ from test_stix_import import bundle as stix_document
 def test_empty_optional_curated_columns_keep_their_positions(tmp_path, safety_api, columns):
     path = tmp_path / "curated.txt"
     path.write_text("\t".join(columns) + "\n", encoding="utf-8")
-    api = iocs if safety_api.entry.__name__ == "zbtriage.cli" else safety_api.entry
+    api = iocs if safety_api.entry.__name__ == "securail.cli" else safety_api.entry
     ind = api.load(str(path)).indicators[0]
     assert (ind.source, ind.family) == columns[3:]
 
@@ -43,7 +43,7 @@ def test_empty_optional_curated_columns_keep_their_positions(tmp_path, safety_ap
 def test_malformed_curated_columns_are_refused(tmp_path, safety_api, row):
     path = tmp_path / "curated.txt"
     path.write_text(row + "\n", encoding="utf-8")
-    api = iocs if safety_api.entry.__name__ == "zbtriage.cli" else safety_api.entry
+    api = iocs if safety_api.entry.__name__ == "securail.cli" else safety_api.entry
     with pytest.raises(api.IocError):
         api.load(str(path))
 
@@ -59,7 +59,7 @@ def test_curated_duplicates_preserve_attribution_or_refuse_conflicting_classific
         rows.reverse()
     path = tmp_path / "curated.txt"
     path.write_text("\n".join(rows + rows) + "\n", encoding="utf-8")
-    api = iocs if safety_api.entry.__name__ == "zbtriage.cli" else safety_api.entry
+    api = iocs if safety_api.entry.__name__ == "securail.cli" else safety_api.entry
     if conflict != "none":
         with pytest.raises(api.IocError, match="conflicting.*classification"):
             api.load(str(path))
@@ -81,7 +81,7 @@ def test_conflicting_curated_rows_stop_before_scan_or_report(tmp_path, safety_ap
     feed.write_text("fixture.invalid\tcc\tprimary\nfixture.invalid\tstalkerware\tprimary\n",
                     encoding="utf-8")
     output = tmp_path / "report.json"
-    dispatch = "_run_modules" if safety_api.entry.__name__ == "zbtriage.cli" else "reader_run"
+    dispatch = "_run_modules" if safety_api.entry.__name__ == "securail.cli" else "reader_run"
     with patch.object(safety_api.entry, dispatch, side_effect=AssertionError("scan must not start")):
         code = safety_api.entry.main(["--no-menu", "--no-feeds", "--iocs", str(feed), "--json", str(output)])
     assert code == 1
@@ -90,7 +90,7 @@ def test_conflicting_curated_rows_stop_before_scan_or_report(tmp_path, safety_ap
 
 
 def test_repeated_feed_merges_keep_each_attribution_once(safety_api):
-    api = iocs if safety_api.entry.__name__ == "zbtriage.cli" else safety_api.entry
+    api = iocs if safety_api.entry.__name__ == "securail.cli" else safety_api.entry
     first = api.IocSet([api.Indicator("fixture.invalid", "cc", "primary", "domain", "Publisher Alpha", "Family Alpha")], "alpha", None)
     second = api.IocSet([api.Indicator("fixture.invalid", "infrastructure", "primary", "domain", "Publisher Beta", "Family Beta")], "beta", None)
     merged = api.merge([api.merge([first, second]), first, second])
@@ -104,7 +104,7 @@ def test_repeated_feed_merges_keep_each_attribution_once(safety_api):
 @pytest.mark.parametrize("kind", ("curated", "stix", "merge"))
 @pytest.mark.parametrize("count", (256, 257))
 def test_excessive_distinct_assertions_are_refused_instead_of_truncated(tmp_path, safety_api, kind, count):
-    api = iocs if safety_api.entry.__name__ == "zbtriage.cli" else safety_api.entry
+    api = iocs if safety_api.entry.__name__ == "securail.cli" else safety_api.entry
     error = api.IocError
     if kind == "curated":
         path = tmp_path / "many.txt"
@@ -130,7 +130,7 @@ def test_excessive_distinct_assertions_are_refused_instead_of_truncated(tmp_path
 
 @pytest.mark.parametrize("problem", ("encoding", "line", "total", "growth"))
 def test_unreadable_or_oversized_curated_files_have_explicit_errors(tmp_path, safety_api, problem):
-    api = iocs if safety_api.entry.__name__ == "zbtriage.cli" else safety_api.entry
+    api = iocs if safety_api.entry.__name__ == "securail.cli" else safety_api.entry
     path = tmp_path / "bad.txt"
     raw = b"fixture.invalid\tcc\tprimary\n"
     if problem == "encoding":
@@ -154,7 +154,7 @@ def test_unreadable_or_oversized_curated_files_have_explicit_errors(tmp_path, sa
 
 
 def test_identical_repeated_assertions_do_not_use_up_the_distinct_limit(tmp_path, safety_api):
-    api = iocs if safety_api.entry.__name__ == "zbtriage.cli" else safety_api.entry
+    api = iocs if safety_api.entry.__name__ == "securail.cli" else safety_api.entry
     path = tmp_path / "repeated.txt"
     path.write_text("fixture.invalid\tcc\tprimary\tPublisher\tFamily\n" * 1000, encoding="utf-8")
     loaded = api.load(str(path))
@@ -171,7 +171,7 @@ def test_duplicate_stix_values_keep_each_family_and_its_assertion(tmp_path, safe
         doc["objects"].reverse()
     path = tmp_path / "families.stix2"
     path.write_text(json.dumps(doc), encoding="utf-8")
-    built = safety_api.entry.__name__ != "zbtriage.cli"
+    built = safety_api.entry.__name__ != "securail.cli"
     importer = safety_api.entry if built else stix
     loader = safety_api.entry if built else iocs
     loaded = importer.load_stix(str(path))

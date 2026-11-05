@@ -2,9 +2,9 @@
 import sys
 from types import SimpleNamespace
 
-from zbtriage import gui, netconns, workflow
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.report import V_HITS, V_NONE, V_NONE_WITH_GAPS, V_REFERENCES
+from securail import gui, netconns, workflow
+from securail.iocs import Indicator, IocSet
+from securail.report import V_HITS, V_NONE, V_NONE_WITH_GAPS, V_REFERENCES
 
 
 def _doc(status, gaps=()):
@@ -72,7 +72,7 @@ def test_lsof_endpoint_split():
 
 
 def test_window_offers_every_training_example():
-    from zbtriage.training import TRAINING_SCENARIOS
+    from securail.training import TRAINING_SCENARIOS
     assert "training" in [key for key, _label, _note in gui.GUI_CHECKS]
     assert sorted(k for _label, k in gui.GUI_TRAINING_LABELS) == sorted(TRAINING_SCENARIOS)
 
@@ -82,7 +82,7 @@ def test_training_is_stamped_in_what_the_window_saves(tmp_path):
     # so the training marker has to be added there or a saved report from the
     # window would look like a real check.
     import datetime
-    from zbtriage import cli, report, training
+    from securail import cli, report, training
     args = cli._parse(["--training", "spyware", "--no-menu", "--no-banner"])
     training.training_prepare(args)
     try:
@@ -97,7 +97,7 @@ def test_training_is_stamped_in_what_the_window_saves(tmp_path):
 
 def test_a_real_check_carries_no_training_stamp():
     import datetime
-    from zbtriage import cli, report
+    from securail import cli, report
     args = cli._parse(["--scan-type", "browser", "--no-menu", "--no-banner"])
     doc = report.prepare_document(IocSet([], "", 0), [], datetime.datetime.now(), args)
     assert "training" not in doc

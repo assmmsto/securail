@@ -15,9 +15,9 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import bidi, gui, report, scope  # noqa: E402
-from zbtriage import i18n  # noqa: E402
-from zbtriage.i18n import T, i18n_set  # noqa: E402
+from securail import bidi, gui, report, scope  # noqa: E402
+from securail import i18n  # noqa: E402
+from securail.i18n import T, i18n_set  # noqa: E402
 
 from test_gui_layout import WindowCase  # noqa: E402
 
@@ -57,7 +57,7 @@ class TestPhoneGuides(unittest.TestCase):
         with patch.object(sys, "frozen", False, create=True):
             for platform in ("ios", "android"):
                 text = gui.gui_guide_text(platform)
-                self.assertIn("python -X utf8 scan/zero-breach-toolkit.py --phone", text)
+                self.assertIn("python -X utf8 scan/securail.py --phone", text)
         self.assertIn("--backup-password", scope.scope_guide("ios"))
 
     def test_the_guide_names_the_buttons_in_the_chosen_language(self):
@@ -237,7 +237,7 @@ class TestUpdateLines(unittest.TestCase):
 class TestFreshProfile(unittest.TestCase):
     def test_missing_until_a_list_is_downloaded(self):
         with tempfile.TemporaryDirectory() as cache:
-            with patch("zbtriage.feeds.default_cache_dir", lambda: cache):
+            with patch("securail.feeds.default_cache_dir", lambda: cache):
                 self.assertTrue(gui.gui_lists_missing())
                 with open(os.path.join(cache, "manifest.json"), "w", encoding="utf-8") as fh:
                     json.dump({"sources": {"a": {"file": "a.txt"}}}, fh)
@@ -247,7 +247,7 @@ class TestFreshProfile(unittest.TestCase):
         with tempfile.TemporaryDirectory() as cache:
             with open(os.path.join(cache, "manifest.json"), "w", encoding="utf-8") as fh:
                 fh.write("{broken")
-            with patch("zbtriage.feeds.default_cache_dir", lambda: cache):
+            with patch("securail.feeds.default_cache_dir", lambda: cache):
                 self.assertFalse(gui.gui_lists_missing())
 
 

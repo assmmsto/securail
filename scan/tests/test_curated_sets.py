@@ -20,8 +20,8 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPO = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 
-from zbtriage import feeds  # noqa: E402
-from zbtriage.iocs import TYPE_DOMAIN, TYPE_IP, TYPE_SHA256, load  # noqa: E402
+from securail import feeds  # noqa: E402
+from securail.iocs import TYPE_DOMAIN, TYPE_IP, TYPE_SHA256, load  # noqa: E402
 
 CURATED = os.path.join(REPO, "iocs", "curated_mercenary.txt")
 GENERATOR = os.path.join(REPO, "tools", "gen_curated_mercenary.py")

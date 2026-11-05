@@ -7,7 +7,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from zbtriage.evidence import evidence_correlations
+from securail.evidence import evidence_correlations
 from test_evidence_safety import _ctx, safety_api
 from test_followup_fixes import bundle
 from test_ios_upgrade import backup, db_bytes

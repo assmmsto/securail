@@ -5,13 +5,13 @@ This is the single command that turns iocs/adfection_iocs.txt into everything
 that ships: the STIX and MISP feeds, the DNS/ad blocklists, the indicator
 checksum, and the single-file build. It is deterministic - run it on a fresh
 checkout and you get byte-identical output - which is what lets anyone verify
-that the published zero-breach-toolkit.py was built from exactly this source.
+that the published securail.py was built from exactly this source.
 
 Usage:
     python build/build.py            # regenerate dist/ and the standalone
     python build/build.py --check    # also fail if anything is now out of date
 
-The standalone is written to dist/zero-breach-toolkit.py. Its SHA-256 is printed at the
+The standalone is written to dist/securail.py. Its SHA-256 is printed at the
 end; that is the value to publish in the release notes so people can verify their
 download.
 """
@@ -28,7 +28,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IOC = os.path.join(ROOT, "iocs", "adfection_iocs.txt")
 DIST = os.path.join(ROOT, "dist")
-STANDALONE = os.path.join(DIST, "zero-breach-toolkit.py")
+STANDALONE = os.path.join(DIST, "securail.py")
 
 
 def _run(script, *args):
@@ -57,14 +57,14 @@ def main(argv=None):
     args = p.parse_args(argv)
 
     if args.expect_version:
-        init = io.open(os.path.join(ROOT, "scan", "zbtriage", "__init__.py"),
+        init = io.open(os.path.join(ROOT, "scan", "securail", "__init__.py"),
                        encoding="utf-8").read()
         import re as _re
         found = _re.search(r'__version__\s*=\s*"([^"]+)"', init)
         found = found.group(1) if found else "(unreadable)"
         if found != args.expect_version:
             print("\nERROR: package __version__ is {!r} but the release "
-                  "being cut is {!r}. Update scan/zbtriage/__init__.py "
+                  "being cut is {!r}. Update scan/securail/__init__.py "
                   "before building.".format(found, args.expect_version),
                   file=sys.stderr)
             return 1

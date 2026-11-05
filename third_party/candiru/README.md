@@ -11,7 +11,7 @@ were decoded to reproduce the displayed rule. Its disclaimer is retained.
 
 `PROVENANCE.json` records retrieval time, source URLs, rule metadata, the source
 page hash, and SHA-256 hashes of vendored rule/license bytes. The embedded strings
-in `scan/zbtriage/candiru_rules.py` reproduce the rule bytes exactly when
+in `scan/securail/candiru_rules.py` reproduce the rule bytes exactly when
 encoded as UTF-8, preserving their separate third-party licensing. These files
 are a collection of separately licensed rules; project licensing does not
 replace their licenses. No author endorsement is implied.

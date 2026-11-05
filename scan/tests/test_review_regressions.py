@@ -27,11 +27,11 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(_HERE))   # scan/
 sys.path.insert(0, _HERE)                    # the tests dir, for the shared harness
 
-from zbtriage import iocs as iocmod                        # noqa: E402
-from zbtriage import report                                # noqa: E402
-from zbtriage.context import ScanContext                   # noqa: E402
-from zbtriage.modules import browser, hashscan             # noqa: E402
-from zbtriage.result import (CLEAN, EV_CONTACTED,          # noqa: E402
+from securail import iocs as iocmod                        # noqa: E402
+from securail import report                                # noqa: E402
+from securail.context import ScanContext                   # noqa: E402
+from securail.modules import browser, hashscan             # noqa: E402
+from securail.result import (CLEAN, EV_CONTACTED,          # noqa: E402
                                EV_ON_DISK, EV_REFERENCED)
 
 from test_browser_launch import (BrowserLaunchBase,          # noqa: E402

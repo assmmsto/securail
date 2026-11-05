@@ -15,9 +15,9 @@ sys.path[:0] = [os.path.dirname(os.path.dirname(__file__)), os.path.dirname(__fi
 from test_browser_launch import (BrowserLaunchBase, FirefoxArtifactBase,
                                  TEST_DOMAIN, chromium_cookie_db,
                                  chromium_history_db)
-from zbtriage import localpaths
-from zbtriage.modules import browser, hashscan, host
-from zbtriage.result import ModuleResult
+from securail import localpaths
+from securail.modules import browser, hashscan, host
+from securail.result import ModuleResult
 
 
 class TestBrowserLaunchSafety(BrowserLaunchBase):
@@ -251,7 +251,7 @@ class TestLocalPathGuard(BrowserLaunchBase):
         self.assertNotIn(child, touched)
 
     def test_hash_root_is_guarded_before_walk(self):
-        from zbtriage.iocs import Indicator
+        from securail.iocs import Indicator
         self.ctx.iocs.indicators.append(Indicator("a" * 64, "sample", "primary", "sha256"))
         with patch.object(hashscan, "_roots", return_value=[self.tmp]), \
              patch.object(hashscan, "path_problem", return_value="remote root") as guard, \

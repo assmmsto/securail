@@ -16,10 +16,10 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import cli
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import browser, ios
+from securail import cli
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import browser, ios
 from test_ios_upgrade import backup, db_bytes
 from test_followup_fixes import bundle
 

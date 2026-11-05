@@ -30,7 +30,7 @@ from pathlib import Path
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOMAIN = "program-smoke.invalid"
-PAYLOAD = b"Harmless Zero Breach program check bytes; not malware.\n"
+PAYLOAD = b"Harmless Securail program check bytes; not malware.\n"
 NEEDS_PASSWORD = "needs --backup-password"
 
 
@@ -93,7 +93,7 @@ def pair(program, single, base, label, args, feed):
 
 def main():
     program = os.path.abspath(sys.argv[1])
-    single = os.path.abspath(sys.argv[2]) if len(sys.argv) > 2 else os.path.join(ROOT, "dist", "zero-breach-toolkit.py")
+    single = os.path.abspath(sys.argv[2]) if len(sys.argv) > 2 else os.path.join(ROOT, "dist", "securail.py")
     problems = []
     with tempfile.TemporaryDirectory(prefix="zbt-program-smoke-") as base:
         target, feed = fixture(base)

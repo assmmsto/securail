@@ -6,9 +6,9 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import android
-from zbtriage.result import ModuleResult
+from securail.iocs import Indicator, IocSet
+from securail.modules import android
+from securail.result import ModuleResult
 from test_evidence_safety import _ctx
 from test_followup_fixes import bundle
 

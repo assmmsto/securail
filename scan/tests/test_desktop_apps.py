@@ -20,10 +20,10 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.context import ScanContext  # noqa: E402
-from zbtriage.iocs import Indicator, IocSet  # noqa: E402
-from zbtriage.modules import browser  # noqa: E402
-from zbtriage.result import EV_CONTACTED  # noqa: E402
+from securail.context import ScanContext  # noqa: E402
+from securail.iocs import Indicator, IocSet  # noqa: E402
+from securail.modules import browser  # noqa: E402
+from securail.result import EV_CONTACTED  # noqa: E402
 
 BAD = "bad-c2.example"
 

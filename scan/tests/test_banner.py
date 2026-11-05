@@ -19,7 +19,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import banner, cli  # noqa: E402
+from securail import banner, cli  # noqa: E402
 
 
 class FakeTerminal(io.StringIO):
@@ -44,6 +44,18 @@ class TestRender(unittest.TestCase):
     def test_no_colour_codes_unless_asked(self):
         self.assertNotIn("\x1b[", banner.render_banner("0.1.0", width=120, color=False))
         self.assertIn("\x1b[38;2;", banner.render_banner("0.1.0", width=120, color=True))
+
+    def test_every_letter_is_the_same_width(self):
+        for glyphs, cell in ((banner._BN_GLYPHS, banner._BN_CELL),
+                             (banner._BN_SMALL, banner._BN_SMALL_CELL)):
+            for ch in banner._BN_TITLE:
+                widths = {len(row) for row in glyphs[ch]}
+                self.assertEqual(len(widths), 1, (ch, glyphs[ch]))
+                self.assertLessEqual(widths.pop(), cell + 1, ch)
+
+    def test_tagline_names_the_check(self):
+        self.assertIn(banner._BN_TAGLINE, banner.render_banner("0.1.0", width=120))
+        self.assertEqual(banner._BN_TITLE, "SECURAIL")
 
 
 class TestWhenShown(unittest.TestCase):

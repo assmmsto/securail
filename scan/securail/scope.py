@@ -136,7 +136,7 @@ def scope_guide(platform):
  5. When AndroidQF finishes, it leaves a .zip file next to itself. Unzip it.
  6. Check the unzipped folder. Run this from inside the Zero-Breach-Toolkit
     folder, and keep the quotes around the folder path:
-      python -X utf8 scan/zero-breach-toolkit.py --phone "PATH TO THE UNZIPPED FOLDER"
+      python -X utf8 scan/securail.py --phone "PATH TO THE UNZIPPED FOLDER"
     Or open the menu (run the tool with no options), choose the phone check, and
     drag the unzipped folder into the window.
  7. Afterwards, turn USB debugging off again on the phone.
@@ -158,7 +158,7 @@ Things the collection did not include are listed in the report as not checked.
       Windows: %USERPROFILE%\\Apple\\MobileSync\\Backup\\
                (older iTunes: %APPDATA%\\Apple Computer\\MobileSync\\Backup\\)
  3. Run this from inside the Zero-Breach-Toolkit folder, keeping the quotes:
-      python -X utf8 scan/zero-breach-toolkit.py --phone "PATH TO THE BACKUP FOLDER" --backup-password
+      python -X utf8 scan/securail.py --phone "PATH TO THE BACKUP FOLDER" --backup-password
     Leave out --backup-password if the backup is not encrypted. The password is
     asked for privately and never saved.
     Or open the menu (run the tool with no options), choose the phone check, and

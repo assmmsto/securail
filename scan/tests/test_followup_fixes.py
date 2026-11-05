@@ -20,11 +20,11 @@ from unittest.mock import patch
 
 import pytest
 
-from zbtriage import cli, phoneguide, report
-from zbtriage.context import ScanContext, scan_recovery
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import android, browser, ios, traces
-from zbtriage.result import Hit, ModuleResult, EV_CONTACTED, EV_PERSISTENCE, EV_REFERENCED
+from securail import cli, phoneguide, report
+from securail.context import ScanContext, scan_recovery
+from securail.iocs import Indicator, IocSet
+from securail.modules import android, browser, ios, traces
+from securail.result import Hit, ModuleResult, EV_CONTACTED, EV_PERSISTENCE, EV_REFERENCED
 from test_expanded_capabilities import context, ios_fixture, BAD
 
 

@@ -17,10 +17,10 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.context import ScanContext  # noqa: E402
-from zbtriage.iocs import Indicator, IocSet  # noqa: E402
-from zbtriage.modules import traces  # noqa: E402
-from zbtriage.result import (CLEAN, EV_ATTEMPTED, EV_COMMAND, EV_CONTACTED, EV_ON_DISK,  # noqa: E402
+from securail.context import ScanContext  # noqa: E402
+from securail.iocs import Indicator, IocSet  # noqa: E402
+from securail.modules import traces  # noqa: E402
+from securail.result import (CLEAN, EV_ATTEMPTED, EV_COMMAND, EV_CONTACTED, EV_ON_DISK,  # noqa: E402
                              HITS, ModuleResult)
 
 BAD = "bad-c2.example"
@@ -298,7 +298,7 @@ class TestHermeticTestsStubEveryModule(unittest.TestCase):
     def test_every_scanned_module_is_stubbed(self):
         import contextlib
         from reader_fixtures import stub_registered_readers
-        from zbtriage.readers import READER_SPECS, reader_resolve
+        from securail.readers import READER_SPECS, reader_resolve
         with contextlib.ExitStack() as stack:
             patched = stub_registered_readers(stack)
             self.assertEqual(set(patched), {spec.name for spec in READER_SPECS})

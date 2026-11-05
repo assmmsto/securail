@@ -26,7 +26,7 @@ import zlib
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from test_android import check, collection  # noqa: E402
-from zbtriage.result import EV_DEVICE_LOG, EV_ON_DEVICE, EV_RECEIVED  # noqa: E402
+from securail.result import EV_DEVICE_LOG, EV_ON_DEVICE, EV_RECEIVED  # noqa: E402
 
 SPY = "com.spy.app"
 
@@ -252,8 +252,8 @@ class TestDamagedCollections(unittest.TestCase):
     def test_cli_keeps_the_report_if_the_module_itself_fails(self):
         import contextlib
         from unittest.mock import patch
-        from zbtriage import cli
-        from zbtriage.modules import android
+        from securail import cli
+        from securail.modules import android
         report = os.path.join(tempfile.mkdtemp(prefix="rep_"), "r.json")
 
         def boom(ctx):
@@ -274,10 +274,10 @@ class TestFamilySafetyAppIsNotSpywareAlarm(unittest.TestCase):
 
     def test_life360_case(self):
         import datetime as _dt
-        from zbtriage.context import ScanContext
-        from zbtriage.iocs import Indicator, IocSet
-        from zbtriage.modules import android
-        from zbtriage.report import build_document, render_summary
+        from securail.context import ScanContext
+        from securail.iocs import Indicator, IocSet
+        from securail.modules import android
+        from securail.report import build_document, render_summary
         app = "com.life360.android.safetymapd"
         d = collection(spy=False)
         pkgs = json.load(open(os.path.join(d, "packages.json")))
@@ -302,7 +302,7 @@ class TestFamilySafetyAppIsNotSpywareAlarm(unittest.TestCase):
         self.assertIn("phone-monitoring app is installed", r.hits[0].detail)
 
     def test_echap_app_ids_get_the_stalkerware_tier(self):
-        from zbtriage import feeds
+        from securail import feeds
         path = os.path.join(tempfile.mkdtemp(prefix="echap_"), "e.stix2")
         json.dump({"type": "bundle", "objects": [
             {"type": "indicator", "id": "indicator--1",

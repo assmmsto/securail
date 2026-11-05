@@ -1,4 +1,4 @@
-"""zbtriage/heuristics.py must stay DATA: it names download tools as patterns to
+"""securail/heuristics.py must stay DATA: it names download tools as patterns to
 look for, so it is exempt from the module network-tool guard - and that exemption
 is only safe while the file can never run anything."""
 
@@ -9,7 +9,7 @@ import os
 import unittest
 
 PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                    "zbtriage", "heuristics.py")
+                    "securail", "heuristics.py")
 
 
 class TestHeuristicsIsDataOnly(unittest.TestCase):

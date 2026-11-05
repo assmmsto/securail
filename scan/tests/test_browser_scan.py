@@ -17,9 +17,9 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import cli, menu, scope
-from zbtriage.modules import browser
-from zbtriage.readers import reader_select
+from securail import cli, menu, scope
+from securail.modules import browser
+from securail.readers import reader_select
 from test_expanded_capabilities import BAD, context
 from test_followup_fixes import bundle  # noqa: F401  (pytest fixture)
 

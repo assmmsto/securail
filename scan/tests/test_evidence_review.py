@@ -17,11 +17,11 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import report
-from zbtriage.evidence import _withdrawn_only
-from zbtriage.iocs import Indicator, IocSet, load_any
-from zbtriage.modules import browser
-from zbtriage.result import EV_CONTACTED, EV_REFERENCED, Hit, ModuleResult
+from securail import report
+from securail.evidence import _withdrawn_only
+from securail.iocs import Indicator, IocSet, load_any
+from securail.modules import browser
+from securail.result import EV_CONTACTED, EV_REFERENCED, Hit, ModuleResult
 from test_expanded_capabilities import BAD, context
 from test_followup_fixes import bundle  # noqa: F401  (pytest fixture)
 

@@ -9,9 +9,9 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import report
-from zbtriage.iocs import Indicator, IocSet, TYPE_DOMAIN, TYPE_IP, TYPE_SHA256
-from zbtriage.result import (Hit, ModuleResult, EV_ON_DISK, EV_PERSISTENCE,
+from securail import report
+from securail.iocs import Indicator, IocSet, TYPE_DOMAIN, TYPE_IP, TYPE_SHA256
+from securail.result import (Hit, ModuleResult, EV_ON_DISK, EV_PERSISTENCE,
                                EV_CONTACTED, EV_DNS, EV_ATTEMPTED,
                                EV_CONFIGURED, EV_REFERENCED)
 

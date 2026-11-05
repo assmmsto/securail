@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from zbtriage import gui
+from securail import gui
 
 
 def _without_ssh():

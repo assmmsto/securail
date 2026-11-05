@@ -33,8 +33,8 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import cli, contract, menu, training, workflow  # noqa: E402
-from zbtriage.iocs import load_any  # noqa: E402
+from securail import cli, contract, menu, training, workflow  # noqa: E402
+from securail.iocs import load_any  # noqa: E402
 
 
 def run(*argv, tmp):
@@ -94,7 +94,7 @@ class TestCellebriteScenario(TrainingCase):
         self.assertEqual(cli._parse(["--training", "cellebrite"]).training, "cellebrite")
 
     def test_the_phone_check_finds_cellebrite(self):
-        from zbtriage import devicetraces
+        from securail import devicetraces
         code, text, doc, _ = run("--training", "cellebrite", tmp=self.tmp)
         self.assertEqual(code, 2)
         self.assertEqual(doc["training"], training.training_marker(
@@ -114,13 +114,13 @@ class TestCellebriteScenario(TrainingCase):
     def test_the_finding_comes_from_the_detector_not_the_example(self):
         # With the phone check's Cellebrite rule switched off the example has
         # nothing to report: the finding is not written into it.
-        with patch("zbtriage.modules.android.dt_android_usb", return_value=[]):
+        with patch("securail.modules.android.dt_android_usb", return_value=[]):
             code, _text, doc, _ = run("--training", "cellebrite", tmp=self.tmp)
         self.assertEqual(doc["verdict"]["hits_total"], 0)
         self.assertNotEqual(code, 2)
 
     def test_the_log_holds_only_the_published_device_and_invented_values(self):
-        from zbtriage import devicetraces
+        from securail import devicetraces
         folder = os.path.join(self.tmp, "phone")
         os.mkdir(folder)
         training._trn_collection(folder, "cellebrite")
@@ -152,7 +152,7 @@ class TestCellebriteScenario(TrainingCase):
         # The window's own check thread, without drawing the window.
         import queue
         import threading
-        from zbtriage import gui
+        from securail import gui
         self.assertIn(("Phone seized (Cellebrite)", "cellebrite"), gui.GUI_TRAINING_LABELS)
         fake = SimpleNamespace(hooks=cli._gui_hooks(), stop_requested=threading.Event(),
                                events=queue.Queue())
@@ -183,8 +183,8 @@ class TestCellebriteScenario(TrainingCase):
         err = io.StringIO()
         with patch.object(sys, "stdin", io.StringIO("4\n5\n0\n")), \
                 patch.object(sys, "stderr", err), \
-                patch("zbtriage.report.share_summary", side_effect=AssertionError("exported")), \
-                patch("zbtriage.handoff.handoff_write", side_effect=AssertionError("exported")):
+                patch("securail.report.share_summary", side_effect=AssertionError("exported")), \
+                patch("securail.handoff.handoff_write", side_effect=AssertionError("exported")):
             workflow.workflow_menu(doc, SimpleNamespace())
         self.assertEqual(err.getvalue().count("Not available for a training example"), 2)
 
@@ -304,8 +304,8 @@ class TestMenus(TrainingCase):
         err = io.StringIO()
         with patch.object(sys, "stdin", io.StringIO("4\n5\n0\n")), \
                 patch.object(sys, "stderr", err), \
-                patch("zbtriage.report.share_summary", side_effect=AssertionError("exported")), \
-                patch("zbtriage.handoff.handoff_write", side_effect=AssertionError("exported")):
+                patch("securail.report.share_summary", side_effect=AssertionError("exported")), \
+                patch("securail.handoff.handoff_write", side_effect=AssertionError("exported")):
             workflow.workflow_menu(doc, SimpleNamespace())
         self.assertIn("Not available for a training example", err.getvalue())
 
@@ -313,7 +313,7 @@ class TestMenus(TrainingCase):
 class TestWindowLayout(TrainingCase):
     def test_the_example_and_phone_rows_do_not_cover_a_choice(self):
         try:
-            from zbtriage import gui as gui_probe_module
+            from securail import gui as gui_probe_module
             if not gui_probe_module.gui_available():
                 raise RuntimeError("no window")
             import tkinter as tk
@@ -322,7 +322,7 @@ class TestWindowLayout(TrainingCase):
             self.skipTest("no window available: {}".format(exc))
         try:
             root.withdraw()
-            from zbtriage import gui
+            from securail import gui
             app = gui.GuiApp(root, cli._gui_hooks())
             top = app.training_frame.master
             choice_rows = {int(w.grid_info()["row"]) for w in top.grid_slaves()

@@ -19,7 +19,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import phoneguide
+from securail import phoneguide
 from test_followup_fixes import age_bytes
 
 ADB_FILES = ("adb.exe", "AdbWinApi.dll", "AdbWinUsbApi.dll")

@@ -10,9 +10,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest  # noqa: E402
 
-from zbtriage import feeds, gui, kevdata, localpaths, phoneguide  # noqa: E402
-from zbtriage.modules import browser, hashscan  # noqa: E402
-from zbtriage.report import _gap_lines  # noqa: E402
+from securail import feeds, gui, kevdata, localpaths, phoneguide  # noqa: E402
+from securail.modules import browser, hashscan  # noqa: E402
+from securail.report import _gap_lines  # noqa: E402
 
 
 def _packaged(monkeypatch, value):
@@ -30,10 +30,10 @@ def test_browser_gap_names_the_app_or_terminal(monkeypatch):
     path = "/Users/x/Library/Safari/SafariTabs.db"
     _packaged(monkeypatch, True)
     note = browser._locked_note(path, exc)
-    assert "Zero Breach Toolkit Full Disk Access" in note and "Terminal" not in note
+    assert "Securail Full Disk Access" in note and "Terminal" not in note
     _packaged(monkeypatch, False)
     note = browser._locked_note(path, exc)
-    assert "Terminal Full Disk Access" in note and "Zero Breach Toolkit" not in note
+    assert "Terminal Full Disk Access" in note and "Securail" not in note
 
 
 def test_hash_gap_names_the_app_or_terminal(monkeypatch):
@@ -42,20 +42,20 @@ def test_hash_gap_names_the_app_or_terminal(monkeypatch):
     reasons = {"denied": 2, "large": 0, "unreadable": 0}
     _packaged(monkeypatch, True)
     text = hashscan._hs_reasons(reasons)
-    assert "give Zero Breach Toolkit Full Disk Access" in text and "Terminal" not in text
+    assert "give Securail Full Disk Access" in text and "Terminal" not in text
     _packaged(monkeypatch, False)
     assert "give Terminal Full Disk Access" in hashscan._hs_reasons(reasons)
 
 
 def test_summary_advice_names_the_app_or_terminal(monkeypatch):
-    monkeypatch.setattr("zbtriage.report.mac_has_full_disk_access", lambda: False)
+    monkeypatch.setattr("securail.report.mac_has_full_disk_access", lambda: False)
     private_gap = ["browser/safari:safari-tabs: macOS privacy protection blocked Safari (SafariTabs.db), "
                    "so it was not checked. Give Terminal Full Disk Access, then run again."]
     folder_gap = ["hash/root: 3 folder(s) or item(s) could not be opened, so nothing in them was compared "
                   "(3 permission denied); give Terminal Full Disk Access and run again"]
     _packaged(monkeypatch, True)
-    assert "Give Zero Breach Toolkit Full Disk Access" in _gap_lines(private_gap)[0]
-    assert "Full Disk Access for Zero Breach Toolkit" in " ".join(_gap_lines(folder_gap))
+    assert "Give Securail Full Disk Access" in _gap_lines(private_gap)[0]
+    assert "Full Disk Access for Securail" in " ".join(_gap_lines(folder_gap))
     _packaged(monkeypatch, False)
     assert "Give Terminal Full Disk Access" in _gap_lines(private_gap)[0]
     assert "Full Disk Access for Terminal" in " ".join(_gap_lines(folder_gap))
@@ -204,8 +204,8 @@ def test_window_start_failure_falls_back_to_the_terminal(monkeypatch):
 
 # --- The "newer version" line during an explicit update ---------------------------
 
-from zbtriage import cli, report  # noqa: E402
-from zbtriage.i18n import i18n_set  # noqa: E402
+from securail import cli, report  # noqa: E402
+from securail.i18n import i18n_set  # noqa: E402
 
 
 @pytest.mark.parametrize("tag, expect", [
@@ -240,7 +240,7 @@ def test_version_notice_is_translated():
 def _stub_update(monkeypatch):
     summary = {"cache": "c", "ok": 1, "failed": 0, "sources": [{"status": "updated", "indicators": 5}]}
     monkeypatch.setattr(feeds, "update", lambda *a, **k: summary)
-    from zbtriage import kevdata
+    from securail import kevdata
 
     def no_kev(*a, **k):
         raise kevdata.KevError("skipped")

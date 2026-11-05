@@ -15,7 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.modules import browser  # noqa: E402
+from securail.modules import browser  # noqa: E402
 
 
 def test_standard_cookie_link_is_an_alias(monkeypatch, tmp_path):
@@ -76,8 +76,8 @@ def test_desktop_wal_uses_the_desktop_limit():
 def test_phone_reader_keeps_its_own_limit():
     # The phone reader's WAL limit never exceeds the desktop one, and a WAL
     # reaching past the phone limit is refused.
-    from zbtriage.ios_sources import _is_wal_prefix, _IS_FILE_LIMIT
-    from zbtriage.modules.browser import _MAX_SNAPSHOT_BYTES
+    from securail.ios_sources import _is_wal_prefix, _IS_FILE_LIMIT
+    from securail.modules.browser import _MAX_SNAPSHOT_BYTES
     assert _IS_FILE_LIMIT <= _MAX_SNAPSHOT_BYTES
     header, wal = _wal_fixture(_IS_FILE_LIMIT // 4096 + 1)
     _prefix, issues = _is_wal_prefix(wal, header)

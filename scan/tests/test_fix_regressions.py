@@ -14,10 +14,10 @@ from unittest.mock import patch
 
 import pytest
 
-from zbtriage import report
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import browser, ios, traces
-from zbtriage.result import Hit, ModuleResult, EV_CONTACTED, EV_PERSISTENCE, EV_REFERENCED
+from securail import report
+from securail.iocs import Indicator, IocSet
+from securail.modules import browser, ios, traces
+from securail.result import Hit, ModuleResult, EV_CONTACTED, EV_PERSISTENCE, EV_REFERENCED
 from test_expanded_capabilities import context, ios_fixture, BAD
 from test_followup_fixes import bundle, fake_registry, sms_path
 

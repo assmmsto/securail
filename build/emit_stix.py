@@ -28,7 +28,7 @@ import uuid
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 "..", "scan"))
 
-from zbtriage import iocs as iocmod  # noqa: E402
+from securail import iocs as iocmod  # noqa: E402
 
 # Stable namespace for this project's deterministic STIX ids.
 NAMESPACE = uuid.UUID("6f0b4a2e-5d1c-4f3b-9a7e-adf3c70f1001")
@@ -197,7 +197,7 @@ def build_bundle(ioc_set: iocmod.IocSet, now: datetime.datetime) -> dict:
         "id": identity_id,
         "created": shared_created,
         "modified": modified,
-        "name": "zbtriage IOC set",
+        "name": "securail IOC set",
         "identity_class": "system",
         "description": "Curated from public reporting. NOT affiliated with, and "
                        "NOT endorsed by, The Citizen Lab or Confiant.",

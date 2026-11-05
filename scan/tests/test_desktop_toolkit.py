@@ -8,10 +8,10 @@ import subprocess
 
 import pytest
 
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import browser, traces
-from zbtriage.shelllinks import shelllink_content
-from zbtriage.result import ModuleResult
+from securail.iocs import Indicator, IocSet
+from securail.modules import browser, traces
+from securail.shelllinks import shelllink_content
+from securail.result import ModuleResult
 from test_expanded_capabilities import context, BAD
 from test_followup_fixes import bundle, fake_registry
 

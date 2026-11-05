@@ -6,7 +6,7 @@ import sys
 
 import pytest
 
-from zbtriage import backupcrypto
+from securail import backupcrypto
 
 
 def test_missing_cryptography_says_which_python_and_how_to_fix(monkeypatch):

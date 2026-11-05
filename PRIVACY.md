@@ -1,6 +1,6 @@
 # Privacy
 
-Zero Breach Toolkit runs entirely on your computer.
+Securail runs entirely on your computer.
 
 - **A scan makes no intentional network requests and has no upload feature.** A guard refuses
   Python socket calls, and local-path checks refuse redirected files and Windows remote drives.

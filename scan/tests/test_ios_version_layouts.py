@@ -12,9 +12,9 @@ from pathlib import Path
 
 import pytest
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import IocSet, Indicator
-from zbtriage.modules import ios
+from securail.context import ScanContext
+from securail.iocs import IocSet, Indicator
+from securail.modules import ios
 from test_followup_fixes import bundle
 from test_ios_upgrade import backup
 

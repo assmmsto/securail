@@ -14,7 +14,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from zbtriage import ios_sources, readers
+from securail import ios_sources, readers
 from test_evidence_safety import _ctx, safety_api
 from test_followup_fixes import bundle
 from test_ios_upgrade import backup, db_bytes, tree_hashes
@@ -100,7 +100,7 @@ def test_plaintext_lifetime_and_partial_findings_on_failure(tmp_path, safety_api
     before = tree_hashes(root)
     temporary = tmp_path / "private-temporary"
     temporary.mkdir()
-    api = ios_sources if safety_api.entry.__name__ == "zbtriage.cli" else safety_api.entry
+    api = ios_sources if safety_api.entry.__name__ == "securail.cli" else safety_api.entry
     lifecycle = readers if api is ios_sources else api
     monkeypatch.setattr(api, "local_temp_dir", lambda: str(temporary))
     original_database = api.IosEvidenceSource.database

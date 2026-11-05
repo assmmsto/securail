@@ -8,8 +8,8 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import feeds
-from zbtriage.modules import host
+from securail import feeds
+from securail.modules import host
 
 
 def _src(fmt="domains-txt"):
@@ -124,7 +124,7 @@ def test_accept_shrink_with_an_unknown_source_is_an_error(tmp_path, capsys):
 def test_no_network_request_names_the_tool():
     import glob
     import re
-    root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "zbtriage")
+    root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "securail")
     for path in glob.glob(os.path.join(root, "**", "*.py"), recursive=True):
         text = open(path, encoding="utf-8").read()
         for agent in re.findall(r'"User-Agent":\s*"([^"]*)"', text):

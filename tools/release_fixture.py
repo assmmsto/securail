@@ -19,7 +19,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "release-fixture.invalid"
-PAYLOAD = b"Harmless Zero Breach release test bytes; not malware.\n"
+PAYLOAD = b"Harmless Securail release test bytes; not malware.\n"
 DIGEST = hashlib.sha256(PAYLOAD).hexdigest()
 
 
@@ -54,9 +54,9 @@ def main():
         spec.loader.exec_module(cli)
         browser = hashes = host = patterns = reporting = traces = cli
     else:
-        from zbtriage import cli, report as reporting
-        from zbtriage.modules import browser, hashscan as hashes, host, patternscan as patterns
-        from zbtriage.modules import traces
+        from securail import cli, report as reporting
+        from securail.modules import browser, hashscan as hashes, host, patternscan as patterns
+        from securail.modules import traces
 
     profile = inputs / "Browser" / "Default"
     profile.mkdir(parents=True)
@@ -300,7 +300,7 @@ def main():
         argv.append("--patterns")
     with contextlib.ExitStack() as stack:
         from reader_fixtures import stub_registered_readers
-        from zbtriage import readers, netguard
+        from securail import readers, netguard
         registry = cli if target == "bundle" else readers
         select_readers = registry.reader_select
         fixture_platform = "linux" if case == "linux-startup" else "darwin" if case == "macos-startup" else "win32"
@@ -310,7 +310,7 @@ def main():
         stub_registered_readers(stack, cli if target == "bundle" else None,
                                 keep=("browser", "hash", "host", "android", "ios", "patterns") + native_traces + extra_reader)
         if case in ("linux-startup", "macos-startup"):
-            from zbtriage.modules import posix
+            from securail.modules import posix
             unix_reader = cli if target == "bundle" else posix
             check, kind = ("linux-autostart", "desktop") if case == "linux-startup" else ("macos-launch-items", "plist")
             stack.enter_context(patch.object(unix_reader, "_ux_roots", lambda: [(check, str(startup), kind)]))

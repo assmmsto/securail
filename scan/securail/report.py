@@ -193,7 +193,7 @@ def build_document(iocs: IocSet, modules: List[ModuleResult],
     gaps = [sanitize_untrusted(g) for g in gaps]
     document = {
         "schema_version": SCHEMA_VERSION,
-        "tool": {"name": "zero-breach-toolkit", "version": __version__},
+        "tool": {"name": "securail", "version": __version__},
         "timestamp": started.replace(microsecond=0).isoformat(),
         "platform": _platform_info(),
         "ioc_set": {
@@ -301,7 +301,7 @@ def describe_document() -> Dict[str, Any]:
     grades = dict(EVIDENCE_MEANING)
     return {
         "schema_version": SCHEMA_VERSION,
-        "tool": {"name": "zero-breach-toolkit", "version": __version__,
+        "tool": {"name": "securail", "version": __version__,
                  "summary": ("Local, read-only check for traces of known commercial "
                              "spyware. Never contacts an indicator; never modifies "
                              "the machine. A clean result is not a clean bill of "
@@ -486,7 +486,7 @@ def share_summary(document: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "schema_version": SCHEMA_VERSION,
         "report_type": "sharing-summary",
-        "tool": {"name": "zero-breach-toolkit", "version": __version__},
+        "tool": {"name": "securail", "version": __version__},
         "verdict": {k: v.get(k, 0) for k in ("status", "hits_total", "findings_total",
                                              "references_total", "withdrawn_total")},
         "exit_code": document["exit_code"],
@@ -565,7 +565,7 @@ def render_human(document: Dict[str, Any]) -> str:
     out.extend(training_top)
 
     w(_RULE)
-    w("  " + T("Zero Breach Toolkit {version} - spyware indicator check",
+    w("  " + T("Securail {version} - spyware indicator check",
                version=document["tool"]["version"]))
     # The name must not be read as a promise. The tagline carries the tool's one
     # non-negotiable caveat right next to it, so a screenshot of the top of the
@@ -1403,7 +1403,7 @@ def _next_steps(w, hits):
                                  "https://archivegenocide.com/scan has a test and setup "
                                  "steps. This project publishes its own blocklists of "
                                  "these advertising domains (adblock, hosts and dnsmasq "
-                                 "formats): https://github.com/interplains/Zero-Breach-Toolkit#blocking-advertising-domains")
+                                 "formats): https://github.com/assmmsto/securail#blocking-advertising-domains")
         if any(h.get("tier") == "vuln-driver" and
                h.get("evidence") == EV_ON_DISK for h in hits):
             w("")
@@ -1737,7 +1737,7 @@ def _gap_lines(gaps: List[str]) -> List[str]:
     if private:
         if is_packaged():
             lines.append(T("macOS privacy protection kept some records from being read: {apps}. Give "
-                           "Zero Breach Toolkit Full Disk Access (System Settings > Privacy & Security > Full Disk "
+                           "Securail Full Disk Access (System Settings > Privacy & Security > Full Disk "
                            "Access), then run the check again.",
                            apps=", ".join(sorted(T(name) for name in private))))
         else:
@@ -1745,7 +1745,7 @@ def _gap_lines(gaps: List[str]) -> List[str]:
                            "Terminal Full Disk Access (System Settings > Privacy & Security > Full Disk "
                            "Access), then run the check again.",
                            apps=", ".join(sorted(T(name) for name in private))))
-    fda = ((" " + (T("Full Disk Access for Zero Breach Toolkit lets macOS-protected folders be included.")
+    fda = ((" " + (T("Full Disk Access for Securail lets macOS-protected folders be included.")
                    if is_packaged() else
                    T("Full Disk Access for Terminal lets macOS-protected folders be included.")))
            if full_disk and not private and not mac_has_full_disk_access() else "")

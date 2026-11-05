@@ -13,9 +13,9 @@ import tarfile
 
 import pytest
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import IocSet, Indicator
-from zbtriage.modules import ios
+from securail.context import ScanContext
+from securail.iocs import IocSet, Indicator
+from securail.modules import ios
 from test_followup_fixes import bundle
 from test_ios_upgrade import backup, db_bytes
 
@@ -245,7 +245,7 @@ def test_backup_without_manifest_plist_is_read_as_unencrypted(tmp_path, reader):
 
 
 def test_stix_file_name_holding_a_path_is_a_path(tmp_path):
-    from zbtriage.stix import load_stix
+    from securail.stix import load_stix
     path = tmp_path / "bundle.json"
     path.write_text(json.dumps({"type": "bundle", "id": "bundle--1", "objects": [
         {"type": "malware", "id": "malware--1", "name": "Fixture", "is_family": False},

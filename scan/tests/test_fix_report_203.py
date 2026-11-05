@@ -18,11 +18,11 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import gui, report
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.modules import android, ios
-from zbtriage.result import EV_CONTACTED, EV_DEVICE_LOG, Hit, ModuleResult
+from securail import gui, report
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.modules import android, ios
+from securail.result import EV_CONTACTED, EV_DEVICE_LOG, Hit, ModuleResult
 
 UNREAD_TITLE = "This phone could not be checked"
 NOW = datetime.datetime(2026, 11, 2, 12, 0, 0)
@@ -152,7 +152,7 @@ def test_a_withdrawn_match_is_not_called_a_page_you_read():
             for h in md.get("hits", []):
                 h["withdrawn_only"] = True
                 h["withdrawal_present"] = True
-    with patch("zbtriage.evidence.evidence_enrich", enrich):
+    with patch("securail.evidence.evidence_enrich", enrich):
         doc = report.build_document(IOCS, [module], NOW)
     assert doc["verdict"]["status"] == report.V_WITHDRAWN
     colour, title, subtitle = gui.gui_headline(doc)

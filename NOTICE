@@ -1,8 +1,11 @@
-Zero Breach Toolkit
+Securail
 Copyright 2026 archivegenocide.com
 
-Built on Zero Breach (https://github.com/interplains/zero-breach), by the same
-authors, under the same licence.
+Securail is an independent fork of Zero Breach Toolkit 2.0.6
+(https://github.com/interplains/Zero-Breach-Toolkit), by archivegenocide — the
+same authors as the upstream project. The scanning engine, the indicator sets
+and the detection logic are upstream work, unchanged by this fork. This fork
+changes the name and the command-line presentation only.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this software except in compliance with the License. You may obtain a copy of

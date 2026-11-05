@@ -1,4 +1,4 @@
-"""Plain-Python AES (zbtriage/aes.py) against the published standard vectors.
+"""Plain-Python AES (securail/aes.py) against the published standard vectors.
 
 FIPS-197 Appendix C (single-block AES-128/192/256) and NIST SP 800-38A F.2.5/F.2.6
 (CBC-AES256). If these pass, the implementation is the standard one.
@@ -12,7 +12,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import aes  # noqa: E402
+from securail import aes  # noqa: E402
 
 H = bytes.fromhex
 

@@ -7,8 +7,8 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import gui  # noqa: E402
-from zbtriage.i18n import i18n_set  # noqa: E402
+from securail import gui  # noqa: E402
+from securail.i18n import i18n_set  # noqa: E402
 
 MESSAGE = "The window could not be opened on this computer, so the check is running in the terminal instead."
 HINT = "To get the window, install Python from python.org/downloads and start the check with that Python."
@@ -111,7 +111,7 @@ class FallbackCase(unittest.TestCase):
             self.assertNotIn(HINT, err.getvalue())
 
     def test_message_is_translated_in_every_language(self):
-        from zbtriage.i18n import I18N_CODES, T
+        from securail.i18n import I18N_CODES, T
         langs = [l for l in I18N_CODES if l != "en"]
         self.assertTrue(langs)
         for lang in langs:

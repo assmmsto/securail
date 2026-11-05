@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.modules import browser  # noqa: E402
+from securail.modules import browser  # noqa: E402
 from test_browser_launch import BrowserLaunchBase, TEST_DOMAIN  # noqa: E402
 
 

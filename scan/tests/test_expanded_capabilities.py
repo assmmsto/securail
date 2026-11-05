@@ -22,15 +22,15 @@ import zipfile
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from zbtriage import cli, report, stix
-from zbtriage import phoneguide
-from zbtriage.aes import aes_cbc_encrypt
-from zbtriage.backupcrypto import backup_android_decrypt, backup_ios_keys
-from zbtriage.context import ScanContext
-from zbtriage.evidence import evidence_correlations, evidence_enrich
-from zbtriage.iocs import Indicator, IocSet, merge
-from zbtriage.modules import android, browser, hashscan, host, ios, traces
-from zbtriage.result import Hit, ModuleResult, EV_CONTACTED, EV_REFERENCED
+from securail import cli, report, stix
+from securail import phoneguide
+from securail.aes import aes_cbc_encrypt
+from securail.backupcrypto import backup_android_decrypt, backup_ios_keys
+from securail.context import ScanContext
+from securail.evidence import evidence_correlations, evidence_enrich
+from securail.iocs import Indicator, IocSet, merge
+from securail.modules import android, browser, hashscan, host, ios, traces
+from securail.result import Hit, ModuleResult, EV_CONTACTED, EV_REFERENCED
 
 BAD = "fixture.invalid"
 SAMPLE = b"synthetic harmless file"

@@ -32,10 +32,10 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet
-from zbtriage.localpaths import path_problem
-from zbtriage.modules import browser
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet
+from securail.localpaths import path_problem
+from securail.modules import browser
 
 INDICATOR = "spy-c2.test"
 
@@ -231,9 +231,9 @@ POSIX_ONLY = pytest.mark.skipif(not hasattr(os, "mkfifo"), reason="needs named p
 _FIFO_SCRIPT = textwrap.dedent('''
     import os, sys
     sys.path.insert(0, {scan!r})
-    from zbtriage.context import ScanContext
-    from zbtriage.iocs import Indicator, IocSet
-    from zbtriage.modules import browser
+    from securail.context import ScanContext
+    from securail.iocs import Indicator, IocSet
+    from securail.modules import browser
     ud, target = sys.argv[1], sys.argv[2]
     os.makedirs(os.path.join(ud, "Default", "Network"), exist_ok=True)
     open(os.path.join(ud, "Default", "Preferences"), "w").write("{{}}")

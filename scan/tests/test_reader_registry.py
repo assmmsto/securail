@@ -7,9 +7,9 @@ from unittest.mock import patch
 
 import pytest
 
-from zbtriage import readers, report, cli
-from zbtriage.context import ScanContext
-from zbtriage.result import ModuleResult, Hit, EV_EXECUTION, EV_INVENTORY
+from securail import readers, report, cli
+from securail.context import ScanContext
+from securail.result import ModuleResult, Hit, EV_EXECUTION, EV_INVENTORY
 from test_followup_fixes import bundle
 from test_expanded_capabilities import context
 from reader_fixtures import stub_registered_readers

@@ -17,9 +17,9 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import cli, gui  # noqa: E402
-from zbtriage.bidi import _MARKS  # noqa: E402
-from zbtriage.i18n import i18n_set  # noqa: E402
+from securail import cli, gui  # noqa: E402
+from securail.bidi import _MARKS  # noqa: E402
+from securail.i18n import i18n_set  # noqa: E402
 
 
 def _training_document(tmp, scenario="cellebrite"):

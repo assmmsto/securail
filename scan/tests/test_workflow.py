@@ -11,8 +11,8 @@ import zipfile
 
 import pytest
 
-from zbtriage import cli, menu, report, workflow
-from zbtriage.result import ModuleResult, Hit, EV_CONTACTED
+from securail import cli, menu, report, workflow
+from securail.result import ModuleResult, Hit, EV_CONTACTED
 from test_expanded_capabilities import context, BAD, SAMPLE, DIGEST
 from test_followup_fixes import bundle
 
@@ -178,7 +178,7 @@ def test_post_menu_refuses_overwrite_of_original_even_with_yes(tmp_path, bundle)
 
 
 def test_phone_menu_guards_markers_before_stat(tmp_path, bundle):
-    from zbtriage import localpaths
+    from securail import localpaths
     for api, guard_owner in ((menu, localpaths), (bundle, bundle)):
         with patch.object(guard_owner, "path_problem", return_value="refused link"), \
              patch.object(api.os.path, "isfile", side_effect=AssertionError("followed refused marker")):

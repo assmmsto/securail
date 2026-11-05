@@ -8,11 +8,11 @@ import os
 
 import pytest
 
-from zbtriage import contract, gui, report
-from zbtriage.context import ScanContext
-from zbtriage.iocs import IocSet
-from zbtriage.modules import android, ios
-from zbtriage.training import _trn_collection
+from securail import contract, gui, report
+from securail.context import ScanContext
+from securail.iocs import IocSet
+from securail.modules import android, ios
+from securail.training import _trn_collection
 from test_followup_fixes import bundle
 from test_ios_real_world_layouts import _ips, _sysdiagnose
 
@@ -114,7 +114,7 @@ def test_cellebrite_computer_in_lockdown_records(tmp_path, ios_reader):
 def test_a_process_called_mnm_is_never_matched_on_a_computer():
     # The trace lives only in the phone checks: the indicator lists that
     # computer checks use do not contain it.
-    from zbtriage.cli import _load_iocs, _parse
+    from securail.cli import _load_iocs, _parse
     iocs = _load_iocs(_parse(["--no-menu", "--no-banner", "--no-feeds"]))
     assert not [i for i in iocs.of_type("process") if i.value == "mnm"]
 

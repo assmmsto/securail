@@ -35,7 +35,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from test_android import check, collection  # noqa: E402
 from test_android_deep import add_dumpsys  # noqa: E402
-from zbtriage.result import EV_DEVICE_LOG  # noqa: E402
+from securail.result import EV_DEVICE_LOG  # noqa: E402
 
 SPY = "com.spy.app"
 

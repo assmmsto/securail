@@ -15,10 +15,10 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import feeds, ios_artifacts, localpaths, report, workflow
-from zbtriage.iocs import load_any
-from zbtriage.modules import hashscan
-from zbtriage.result import EV_CONTACTED, EV_REFERENCED
+from securail import feeds, ios_artifacts, localpaths, report, workflow
+from securail.iocs import load_any
+from securail.modules import hashscan
+from securail.result import EV_CONTACTED, EV_REFERENCED
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -236,6 +236,6 @@ def test_make_release_refuses_uncommitted_changes(monkeypatch):
     spec = importlib.util.spec_from_file_location("_make_release", os.path.join(ROOT, "tools", "make_release.py"))
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    monkeypatch.setattr(module, "git", lambda *a: " M scan/zbtriage/iocs.py" if a[0] == "status" else "")
+    monkeypatch.setattr(module, "git", lambda *a: " M scan/securail/iocs.py" if a[0] == "status" else "")
     with pytest.raises(SystemExit, match="uncommitted"):
         module.refuse_unless_releasable("v0.0.0")

@@ -569,7 +569,7 @@ class IocSet:
 
     # MEASURED (twice). Read before changing.
     #
-    # Zero Breach's note, still true: one regex ALTERNATION of all literals is 4x
+    # Securail's note, still true: one regex ALTERNATION of all literals is 4x
     # SLOWER than one `in` pass per indicator (Python's `re` walks a large
     # alternation itself; `in` is optimised C). That held for ~260 indicators.
     #

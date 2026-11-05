@@ -23,11 +23,11 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import report  # noqa: E402
-from zbtriage import stix  # noqa: E402
-from zbtriage.iocs import (TYPE_DOMAIN, TYPE_IP, TYPE_SHA256, IocError,  # noqa: E402
+from securail import report  # noqa: E402
+from securail import stix  # noqa: E402
+from securail.iocs import (TYPE_DOMAIN, TYPE_IP, TYPE_SHA256, IocError,  # noqa: E402
                         load_any, merge)
-from zbtriage.result import EV_CONTACTED, EV_ON_DISK, Hit, ModuleResult  # noqa: E402
+from securail.result import EV_CONTACTED, EV_ON_DISK, Hit, ModuleResult  # noqa: E402
 
 HASH_A = "a" * 64
 HASH_B = "b" * 64
@@ -104,7 +104,7 @@ class TestParsing(unittest.TestCase):
         self.assertEqual(imp.total, 5)
 
     def test_app_id_shaped_like_a_domain_never_shadows_the_domain(self):
-        from zbtriage.iocs import TYPE_APP_ID, TYPE_DOMAIN as D
+        from securail.iocs import TYPE_APP_ID, TYPE_DOMAIN as D
         s = load_any(write(bundle(["[app:id='same.example']",
                                    "[domain-name:value='same.example']"])))
         self.assertEqual(s.lookup("same.example").type, D)

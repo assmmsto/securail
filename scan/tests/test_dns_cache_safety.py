@@ -7,11 +7,11 @@ import unittest
 from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from zbtriage.context import ScanContext
-from zbtriage.iocs import Indicator, IocSet, TYPE_DOMAIN
-from zbtriage.modules import host
-from zbtriage.report import build_document, render_human
-from zbtriage.result import EV_DNS, ModuleResult
+from securail.context import ScanContext
+from securail.iocs import Indicator, IocSet, TYPE_DOMAIN
+from securail.modules import host
+from securail.report import build_document, render_human
+from securail.result import EV_DNS, ModuleResult
 
 
 class TestPreloadedDnsBlocks(unittest.TestCase):

@@ -17,10 +17,10 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from zbtriage import cli, workflow
-from zbtriage.context import ScanContext
-from zbtriage.modules import browser
-from zbtriage.result import EV_CONTACTED, HIT_LIST_LIMIT, Hit, ModuleResult
+from securail import cli, workflow
+from securail.context import ScanContext
+from securail.modules import browser
+from securail.result import EV_CONTACTED, HIT_LIST_LIMIT, Hit, ModuleResult
 from test_expanded_capabilities import BAD, context
 
 
@@ -156,7 +156,7 @@ def _safari_backup(root, origin):
 
 @pytest.mark.parametrize("origin, grade", [(0, "contacted"), (1, "referenced")])
 def test_a_safari_visit_synced_from_another_device_is_not_contact(tmp_path, origin, grade):
-    from zbtriage.modules import ios
+    from securail.modules import ios
     r = ios.run(context(phone_path=_safari_backup(tmp_path / "backup", origin)))
     assert {h.evidence for h in r.hits if h.indicator == BAD} == {grade}
 
@@ -164,7 +164,7 @@ def test_a_safari_visit_synced_from_another_device_is_not_contact(tmp_path, orig
 # --- oversized Mark of the Web record ----------------------------------------
 
 def test_an_oversized_download_record_is_a_gap(tmp_path, monkeypatch):
-    from zbtriage.modules import traces
+    from securail.modules import traces
     (tmp_path / "file.bin").write_bytes(b"x")
     monkeypatch.setattr(traces, "_tr_motw_roots", lambda: [str(tmp_path)])
     monkeypatch.setattr(traces, "_tr_read_zone", lambda p: {"_oversize": "1"})
@@ -176,7 +176,7 @@ def test_an_oversized_download_record_is_a_gap(tmp_path, monkeypatch):
 # --- hosts file size cap ------------------------------------------------------
 
 def test_an_enormous_hosts_file_is_a_gap_not_read(tmp_path, monkeypatch):
-    from zbtriage.modules import host
+    from securail.modules import host
     etc = tmp_path / "System32" / "drivers" / "etc"
     etc.mkdir(parents=True)
     (etc / "hosts").write_text("198.51.100.7 " + BAD + "\n")
