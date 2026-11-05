@@ -388,7 +388,7 @@ def _force_utf8_io():
 
 def _bundle_parser():
     p = WorkflowParser(
-        prog="zero-breach-toolkit",
+        prog="securail",
         description="Read-only check for known mercenary spyware "
                     "indicators. A clean result is NOT a clean bill of health.")
     p.add_argument("--json", metavar="PATH",
