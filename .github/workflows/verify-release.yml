@@ -40,7 +40,24 @@ jobs:
       - name: Check the published file and its checksum
         run: |
           set -eu
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir published --pattern SHA256SUMS --pattern securail.py
+          # The `published` event can arrive before the upload has finished - it
+          # did for v2.0.6, which failed here with "no assets to download" and
+          # looked like a release that does not verify. Wait for the assets
+          # instead of reporting a problem that is only a race.
+          attempt=1
+          while :; do
+            if gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir published \
+                 --pattern SHA256SUMS --pattern securail.py; then
+              break
+            fi
+            if [ "$attempt" -ge 10 ]; then
+              echo "::error::the release assets never became downloadable"
+              exit 1
+            fi
+            echo "assets not downloadable yet (attempt $attempt); waiting 30s"
+            attempt=$((attempt + 1))
+            sleep 30
+          done
           # Exactly one manifest entry for the scanner.
           test "$(awk '$2 == "securail.py"' published/SHA256SUMS | wc -l)" -eq 1
           expected=$(awk '$2 == "securail.py" {print $1}' published/SHA256SUMS)
